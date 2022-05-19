@@ -20,6 +20,9 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IWorldPosCallable;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.energy.CapabilityEnergy;
+import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.items.SlotItemHandler;
 
 public class AlloySmelterContainer extends Container {
@@ -27,6 +30,7 @@ public class AlloySmelterContainer extends Container {
 	private AlloySmelterTileEntity tileEntity;
 	private IWorldPosCallable canInteractWithCallable;
 	public FunctionalIntReferenceHolder currentSmeltTime;
+	public FunctionalIntReferenceHolder currentEnergy;
 
 	public AlloySmelterContainer(final int id, final PlayerInventory inv,
 			final AlloySmelterTileEntity tileEntity) {
@@ -57,6 +61,8 @@ public class AlloySmelterContainer extends Container {
 
 		addDataSlot(currentSmeltTime = new FunctionalIntReferenceHolder(() -> tileEntity.currentSmeltTime,
 				v -> tileEntity.currentSmeltTime = v));
+		addDataSlot(currentEnergy = new FunctionalIntReferenceHolder(() -> tileEntity.currentEnergy,
+				value -> tileEntity.currentEnergy = value));
 	}
 
 	public AlloySmelterContainer(final int id, final PlayerInventory inv, final PacketBuffer buffer) {
@@ -113,5 +119,9 @@ public class AlloySmelterContainer extends Container {
 		return currentSmeltTime.get() != 0 && tileEntity.maxSmeltTime != 0
 				? currentSmeltTime.get() * 24 / tileEntity.maxSmeltTime
 				: 0;
+	}
+
+	public LazyOptional<IEnergyStorage> getCapabilityFromTE(){
+		return this.tileEntity.getCapability(CapabilityEnergy.ENERGY);
 	}
 }

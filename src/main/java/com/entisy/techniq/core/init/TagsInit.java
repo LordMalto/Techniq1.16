@@ -48,6 +48,7 @@ public class TagsInit {
 		public static final INamedTag<Item> STORAGE_BLOCKS_COPPER = forge("storage_blocks/copper");
 		
 		public static final INamedTag<Item> INGOTS_COPPER = forge("ingots/copper");
+		public static final INamedTag<Item> INGOTS_REDSTONE_ALLOY = forge("ingots/redstone_alloy");
 		public static final INamedTag<Item> PLATES_COPPER = forge("plates/copper");
 		public static final INamedTag<Item> PLATES_IRON = forge("plates/iron");
 		public static final INamedTag<Item> PLATES_GOLD = forge("plates/gold");

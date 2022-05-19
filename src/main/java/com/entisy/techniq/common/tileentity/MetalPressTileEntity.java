@@ -11,7 +11,7 @@ import com.entisy.techniq.Techniq;
 import com.entisy.techniq.common.block.MetalPressBlock;
 import com.entisy.techniq.common.container.MetalPressContainer;
 import com.entisy.techniq.common.itemHandlers.MetalPressItemHandler;
-import com.entisy.techniq.common.recipe.alloySmelter.metalPress.MetalPressRecipe;
+import com.entisy.techniq.common.recipe.metalPress.MetalPressRecipe;
 import com.entisy.techniq.core.energy.ModEnergyHandler;
 import com.entisy.techniq.core.init.RecipeSerializerInit;
 import com.entisy.techniq.core.init.TileEntityTypesInit;
@@ -66,10 +66,6 @@ public class MetalPressTileEntity extends TileEntity implements ITickableTileEnt
 	public MetalPressTileEntity(TileEntityType<?> type) {
 		super(type);
 		inventory = new MetalPressItemHandler(slots);
-//		getCapability(CapabilityEnergy.ENERGY).ifPresent(iEnergyStorage -> {
-//			iEnergyStorage.receiveEnergy(5000, false);
-//			currentEnergy.set(iEnergyStorage.getEnergyStored());
-//		});
 	}
 
 	LazyOptional<IEnergyStorage> energyStorageLazyOptional = LazyOptional.of(() -> new ModEnergyHandler(maxEnergy, maxEnergyReceive, maxEnergyExtract, currentEnergy));
@@ -150,7 +146,6 @@ public class MetalPressTileEntity extends TileEntity implements ITickableTileEnt
 		ItemStackHelper.loadAllItems(nbt, inv);
 		inventory.setNonNullList(inv);
 		currentSmeltTime = nbt.getInt("CurrentSmeltTime");
-//		currentEnergy.set(nbt.getInt("CurrentEnergy"));
 		energyStorageLazyOptional.ifPresent(iEnergyStorage -> {
 			currentEnergy = nbt.getInt("CurrentEnergy") | iEnergyStorage.getEnergyStored();
 		});

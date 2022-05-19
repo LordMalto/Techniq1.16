@@ -49,6 +49,7 @@ public class ModItemModelProvider extends ItemModelProvider {
 		ModelFile itemGenerated = getExistingFile(mcLoc("item/generated"));
 		
 		builder("copper_ingot", itemGenerated);
+		builder("redstone_alloy_ingot", itemGenerated);
 		builder("copper_plate", itemGenerated);
 		builder("iron_plate", itemGenerated);
 		builder("gold_plate", itemGenerated);

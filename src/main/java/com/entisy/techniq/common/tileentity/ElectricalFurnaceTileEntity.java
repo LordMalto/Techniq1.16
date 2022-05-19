@@ -8,9 +8,11 @@ import java.util.stream.Collectors;
 import javax.annotation.Nullable;
 
 import com.entisy.techniq.Techniq;
+import com.entisy.techniq.common.block.AlloySmelterBlock;
 import com.entisy.techniq.common.block.ElectricalFurnaceBlock;
 import com.entisy.techniq.common.container.ElectricalFurnaceContainer;
 import com.entisy.techniq.common.itemHandlers.ElectricalFurnaceItemHandler;
+import com.entisy.techniq.common.recipe.alloySmelter.AlloySmelterRecipe;
 import com.entisy.techniq.common.recipe.electricalFurnace.ElectricalFurnaceRecipe;
 import com.entisy.techniq.core.init.RecipeSerializerInit;
 import com.entisy.techniq.core.init.TileEntityTypesInit;
@@ -73,28 +75,28 @@ public class ElectricalFurnaceTileEntity extends TileEntity implements ITickable
 	public void tick() {
 		boolean dirty = false;
 		if (level != null && !level.isClientSide()) {
-				if (getRecipe(inventory.getStackInSlot(0)) != null) {
-					if (currentSmeltTime != maxSmeltTime) {
-							level.setBlockAndUpdate(getBlockPos(),
-									getBlockState().setValue(ElectricalFurnaceBlock.LIT, true));
-							currentSmeltTime++;
-							System.out.println(currentSmeltTime);
-							dirty = true;
-						} else {
-							level.setBlockAndUpdate(getBlockPos(),
-									getBlockState().setValue(ElectricalFurnaceBlock.LIT, false));
-							currentSmeltTime = 0;
-							ItemStack output = getRecipe(inventory.getStackInSlot(0)).getResultItem();
-							inventory.insertItem(1, output.copy(), false);
-							inventory.decreaseStackSize(0, 1);
-							dirty = true;
-						}
+			ElectricalFurnaceRecipe recipe = getRecipe(inventory.getItem(0));
+
+			if (recipe != null) {
+				if (currentSmeltTime != maxSmeltTime) {
+					level.setBlockAndUpdate(getBlockPos(), getBlockState().setValue(AlloySmelterBlock.LIT, true));
+					currentSmeltTime++;
+					dirty = true;
+				} else {
+					level.setBlockAndUpdate(getBlockPos(), getBlockState().setValue(AlloySmelterBlock.LIT, false));
+					currentSmeltTime = 0;
+					ItemStack output = recipe.getResultItem();
+					inventory.insertItem(1, output.copy(), false);
+
+					inventory.shrink(0, recipe.getCount(inventory.getItem(0)));
+					dirty = true;
 				}
 			} else {
-				level.setBlockAndUpdate(getBlockPos(), getBlockState().setValue(ElectricalFurnaceBlock.LIT, false));
+				level.setBlockAndUpdate(getBlockPos(), getBlockState().setValue(AlloySmelterBlock.LIT, false));
 				currentSmeltTime = 0;
 				dirty = true;
 			}
+		}
 		if (dirty) {
 			setChanged();
 			level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), Constants.BlockFlags.BLOCK_UPDATE);

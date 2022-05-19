@@ -4,7 +4,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import com.entisy.techniq.Techniq;
 import com.entisy.techniq.common.container.AlloySmelterContainer;
+import com.entisy.techniq.common.container.MetalPressContainer;
 import com.entisy.techniq.common.tileentity.AlloySmelterTileEntity;
+import com.entisy.techniq.common.tileentity.MetalPressTileEntity;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 
@@ -22,12 +24,15 @@ public class AlloySmelterScreen extends ContainerScreen<AlloySmelterContainer> {
 	private static final ResourceLocation TEXTURE = new ResourceLocation(Techniq.MOD_ID,
 			"textures/gui/alloy_smelter.png");
 
+	private final AlloySmelterContainer container;
+
 	public AlloySmelterScreen(AlloySmelterContainer container, PlayerInventory inv, ITextComponent title) {
 		super(container, inv, title);
 		leftPos = 0;
 		topPos = 0;
 		width = 176;
 		height = 165;
+		this.container = container;
 	}
 
 	@SuppressWarnings("deprecation")
@@ -39,6 +44,16 @@ public class AlloySmelterScreen extends ContainerScreen<AlloySmelterContainer> {
 		int x = (this.width - this.getXSize()) / 2;
 		int y = (this.height - this.getYSize()) / 2;
 		this.blit(stack, x, y, 0, 0, getXSize(), getYSize());
+
+		// draw energy bar
+		AtomicInteger current = new AtomicInteger();
+
+		container.getCapabilityFromTE().ifPresent(iEnergyStorage -> {
+			current.set(iEnergyStorage.getEnergyStored());
+		});
+
+		int pixel = current.get() != 0 ? current.get() * 50 / 25000 : 0;
+		blit(stack, getGuiLeft() + 154, getGuiTop() + (50 - pixel) + 18, 176, (50 - pixel), 12, 50);
 
 		// draw progress bar/arrow
 		blit(stack, leftPos + 77, topPos + 35, 0, 166, getMenu().getSmeltProgressionScaled(), 16);
@@ -54,7 +69,7 @@ public class AlloySmelterScreen extends ContainerScreen<AlloySmelterContainer> {
 	public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
 		this.renderBackground(matrixStack);
 		super.render(matrixStack, mouseX, mouseY, partialTicks);
-//		this.renderTooltip(matrixStack, mouseX, mouseY);
+		this.renderTooltip(matrixStack, mouseX, mouseY);
 	}
 
 	@Override
@@ -64,10 +79,15 @@ public class AlloySmelterScreen extends ContainerScreen<AlloySmelterContainer> {
 		if (mouseX >= getGuiLeft() + 154 && mouseX < getGuiLeft() + 154 + 12) {
 			if (mouseY >= getGuiTop() + 18 && mouseY < getGuiTop() + 18 + 50) {
 
+				// rendering the amount of energy stored e.g. 5000/25000
 				AtomicInteger current = new AtomicInteger();
 
+				container.getCapabilityFromTE().ifPresent(iEnergyStorage -> {
+					current.set(iEnergyStorage.getEnergyStored());
+				});
+
 				this.renderTooltip(matrixStack,
-						new StringTextComponent(current.get() + "/" + AlloySmelterTileEntity.maxEnergy), mouseX, mouseY);
+						new StringTextComponent(current.get() + "/" + MetalPressTileEntity.maxEnergy), mouseX, mouseY);
 			}
 		}
 	}

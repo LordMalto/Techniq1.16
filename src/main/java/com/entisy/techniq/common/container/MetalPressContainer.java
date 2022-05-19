@@ -120,13 +120,6 @@ public class MetalPressContainer extends Container {
 				: 0;
 	}
 
-	@OnlyIn(Dist.CLIENT)
-	public int getEnergyUpdate() {
-		return currentEnergy.get() != 0 && tileEntity.maxEnergy != 0
-				? currentEnergy.get() * 50 / tileEntity.maxEnergy
-				: 0;
-	}
-
 	public LazyOptional<IEnergyStorage> getCapabilityFromTE(){
 		return this.tileEntity.getCapability(CapabilityEnergy.ENERGY);
 	}

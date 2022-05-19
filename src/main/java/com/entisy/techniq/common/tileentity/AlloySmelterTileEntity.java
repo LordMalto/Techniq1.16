@@ -12,6 +12,7 @@ import com.entisy.techniq.common.block.AlloySmelterBlock;
 import com.entisy.techniq.common.container.AlloySmelterContainer;
 import com.entisy.techniq.common.itemHandlers.AlloySmelterItemHandler;
 import com.entisy.techniq.common.recipe.alloySmelter.AlloySmelterRecipe;
+import com.entisy.techniq.core.energy.ModEnergyHandler;
 import com.entisy.techniq.core.init.RecipeSerializerInit;
 import com.entisy.techniq.core.init.TileEntityTypesInit;
 
@@ -43,6 +44,8 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.energy.CapabilityEnergy;
+import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.wrapper.RecipeWrapper;
@@ -55,7 +58,7 @@ public class AlloySmelterTileEntity extends TileEntity implements ITickableTileE
 	public final int maxSmeltTime = 120;
 	private AlloySmelterItemHandler inventory;
 
-	private int currentEnergy;
+	public static int currentEnergy = 400;
 	public static final int maxEnergy = 25000;
 	public static final int maxEnergyReceive = 200;
 	public static final int maxEnergyExtract = 200;
@@ -64,6 +67,8 @@ public class AlloySmelterTileEntity extends TileEntity implements ITickableTileE
 		super(type);
 		inventory = new AlloySmelterItemHandler(slots);
 	}
+
+	LazyOptional<IEnergyStorage> energyStorageLazyOptional = LazyOptional.of(() -> new ModEnergyHandler(maxEnergy, maxEnergyReceive, maxEnergyExtract, currentEnergy));
 
 	public AlloySmelterTileEntity() {
 		this(TileEntityTypesInit.ALLOY_SMELTER_TILE_ENTITY.get());
@@ -78,22 +83,28 @@ public class AlloySmelterTileEntity extends TileEntity implements ITickableTileE
 	public void tick() {
 		boolean dirty = false;
 		if (level != null && !level.isClientSide()) {
-			if (getRecipe(inventory.getStackInSlot(0)) != null && getRecipe(inventory.getStackInSlot(1)) != null) {
-				if (currentSmeltTime != maxSmeltTime) {
-					level.setBlockAndUpdate(getBlockPos(), getBlockState().setValue(AlloySmelterBlock.LIT, true));
-					currentSmeltTime++;
-					dirty = true;
-				} else {
-					level.setBlockAndUpdate(getBlockPos(), getBlockState().setValue(AlloySmelterBlock.LIT, false));
-					currentSmeltTime = 0;
-					ItemStack output = getRecipe(inventory.getStackInSlot(0)).getResultItem();
-					inventory.insertItem(2, output.copy(), false);
+			AlloySmelterRecipe recipe = getRecipe(inventory.getItem(0));
 
-					AlloySmelterRecipe recipe = getRecipe(inventory.getItem(0));
+			if (recipe != null && recipe != null) {
+				if (currentEnergy >= recipe.getRequiredEnergy()) {
+					if (currentSmeltTime != maxSmeltTime) {
+						level.setBlockAndUpdate(getBlockPos(), getBlockState().setValue(AlloySmelterBlock.LIT, true));
+						currentSmeltTime++;
+						dirty = true;
+					} else {
+						energyStorageLazyOptional.ifPresent(iEnergyStorage -> {
+							iEnergyStorage.extractEnergy(recipe.getRequiredEnergy(), false);
+							currentEnergy = iEnergyStorage.getEnergyStored();
+						});
+						level.setBlockAndUpdate(getBlockPos(), getBlockState().setValue(AlloySmelterBlock.LIT, false));
+						currentSmeltTime = 0;
+						ItemStack output = recipe.getResultItem();
+						inventory.insertItem(2, output.copy(), false);
 
-					inventory.shrink(0, recipe.getCount(inventory.getItem(0)));
-					inventory.shrink(1, recipe.getCount(inventory.getItem(1))); // Game crashes at this line
-					dirty = true;
+						inventory.shrink(0, recipe.getCount(inventory.getItem(0)));
+						inventory.shrink(1, recipe.getCount(inventory.getItem(1))); // Game crashes at this line
+						dirty = true;
+					}
 				}
 			} else {
 				level.setBlockAndUpdate(getBlockPos(), getBlockState().setValue(AlloySmelterBlock.LIT, false));
@@ -139,6 +150,9 @@ public class AlloySmelterTileEntity extends TileEntity implements ITickableTileE
 		ItemStackHelper.loadAllItems(nbt, inv);
 		inventory.setNonNullList(inv);
 		currentSmeltTime = nbt.getInt("CurrentSmeltTime");
+		energyStorageLazyOptional.ifPresent(iEnergyStorage -> {
+			currentEnergy = nbt.getInt("CurrentEnergy") | iEnergyStorage.getEnergyStored();
+		});
 	}
 
 	@Override
@@ -149,6 +163,9 @@ public class AlloySmelterTileEntity extends TileEntity implements ITickableTileE
 		}
 		ItemStackHelper.saveAllItems(nbt, inventory.toNonNullList());
 		nbt.putInt("CurrentSmeltTime", currentSmeltTime);
+		energyStorageLazyOptional.ifPresent(iEnergyStorage -> {
+			nbt.putInt("CurrentEnergy", iEnergyStorage.getEnergyStored());
+		});
 		return nbt;
 	}
 
@@ -220,10 +237,13 @@ public class AlloySmelterTileEntity extends TileEntity implements ITickableTileE
 	public void handleUpdateTag(BlockState state, CompoundNBT nbt) {
 		deserializeNBT(nbt);
 	}
-	
+
 	@Override
 	public <T> LazyOptional<T> getCapability(Capability<T> capability, Direction side) {
-		return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.orEmpty(capability, LazyOptional.of(() -> inventory));
+		if (capability == CapabilityEnergy.ENERGY) {
+			return energyStorageLazyOptional.cast();
+		}
+		return super.getCapability(capability, side);
 	}
 	
 	public IItemHandler getInventory() {

@@ -1,4 +1,4 @@
-package com.entisy.techniq.common.recipe.alloySmelter.metalPress;
+package com.entisy.techniq.common.recipe.metalPress;
 
 import java.util.List;
 import java.util.function.Consumer;

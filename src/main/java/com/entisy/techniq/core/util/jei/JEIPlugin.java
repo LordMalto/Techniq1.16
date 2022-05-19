@@ -5,7 +5,7 @@ import java.util.stream.Collectors;
 
 import com.entisy.techniq.Techniq;
 import com.entisy.techniq.common.recipe.electricalFurnace.ElectricalFurnaceRecipe;
-import com.entisy.techniq.common.recipe.alloySmelter.metalPress.MetalPressRecipe;
+import com.entisy.techniq.common.recipe.metalPress.MetalPressRecipe;
 import com.entisy.techniq.core.init.BlockInit;
 import com.entisy.techniq.core.init.RecipeSerializerInit;
 

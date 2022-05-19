@@ -20,7 +20,7 @@ public class ElectricalFurnaceItemHandler extends ItemStackHandler {
 			onContentsChanged(i);
 		}
 	}
-	
+
 	public boolean isEmpty() {
 		for (ItemStack stack : stacks) {
 			if (stack.isEmpty() || stack.getItem() == Items.AIR) {
@@ -29,13 +29,13 @@ public class ElectricalFurnaceItemHandler extends ItemStackHandler {
 		}
 		return false;
 	}
-	
+
 	public boolean onContentChanged(int slot) {
 		super.onContentsChanged(0);
 		return true;
 	}
 
-	public ItemStack decreaseStackSize(int index, int count) {
+	public ItemStack shrink(int index, int count) {
 		ItemStack stack = getStackInSlot(index);
 		stack.shrink(count);
 		onContentsChanged(index);
@@ -64,7 +64,11 @@ public class ElectricalFurnaceItemHandler extends ItemStackHandler {
 			stacks.set(index, items.get(index));
 		}
 	}
-	
+
+	public ItemStack getItem(int index) {
+		return super.getStackInSlot(index);
+	}
+
 	@Override
 	public int getSlots() {
 		return 2;
