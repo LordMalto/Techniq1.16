@@ -1,0 +1,9 @@
+{
+  "type": "techniq:electrical_furnace",
+  "input": {
+    "tag": "forge:ores/copper"
+  },
+  "output": {
+    "item": "techniq:copper_ingot"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "type": "techniq:metal_press",
+  "input": {
+    "item": "minecraft:iron_ingot"
+  },
+  "output": {
+    "item": "techniq:iron_plate"
+  }
+}

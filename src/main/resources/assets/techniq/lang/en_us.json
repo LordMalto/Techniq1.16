@@ -1,0 +1,17 @@
+{
+	"ITEMS": "ITEMS",
+	"item.techniq.copper_ingot": "Copper Ingot",
+	"item.techniq.copper_plate": "Copper Plate",
+	"item.techniq.iron_plate": "Iron Plate",
+	
+	"BLOCKS": "BLOCKS",
+	"block.techniq.copper_block": "Copper Block",
+	"block.techniq.copper_ore": "Copper Ore",
+	"block.techniq.block_breaker": "Block Breaker",
+	"block.techniq.display_case": "Display Case",
+	"block.techniq.electrical_furnace": "Electrical Furnace",
+	"block.techniq.metal_press": "Metal Press",
+	
+	"TABS": "TABS",
+	"itemGroup.techniq_tab": "Techniq"
+}

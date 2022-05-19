@@ -1,0 +1,9 @@
+{
+  "type": "techniq:metal_press",
+  "input": {
+    "tag": "forge:ingots/copper"
+  },
+  "output": {
+    "item": "techniq:copper_plate"
+  }
+}

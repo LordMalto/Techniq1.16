@@ -1,0 +1,14 @@
+{
+  "type": "techniq:alloy_smelter",
+  "ingredients": [
+    {
+      "item": "minecraft:gold_ingot"
+    },
+    {
+      "item": "minecraft:iron_ingot"
+    }
+  ],
+  "output": {
+    "item": "techniq:copper_ingot"
+  }
+}

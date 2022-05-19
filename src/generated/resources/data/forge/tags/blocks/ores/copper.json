@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "techniq:copper_ore",
+    "techniq:nether_copper_ore",
+    "techniq:end_copper_ore"
+  ]
+}

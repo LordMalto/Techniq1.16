@@ -1,0 +1,9 @@
+{
+  "type": "techniq:electrical_furnace",
+  "input": {
+    "tag": "forge:ores/coal"
+  },
+  "output": {
+    "item": "minecraft:coal"
+  }
+}

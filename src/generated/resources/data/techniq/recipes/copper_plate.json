@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "techniq:copper_ingot"
+    },
+    {
+      "item": "techniq:hammer"
+    }
+  ],
+  "result": {
+    "item": "techniq:copper_plate"
+  }
+}

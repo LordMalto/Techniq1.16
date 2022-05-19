@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:emerald_ore",
+    "techniq:nether_emerald_ore",
+    "techniq:end_emerald_ore"
+  ]
+}

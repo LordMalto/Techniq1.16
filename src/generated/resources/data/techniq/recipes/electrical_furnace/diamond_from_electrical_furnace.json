@@ -1,0 +1,9 @@
+{
+  "type": "techniq:electrical_furnace",
+  "input": {
+    "tag": "forge:ores/diamond"
+  },
+  "output": {
+    "item": "minecraft:diamond"
+  }
+}

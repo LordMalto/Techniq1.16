@@ -1,0 +1,9 @@
+{
+  "type": "techniq:metal_press",
+  "input": {
+    "item": "minecraft:diamond"
+  },
+  "output": {
+    "item": "techniq:diamond_plate"
+  }
+}

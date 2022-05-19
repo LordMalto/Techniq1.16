@@ -1,0 +1,9 @@
+{
+  "type": "techniq:electrical_furnace",
+  "input": {
+    "tag": "forge:ores/quartz"
+  },
+  "output": {
+    "item": "minecraft:quartz"
+  }
+}
