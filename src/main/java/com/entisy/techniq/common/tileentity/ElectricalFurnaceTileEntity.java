@@ -73,13 +73,8 @@ public class ElectricalFurnaceTileEntity extends TileEntity implements ITickable
 	public void tick() {
 		boolean dirty = false;
 		if (level != null && !level.isClientSide()) {
-			if (inventory.getStackInSlot(1) != null) {
 				if (getRecipe(inventory.getStackInSlot(0)) != null) {
-					if (inventory.getStackInSlot(1) == getRecipe(inventory.getStackInSlot(0)).getResultItem()) {
-//						if (inventory.getStackInSlot(1).getCount() == inventory.getSlotLimit(1)) {
-//							return;
-//						}
-						if (currentSmeltTime != maxSmeltTime) {
+					if (currentSmeltTime != maxSmeltTime) {
 							level.setBlockAndUpdate(getBlockPos(),
 									getBlockState().setValue(ElectricalFurnaceBlock.LIT, true));
 							currentSmeltTime++;
@@ -94,32 +89,12 @@ public class ElectricalFurnaceTileEntity extends TileEntity implements ITickable
 							inventory.decreaseStackSize(0, 1);
 							dirty = true;
 						}
-					}
-				} else {
-					if (getRecipe(inventory.getStackInSlot(0)) != null) {
-						if (currentSmeltTime != maxSmeltTime) {
-							level.setBlockAndUpdate(getBlockPos(),
-									getBlockState().setValue(ElectricalFurnaceBlock.LIT, true));
-							currentSmeltTime++;
-							System.out.println(currentSmeltTime);
-							dirty = true;
-						} else {
-							level.setBlockAndUpdate(getBlockPos(),
-									getBlockState().setValue(ElectricalFurnaceBlock.LIT, false));
-							currentSmeltTime = 0;
-							ItemStack output = getRecipe(inventory.getStackInSlot(0)).getResultItem();
-							inventory.insertItem(1, output.copy(), false);
-							inventory.decreaseStackSize(0, 1);
-							dirty = true;
-						}
-					}
 				}
 			} else {
 				level.setBlockAndUpdate(getBlockPos(), getBlockState().setValue(ElectricalFurnaceBlock.LIT, false));
 				currentSmeltTime = 0;
 				dirty = true;
 			}
-		}
 		if (dirty) {
 			setChanged();
 			level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), Constants.BlockFlags.BLOCK_UPDATE);
