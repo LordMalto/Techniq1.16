@@ -2,13 +2,16 @@
   "type": "techniq:alloy_smelter",
   "ingredients": [
     {
-      "item": "minecraft:gold_ingot"
+      "item": "minecraft:gold_ingot",
+      "count": 3
     },
     {
-      "item": "minecraft:iron_ingot"
+      "item": "minecraft:iron_ingot",
+      "count": 1
     }
   ],
   "output": {
     "item": "techniq:copper_ingot"
-  }
+  },
+  "required_energy": 200
 }

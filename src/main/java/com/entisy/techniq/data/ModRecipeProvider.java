@@ -5,7 +5,7 @@ import java.util.function.Consumer;
 import com.entisy.techniq.Techniq;
 import com.entisy.techniq.common.recipe.alloySmelter.AlloySmelterRecipeBuilder;
 import com.entisy.techniq.common.recipe.electricalFurnace.ElectricalFurnaceRecipeBuilder;
-import com.entisy.techniq.common.recipe.metalPress.MetalPressRecipeBuilder;
+import com.entisy.techniq.common.recipe.alloySmelter.metalPress.MetalPressRecipeBuilder;
 import com.entisy.techniq.core.init.BlockInit;
 import com.entisy.techniq.core.init.ItemInit;
 import com.entisy.techniq.core.init.TagsInit;
@@ -32,7 +32,7 @@ public class ModRecipeProvider extends RecipeProvider {
 		final String ef = "_from_electrical_furnace";
 		final String as = "_from_alloy_smelter";
 
-		ShapelessRecipeBuilder.shapeless(ItemInit.COPPER_INGOT.get(), 9).requires(BlockInit.COPPER_BLOCK.get())
+		ShapelessRecipeBuilder.shapeless(ItemInit.COPPER_INGOT.get(), 9).requires(BlockInit.COPPER_BLOCK.get(), 2)
 				.unlockedBy("has_item", has(ItemInit.COPPER_INGOT.get())).save(consumer);
 
 		// METAL PRESS
@@ -91,8 +91,7 @@ public class ModRecipeProvider extends RecipeProvider {
 				.requires(ItemInit.HAMMER.get()).unlockedBy("has_item", has(ItemInit.HAMMER.get())).save(consumer);
 
 		// ALLOY SMELTER
-		AlloySmelterRecipeBuilder.smelting(ItemInit.COPPER_INGOT.get()).requires(Items.GOLD_INGOT)
-				.requires(Items.IRON_INGOT).unlockedBy("has_item", has(Items.GOLD_INGOT)).save(consumer, "copper_ingot" + as);
+		AlloySmelterRecipeBuilder.smelting(ItemInit.COPPER_INGOT.get()).requires(Items.GOLD_INGOT, 3, Items.IRON_INGOT, 1).unlockedBy("has_item", has(Items.GOLD_INGOT)).save(consumer, "copper_ingot" + as);
 
 //        ShapelessRecipeBuilder.shapeless(ModItems.ALUMINUM_INGOT.get(), 9).requires(ModBlocks.ALUMINUM_BLOCK.get()).unlockedBy("has_item", has(ModItems.ALUMINUM_INGOT.get())).save(consumer);
 //        

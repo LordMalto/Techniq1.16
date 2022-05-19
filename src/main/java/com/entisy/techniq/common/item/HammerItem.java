@@ -9,6 +9,7 @@ public class HammerItem extends Item {
 		super(properties);
 		properties.stacksTo(1);
 		properties.durability(65);
+		properties.defaultDurability(65);
 	}
 	
 	@Override

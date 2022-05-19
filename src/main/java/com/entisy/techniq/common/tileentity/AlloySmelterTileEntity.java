@@ -82,15 +82,17 @@ public class AlloySmelterTileEntity extends TileEntity implements ITickableTileE
 				if (currentSmeltTime != maxSmeltTime) {
 					level.setBlockAndUpdate(getBlockPos(), getBlockState().setValue(AlloySmelterBlock.LIT, true));
 					currentSmeltTime++;
-					System.out.println(currentSmeltTime);
 					dirty = true;
 				} else {
 					level.setBlockAndUpdate(getBlockPos(), getBlockState().setValue(AlloySmelterBlock.LIT, false));
 					currentSmeltTime = 0;
 					ItemStack output = getRecipe(inventory.getStackInSlot(0)).getResultItem();
 					inventory.insertItem(2, output.copy(), false);
-					inventory.decreaseStackSize(0, 1); //slot, amount
-					inventory.decreaseStackSize(1, 1); //slot, amount
+
+					AlloySmelterRecipe recipe = getRecipe(inventory.getItem(0));
+
+					inventory.shrink(0, recipe.getCount(inventory.getItem(0)));
+					inventory.shrink(1, recipe.getCount(inventory.getItem(1))); // Game crashes at this line
 					dirty = true;
 				}
 			} else {

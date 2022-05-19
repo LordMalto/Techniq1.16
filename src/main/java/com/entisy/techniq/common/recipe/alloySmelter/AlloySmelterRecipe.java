@@ -1,7 +1,6 @@
 package com.entisy.techniq.common.recipe.alloySmelter;
 
 import com.entisy.techniq.core.init.RecipeSerializerInit;
-
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.Ingredient;
@@ -12,54 +11,61 @@ import net.minecraftforge.items.wrapper.RecipeWrapper;
 
 public class AlloySmelterRecipe implements IAlloySmelterRecipe {
 
-	private final ResourceLocation id;
-	private final Ingredient input1;
-	private final Ingredient input2;
-	private final ItemStack output;
+    private final ResourceLocation id;
+    private final Ingredient input1, input2;
+    private final ItemStack output;
+    private int requiredEnergy = 200;
 
-	public AlloySmelterRecipe(ResourceLocation id, Ingredient input1, Ingredient input2, ItemStack output) {
-		this.id = id;
-		this.input1 = input1;
-		this.input2 = input2;
-		this.output = output;
-	}
+    public AlloySmelterRecipe(ResourceLocation id, Ingredient input1, Ingredient input2, ItemStack output, int requiredEnergy) {
+        this.id = id;
+        this.input1 = input1;
+        this.input2 = input2;
+        this.output = output;
+        this.requiredEnergy = requiredEnergy;
+    }
 
-	@Override
-	public ItemStack assemble(RecipeWrapper wrapper) {
-		return output;
-	}
+    public int getRequiredEnergy() {
+        return requiredEnergy;
+    }
 
-	@Override
-	public ItemStack getResultItem() {
-		return output;
-	}
+    public int getCount(ItemStack item) {
+        if (item.getItem() == getIngredients().get(0).getItems()[0].getItem()) return input1.getItems()[0].getCount();
+        if (item.getItem() == getIngredients().get(1).getItems()[0].getItem()) return input2.getItems()[0].getCount();
+        return 1;
+    }
 
-	@Override
-	public ResourceLocation getId() {
-		return id;
-	}
+    @Override
+    public ItemStack assemble(RecipeWrapper wrapper) {
+        return output;
+    }
 
-	@Override
-	public IRecipeSerializer<?> getSerializer() {
-		return RecipeSerializerInit.ALLOY_SMELTER_SERIALIZER.get();
-	}
+    @Override
+    public ItemStack getResultItem() {
+        return output;
+    }
 
-	@Override
-	public Ingredient getInput() {
-		return input1;
-	}
+    @Override
+    public ResourceLocation getId() {
+        return id;
+    }
 
-	@Override
-	public NonNullList<Ingredient> getIngredients() {
-		return NonNullList.of(null, input1);
-	}
+    @Override
+    public IRecipeSerializer<?> getSerializer() {
+        return RecipeSerializerInit.ALLOY_SMELTER_SERIALIZER.get();
+    }
 
-	@Override
-	public boolean matches(RecipeWrapper wrapper, World level) {
-		if (input1.test(wrapper.getItem(0)) && input2.test(wrapper.getItem(1))
-				|| input1.test(wrapper.getItem(1)) && input2.test(wrapper.getItem(0))) {
-			return true;
-		}
-		return false;
-	}
+    @Override
+    public Ingredient getInput() {
+        return input1;
+    }
+
+    @Override
+    public NonNullList<Ingredient> getIngredients() {
+        return NonNullList.of(null, input1, input2);
+    }
+
+    @Override
+    public boolean matches(RecipeWrapper wrapper, World level) {
+        return (input1.test(wrapper.getItem(0)) && input2.test(wrapper.getItem(1)) && wrapper.getItem(0).getCount() >= input1.getItems()[0].getCount() && wrapper.getItem(1).getCount() >= input2.getItems()[0].getCount()) || input1.test(wrapper.getItem(1)) && input2.test(wrapper.getItem(0)) && wrapper.getItem(0).getCount() >= input2.getItems()[0].getCount() && wrapper.getItem(1).getCount() >= input1.getItems()[0].getCount();
+    }
 }

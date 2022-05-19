@@ -1,11 +1,7 @@
 package com.entisy.techniq.core.init;
 
 import com.entisy.techniq.Techniq;
-import com.entisy.techniq.common.block.AlloySmelterBlock;
-import com.entisy.techniq.common.block.BlockBreakerBlock;
-import com.entisy.techniq.common.block.DisplayCaseBlock;
-import com.entisy.techniq.common.block.ElectricalFurnaceBlock;
-import com.entisy.techniq.common.block.MetalPressBlock;
+import com.entisy.techniq.common.block.*;
 import com.entisy.techniq.common.block.cable.CableBlock;
 
 import net.minecraft.block.AbstractBlock;
@@ -82,6 +78,11 @@ public class BlockInit {
 			() -> new ElectricalFurnaceBlock());
 	public static final RegistryObject<Block> ALLOY_SMELTER = BLOCKS.register("alloy_smelter",
 			() -> new AlloySmelterBlock());
+
+//	public static final RegistryObject<Block> IRON_MACHINE_FRAME = BLOCKS.register("machine_frame",
+//			() -> new IronMachineFrameBlock());
+//	public static final RegistryObject<Block> STEEL_MACHINE_FRAME = BLOCKS.register("heavy_machine_frame",
+//			() -> new SteelMachineFrameBlock());
 	
 	/*
 	 * CABLES

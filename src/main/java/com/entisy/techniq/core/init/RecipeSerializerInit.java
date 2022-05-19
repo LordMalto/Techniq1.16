@@ -7,9 +7,9 @@ import com.entisy.techniq.common.recipe.alloySmelter.IAlloySmelterRecipe;
 import com.entisy.techniq.common.recipe.electricalFurnace.ElectricalFurnaceRecipe;
 import com.entisy.techniq.common.recipe.electricalFurnace.ElectricalFurnaceRecipeSerializer;
 import com.entisy.techniq.common.recipe.electricalFurnace.IElectricalFurnaceRecipe;
-import com.entisy.techniq.common.recipe.metalPress.IMetalPressRecipe;
-import com.entisy.techniq.common.recipe.metalPress.MetalPressRecipe;
-import com.entisy.techniq.common.recipe.metalPress.MetalPressRecipeSerializer;
+import com.entisy.techniq.common.recipe.alloySmelter.metalPress.IMetalPressRecipe;
+import com.entisy.techniq.common.recipe.alloySmelter.metalPress.MetalPressRecipe;
+import com.entisy.techniq.common.recipe.alloySmelter.metalPress.MetalPressRecipeSerializer;
 
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.IRecipeSerializer;

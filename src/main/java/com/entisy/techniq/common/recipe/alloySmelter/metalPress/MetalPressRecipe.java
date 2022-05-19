@@ -1,8 +1,7 @@
-package com.entisy.techniq.common.recipe.metalPress;
+package com.entisy.techniq.common.recipe.alloySmelter.metalPress;
 
 import com.entisy.techniq.core.init.RecipeSerializerInit;
 
-import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.Ingredient;
@@ -14,20 +13,19 @@ import net.minecraftforge.items.wrapper.RecipeWrapper;
 public class MetalPressRecipe implements IMetalPressRecipe {
 	
 	private final ResourceLocation id;
-	private Ingredient input;
+	private final Ingredient input;
 	private final ItemStack output;
+	private int energyNeeded = 200;
 	
-	public MetalPressRecipe(ResourceLocation id, Ingredient input, ItemStack output) {
+	public MetalPressRecipe(ResourceLocation id, Ingredient input, ItemStack output, int energyNeeded) {
 		this.id = id;
 		this.input = input;
 		this.output = output;
+		this.energyNeeded = energyNeeded;
 	}
 	
-	public boolean match(IInventory inv) {
-		if (input.test(inv.getItem(0))) {
-			return true;
-		}
-		return false;
+	public int getRequiredEnergy() {
+		return energyNeeded;
 	}
 
 	@Override
@@ -61,7 +59,7 @@ public class MetalPressRecipe implements IMetalPressRecipe {
 	}
 
 	@Override
-	public boolean matches(RecipeWrapper wrapper, World p_77569_2_) {
+	public boolean matches(RecipeWrapper wrapper, World world) {
 		if (input.test(wrapper.getItem(0))) {
 			return true;
 		}
