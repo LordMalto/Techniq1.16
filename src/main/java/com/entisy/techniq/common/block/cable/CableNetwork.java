@@ -52,7 +52,7 @@ public class CableNetwork implements IEnergyStorage {
         return new Connection(this, side, ConnectionType.NONE);
     }
 
-    private void updateWireEnergy() {
+    private void updateEnergy() {
         int energyPerWire = energyStored / getWireCount();
         connections.keySet().forEach(p -> {
             TileEntity tileEntity = world.getBlockEntity(p);
@@ -74,7 +74,7 @@ public class CableNetwork implements IEnergyStorage {
 //            SilentMechanisms.LOGGER.debug("receive ({}): {}, {} -> {}", simulate, received, energyStored, energyStored + received);
             if (!simulate) {
                 energyStored += received;
-                updateWireEnergy();
+                updateEnergy();
             }
         }
         return received;
@@ -88,7 +88,7 @@ public class CableNetwork implements IEnergyStorage {
 //            SilentMechanisms.LOGGER.debug("extract ({}): {}, {} -> {}", simulate, extracted, energyStored, energyStored - extracted);
             if (!simulate) {
                 energyStored -= extracted;
-                updateWireEnergy();
+                updateEnergy();
             }
         }
         return extracted;
