@@ -31,18 +31,20 @@ public class ElectricalFurnaceRecipeBuilder {
 	private final List<Ingredient> ingredients = Lists.newArrayList();
 	private final Advancement.Builder advancement = Advancement.Builder.advancement();
 	private String group;
+	private static int requiredEnergy;
 
-	public ElectricalFurnaceRecipeBuilder(IItemProvider provider, int count) {
+	public ElectricalFurnaceRecipeBuilder(IItemProvider provider, int count, int requiredEnergy) {
 		this.result = provider.asItem();
 		this.count = count;
+		this.requiredEnergy = requiredEnergy;
 	}
 
 	public static ElectricalFurnaceRecipeBuilder smelting(IItemProvider provider) {
-		return new ElectricalFurnaceRecipeBuilder(provider, 1);
+		return new ElectricalFurnaceRecipeBuilder(provider, 1, requiredEnergy);
 	}
 
 	public static ElectricalFurnaceRecipeBuilder smelting(IItemProvider provider, int count) {
-		return new ElectricalFurnaceRecipeBuilder(provider, count);
+		return new ElectricalFurnaceRecipeBuilder(provider, count, requiredEnergy);
 	}
 
 	public ElectricalFurnaceRecipeBuilder requires(ITag<Item> tag) {
@@ -136,19 +138,20 @@ public class ElectricalFurnaceRecipeBuilder {
 		}
 
 		@SuppressWarnings("deprecation")
-		public void serializeRecipeData(JsonObject p_218610_1_) {
+		public void serializeRecipeData(JsonObject json) {
 			if (!this.group.isEmpty()) {
-				p_218610_1_.addProperty("group", this.group);
+				json.addProperty("group", this.group);
 			}
 
-			p_218610_1_.add("input", ingredients.get(0).toJson());
+			json.add("input", ingredients.get(0).toJson());
 			JsonObject jsonobject = new JsonObject();
 			jsonobject.addProperty("item", Registry.ITEM.getKey(this.result).toString());
 			if (this.count > 1) {
 				jsonobject.addProperty("count", this.count);
 			}
 
-			p_218610_1_.add("output", jsonobject);
+			json.add("output", jsonobject);
+			json.addProperty("required_energy", requiredEnergy);
 		}
 
 		public IRecipeSerializer<?> getType() {

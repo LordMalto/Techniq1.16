@@ -6,9 +6,7 @@ import net.minecraft.item.ItemStack;
 public class HammerItem extends Item {
 
 	public HammerItem(Properties properties) {
-		super(properties);
-		properties.stacksTo(1);
-		properties.durability(65);
+		super(properties.defaultDurability(110));
 	}
 	
 	@Override
@@ -19,7 +17,13 @@ public class HammerItem extends Item {
 	@Override
 	public ItemStack getContainerItem(ItemStack itemStack) {
 		ItemStack item = itemStack.copy();
-		item.setDamageValue(item.getDamageValue() + 1);
+		item.hurt(1, null, null);
+		if (item.getDamageValue() > 110/*durability*/ - 1) return ItemStack.EMPTY;
 		return item;
+	}
+
+	@Override
+	public boolean isDamageable(ItemStack stack) {
+		return true;
 	}
 }

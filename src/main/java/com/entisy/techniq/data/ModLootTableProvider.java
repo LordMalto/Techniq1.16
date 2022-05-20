@@ -72,6 +72,7 @@ public class ModLootTableProvider extends LootTableProvider
             dropSelf(BlockInit.BLOCK_BREAKER.get());
             dropSelf(BlockInit.DISPLAY_CASE.get());
             dropSelf(BlockInit.CABLE.get());
+            dropSelf(BlockInit.TRANSFER_NODE.get());
 
             //dropOther(ModBlocks.MACHINE_BLOCK.get(), ModItems.RUBY.get());
 

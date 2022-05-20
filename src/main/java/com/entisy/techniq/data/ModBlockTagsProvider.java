@@ -58,5 +58,12 @@ public class ModBlockTagsProvider extends BlockTagsProvider
         tag(Tags.Blocks.ORES).addTag(TagsInit.Blocks.ORES_IRON);
         tag(TagsInit.Blocks.STORAGE_BLOCKS_COPPER).add(BlockInit.COPPER_BLOCK.get());
         tag(Tags.Blocks.STORAGE_BLOCKS).addTag(TagsInit.Blocks.STORAGE_BLOCKS_COPPER);
+
+        // MOD TAGS
+        tag(TagsInit.Blocks.MACHINE_BLOCKS).add(BlockInit.ALLOY_SMELTER.get());
+        tag(TagsInit.Blocks.MACHINE_BLOCKS).add(BlockInit.ELECTRICAL_FURNACE.get());
+        tag(TagsInit.Blocks.MACHINE_BLOCKS).add(BlockInit.METAL_PRESS.get());
+        tag(TagsInit.Blocks.MACHINE_BLOCKS).add(BlockInit.CABLE.get());
+        tag(TagsInit.Blocks.MACHINE_BLOCKS).add(BlockInit.TRANSFER_NODE.get());
     }
 }

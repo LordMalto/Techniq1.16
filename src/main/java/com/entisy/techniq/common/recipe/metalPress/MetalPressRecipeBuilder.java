@@ -28,6 +28,7 @@ public class MetalPressRecipeBuilder {
 
 	private final Item result;
 	private final int count;
+	private static int requiredEnergy = 200;
 	private final List<Ingredient> ingredients = Lists.newArrayList();
 	private final Advancement.Builder advancement = Advancement.Builder.advancement();
 	private String group;
@@ -43,6 +44,11 @@ public class MetalPressRecipeBuilder {
 
 	public static MetalPressRecipeBuilder metalPress(IItemProvider provider, int count) {
 		return new MetalPressRecipeBuilder(provider, count);
+	}
+
+	public MetalPressRecipeBuilder requiredEnergy(int requiredEnergy) {
+		this.requiredEnergy = requiredEnergy;
+		return this;
 	}
 
 	public MetalPressRecipeBuilder requires(ITag<Item> tag) {
@@ -136,19 +142,20 @@ public class MetalPressRecipeBuilder {
 		}
 
 		@SuppressWarnings("deprecation")
-		public void serializeRecipeData(JsonObject p_218610_1_) {
+		public void serializeRecipeData(JsonObject json) {
 			if (!this.group.isEmpty()) {
-				p_218610_1_.addProperty("group", this.group);
+				json.addProperty("group", this.group);
 			}
 
-			p_218610_1_.add("input", ingredients.get(0).toJson());
+			json.add("input", ingredients.get(0).toJson());
 			JsonObject jsonobject = new JsonObject();
 			jsonobject.addProperty("item", Registry.ITEM.getKey(this.result).toString());
 			if (this.count > 1) {
 				jsonobject.addProperty("count", this.count);
 			}
 
-			p_218610_1_.add("output", jsonobject);
+			json.add("output", jsonobject);
+			json.addProperty("required_energy", requiredEnergy);
 		}
 
 		public IRecipeSerializer<?> getType() {

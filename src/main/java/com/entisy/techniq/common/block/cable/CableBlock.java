@@ -5,7 +5,8 @@ import java.util.Map;
 import javax.annotation.Nullable;
 
 import com.entisy.techniq.api.ConnectionType;
-import com.entisy.techniq.core.util.EnergyUtils;
+import com.entisy.techniq.common.block.SixWayMachineBlock;
+import com.entisy.techniq.common.tileentity.MachineTileEntity;
 import com.google.common.collect.Maps;
 
 import net.minecraft.block.Block;
@@ -23,7 +24,7 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraftforge.energy.IEnergyStorage;
 
-public class CableBlock extends SixWayBlock {
+public class CableBlock extends SixWayMachineBlock {
 
 	public static final EnumProperty<ConnectionType> NORTH = EnumProperty.create("north", ConnectionType.class);
 	public static final EnumProperty<ConnectionType> EAST = EnumProperty.create("east", ConnectionType.class);
@@ -42,7 +43,7 @@ public class CableBlock extends SixWayBlock {
 			});
 
 	public CableBlock(Properties properties) {
-        super(0.125f, properties);
+        super(properties);
         this.registerDefaultState(this.stateDefinition.any()
                 .setValue(NORTH, ConnectionType.NONE)
                 .setValue(EAST, ConnectionType.NONE)
@@ -105,15 +106,18 @@ public class CableBlock extends SixWayBlock {
 		TileEntity tileEntity = worldIn.getBlockEntity(pos.relative(side));
 		if (tileEntity instanceof CableTileEntity) {
 			return ConnectionType.BOTH;
-		} else if (tileEntity != null) {
-			IEnergyStorage energy = EnergyUtils.getEnergyFromSideOrNull(tileEntity, side.getOpposite());
-			if (energy != null) {
-				if (energy.canExtract()) {
-					return current == ConnectionType.NONE ? ConnectionType.IN : current;
-				} else if (energy.canReceive()) {
-					return current == ConnectionType.NONE ? ConnectionType.OUT : current;
-				}
-			}
+//		} else if (tileEntity != null) {
+//			IEnergyStorage energy = EnergyUtils.getEnergyFromSideOrNull(tileEntity, side.getOpposite());
+//			if (energy != null) {
+//				if (energy.canExtract()) {
+//					return current == ConnectionType.NONE ? ConnectionType.IN : current;
+//				} else if (energy.canReceive()) {
+//					return current == ConnectionType.NONE ? ConnectionType.OUT : current;
+//				}
+//			}
+		}
+		if (tileEntity instanceof MachineTileEntity) {
+			return ConnectionType.OUT;
 		}
 		return ConnectionType.NONE;
 	}

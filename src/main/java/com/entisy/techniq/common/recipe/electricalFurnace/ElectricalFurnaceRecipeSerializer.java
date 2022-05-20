@@ -18,14 +18,16 @@ public class ElectricalFurnaceRecipeSerializer extends ForgeRegistryEntry<IRecip
 	public ElectricalFurnaceRecipe fromJson(ResourceLocation id, JsonObject json) {
 		Ingredient input = Ingredient.fromJson(JSONUtils.getAsJsonObject(json, "input"));
 		ItemStack output = CraftingHelper.getItemStack(JSONUtils.getAsJsonObject(json, "output"), true);
-		return new ElectricalFurnaceRecipe(id, input, output);
+		int requiredEnergy = json.get("required_energy").getAsInt();
+		return new ElectricalFurnaceRecipe(id, input, output, requiredEnergy);
 	}
 
 	@Override
 	public ElectricalFurnaceRecipe fromNetwork(ResourceLocation id, PacketBuffer buffer) {
 		Ingredient input = Ingredient.fromNetwork(buffer);
 		ItemStack output = buffer.readItem();
-		return new ElectricalFurnaceRecipe(id, input, output);
+		int requiredEnergy = buffer.readInt();
+		return new ElectricalFurnaceRecipe(id, input, output, requiredEnergy);
 	}
 
 	@Override
@@ -33,5 +35,6 @@ public class ElectricalFurnaceRecipeSerializer extends ForgeRegistryEntry<IRecip
 		Ingredient input = recipe.getIngredients().get(0);
 		input.toNetwork(buffer);
 		buffer.writeItemStack(recipe.getResultItem(), false);
+		buffer.writeInt(recipe.getRequiredEnergy());
 	}
 }

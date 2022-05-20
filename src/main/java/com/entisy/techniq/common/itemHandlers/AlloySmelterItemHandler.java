@@ -35,7 +35,7 @@ public class AlloySmelterItemHandler extends ItemStackHandler {
 		return true;
 	}
 
-	public ItemStack decreaseStackSize(int index, int count) {
+	public ItemStack shrink(int index, int count) {
 		ItemStack stack = getStackInSlot(index);
 		stack.shrink(count);
 		onContentsChanged(index);
@@ -63,6 +63,10 @@ public class AlloySmelterItemHandler extends ItemStackHandler {
 		for (int index = 0; index < items.size(); index++) {
 			stacks.set(index, items.get(index));
 		}
+	}
+
+	public ItemStack getItem(int index) {
+		return super.getStackInSlot(index);
 	}
 	
 	@Override

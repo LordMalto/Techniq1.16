@@ -16,11 +16,13 @@ public class ElectricalFurnaceRecipe implements IElectricalFurnaceRecipe {
 	private final ResourceLocation id;
 	private Ingredient input;
 	private final ItemStack output;
+	private int requiredEnergy = 200;
 	
-	public ElectricalFurnaceRecipe(ResourceLocation id, Ingredient input, ItemStack output) {
+	public ElectricalFurnaceRecipe(ResourceLocation id, Ingredient input, ItemStack output, int requiredEnergy) {
 		this.id = id;
 		this.input = input;
 		this.output = output;
+		this.requiredEnergy = requiredEnergy;
 	}
 	
 	public boolean match(IInventory inv) {
@@ -28,6 +30,14 @@ public class ElectricalFurnaceRecipe implements IElectricalFurnaceRecipe {
 			return true;
 		}
 		return false;
+	}
+
+	public int getRequiredEnergy() {
+		return requiredEnergy;
+	}
+
+	public int getCount(ItemStack item) {
+		return input.getItems()[0].getCount() | 1;
 	}
 
 	@Override

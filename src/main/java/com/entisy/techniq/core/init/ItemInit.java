@@ -16,6 +16,8 @@ public class ItemInit {
 	// INGOTS
 	public static final RegistryObject<Item> COPPER_INGOT = ITEMS.register("copper_ingot",
 			() -> new Item(new Item.Properties().tab(TechniqTab.TECHNIQ_TAB)));
+	public static final RegistryObject<Item> REDSTONE_ALLOY_INGOT = ITEMS.register("redstone_alloy_ingot",
+			() -> new Item(new Item.Properties().tab(TechniqTab.TECHNIQ_TAB)));
 	
 	// PLATES
 	public static final RegistryObject<Item> COPPER_PLATE = ITEMS.register("copper_plate",

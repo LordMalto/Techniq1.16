@@ -18,14 +18,16 @@ public class MetalPressRecipeSerializer extends ForgeRegistryEntry<IRecipeSerial
 	public MetalPressRecipe fromJson(ResourceLocation id, JsonObject json) {
 		Ingredient input = Ingredient.fromJson(JSONUtils.getAsJsonObject(json, "input"));
 		ItemStack output = CraftingHelper.getItemStack(JSONUtils.getAsJsonObject(json, "output"), true);
-		return new MetalPressRecipe(id, input, output);
+		int energyNeeded = json.get("required_energy").getAsInt();
+		return new MetalPressRecipe(id, input, output, energyNeeded);
 	}
 
 	@Override
 	public MetalPressRecipe fromNetwork(ResourceLocation id, PacketBuffer buffer) {
 		Ingredient input = Ingredient.fromNetwork(buffer);
 		ItemStack output = buffer.readItem();
-		return new MetalPressRecipe(id, input, output);
+		int energyNeeded = buffer.readInt();
+		return new MetalPressRecipe(id, input, output, energyNeeded);
 	}
 
 	@Override
@@ -33,5 +35,6 @@ public class MetalPressRecipeSerializer extends ForgeRegistryEntry<IRecipeSerial
 		Ingredient input = recipe.getIngredients().get(0);
 		input.toNetwork(buffer);
 		buffer.writeItemStack(recipe.getResultItem(), false);
+		buffer.writeInt(recipe.getRequiredEnergy());
 	}
 }
