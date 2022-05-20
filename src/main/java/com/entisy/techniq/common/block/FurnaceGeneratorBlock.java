@@ -113,7 +113,7 @@ public class FurnaceGeneratorBlock extends MachineBlock
         TileEntity tileEntity = world.getBlockEntity(pos);
         if (tileEntity instanceof FurnaceGeneratorTileEntity && state.getBlock() != newState.getBlock()) {
             FurnaceGeneratorTileEntity furnace = (FurnaceGeneratorTileEntity) tileEntity;
-            ((FurnaceGeneratorItemHandler) furnace.getInventory()).toNonNullList().forEach(item -> {
+            furnace.getInventory().toNonNullList().forEach(item -> {
                 ItemEntity itemEntity = new ItemEntity(world, pos.getX(), pos.getY(), pos.getZ(), item);
                 world.addFreshEntity(itemEntity);
             });

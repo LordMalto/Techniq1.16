@@ -53,7 +53,7 @@ public class FurnaceGeneratorTileEntity extends MachineTileEntity implements ITi
             if (AVAILABLE_FUELS.getKeys().contains(inventory.getStackInSlot(0).getItem())) {
                 Item fuel = inventory.getStackInSlot(0).getItem();
                 if (currentEnergy + AVAILABLE_FUELS.getValue(fuel) < maxEnergy) {
-                    if (currentSmeltTime != maxSmeltTime) {
+                    if (currentSmeltTime != getMaxSmeltTime()) {
                         level.setBlockAndUpdate(getBlockPos(), getBlockState().setValue(AlloySmelterBlock.LIT, true));
                         currentSmeltTime++;
                         dirty = true;
@@ -99,5 +99,9 @@ public class FurnaceGeneratorTileEntity extends MachineTileEntity implements ITi
     @Override
     public ITextComponent getDisplayName() {
         return getName();
+    }
+
+    public int getMaxSmeltTime() {
+        return 200;
     }
 }

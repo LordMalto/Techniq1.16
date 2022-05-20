@@ -124,8 +124,8 @@ public class MetalPressContainer extends Container {
 
 	@OnlyIn(Dist.CLIENT)
 	public int getSmeltProgressionScaled() {
-		return currentSmeltTime.get() != 0 && tileEntity.maxSmeltTime != 0
-				? currentSmeltTime.get() * 24 / tileEntity.maxSmeltTime
+		return currentSmeltTime.get() != 0 && tileEntity.getMaxSmeltTime() != 0
+				? currentSmeltTime.get() * 24 / tileEntity.getMaxSmeltTime()
 				: 0;
 	}
 

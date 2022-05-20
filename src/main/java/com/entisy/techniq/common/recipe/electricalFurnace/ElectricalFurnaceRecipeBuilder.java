@@ -6,6 +6,7 @@ import java.util.function.Consumer;
 import javax.annotation.Nullable;
 
 import com.entisy.techniq.Techniq;
+import com.entisy.techniq.common.recipe.metalPress.MetalPressRecipeBuilder;
 import com.entisy.techniq.core.init.RecipeSerializerInit;
 import com.google.common.collect.Lists;
 import com.google.gson.JsonObject;
@@ -32,6 +33,7 @@ public class ElectricalFurnaceRecipeBuilder {
 	private final Advancement.Builder advancement = Advancement.Builder.advancement();
 	private String group;
 	private static int requiredEnergy = 200;
+	private static int smeltTime = 200;
 
 	public ElectricalFurnaceRecipeBuilder(IItemProvider provider, int count, int requiredEnergy) {
 		this.result = provider.asItem();
@@ -72,6 +74,16 @@ public class ElectricalFurnaceRecipeBuilder {
 			this.ingredients.add(ingredient);
 		}
 
+		return this;
+	}
+
+	public ElectricalFurnaceRecipeBuilder requiredEnergy(int requiredEnergy) {
+		this.requiredEnergy = requiredEnergy;
+		return this;
+	}
+
+	public ElectricalFurnaceRecipeBuilder smeltTime(int smeltTime) {
+		this.smeltTime = smeltTime;
 		return this;
 	}
 
@@ -152,6 +164,7 @@ public class ElectricalFurnaceRecipeBuilder {
 
 			json.add("output", jsonobject);
 			json.addProperty("required_energy", requiredEnergy);
+			json.addProperty("smelt_time", smeltTime);
 		}
 
 		public IRecipeSerializer<?> getType() {

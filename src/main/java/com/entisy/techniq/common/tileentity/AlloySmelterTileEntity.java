@@ -67,19 +67,17 @@ public class AlloySmelterTileEntity extends MachineTileEntity implements ITickab
     public void tick() {
         boolean dirty = false;
         if (level != null && !level.isClientSide()) {
-            AlloySmelterRecipe recipe = getRecipe(inventory.getItem(0));
-
-            if (recipe != null) {
-                if (currentEnergy >= recipe.getRequiredEnergy()) {
-                    if (currentSmeltTime != maxSmeltTime) {
-                        if ((inventory.getStackInSlot(2).sameItem(recipe.getResultItem()) || inventory.getStackInSlot(2).getItem() == Items.AIR) && inventory.getStackInSlot(2).getCount() < 64) {
+            if (getRecipe() != null) {
+                if (currentEnergy >= getRecipe().getRequiredEnergy()) {
+                    if (currentSmeltTime != getRecipe().getSmeltTime()) {
+                        if ((inventory.getStackInSlot(2).sameItem(getRecipe().getResultItem()) || inventory.getStackInSlot(2).getItem() == Items.AIR) && inventory.getStackInSlot(2).getCount() < 64) {
                             level.setBlockAndUpdate(getBlockPos(), getBlockState().setValue(AlloySmelterBlock.LIT, true));
                             currentSmeltTime++;
                             dirty = true;
                         }
                     } else {
                         energy.ifPresent(iEnergyStorage -> {
-                            ((EnergyStorageImpl)iEnergyStorage).setEnergyDirectly(iEnergyStorage.getEnergyStored() - recipe.getRequiredEnergy());
+                            ((EnergyStorageImpl)iEnergyStorage).setEnergyDirectly(iEnergyStorage.getEnergyStored() - getRecipe().getRequiredEnergy());
                             currentEnergy = iEnergyStorage.getEnergyStored();
                         });
 
@@ -87,11 +85,11 @@ public class AlloySmelterTileEntity extends MachineTileEntity implements ITickab
                         currentSmeltTime = 0;
 
                         //Recipe Handling
-                        ItemStack output = recipe.getResultItem();
+                        ItemStack output = getRecipe().getResultItem();
                         inventory.insertItem(2, output.copy(), false);
 
-                        inventory.shrink(0, recipe.getCount(inventory.getItem(0)));
-                        inventory.shrink(1, recipe.getCount(inventory.getItem(1)));
+                        inventory.shrink(0, getRecipe().getCount(inventory.getItem(0)));
+                        inventory.shrink(1, getRecipe().getCount(inventory.getItem(1)));
                         dirty = true;
                     }
                 }
@@ -139,5 +137,13 @@ public class AlloySmelterTileEntity extends MachineTileEntity implements ITickab
         }
 
         return null;
+    }
+
+    public int getMaxSmeltTime() {
+        return getRecipe().getSmeltTime();
+    }
+
+    public AlloySmelterRecipe getRecipe() {
+        return getRecipe(getInventory().getItem(0));
     }
 }

@@ -6,5 +6,6 @@
   "output": {
     "item": "minecraft:coal"
   },
-  "required_energy": 200
+  "required_energy": 200,
+  "smelt_time": 200
 }

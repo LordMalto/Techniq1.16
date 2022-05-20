@@ -40,7 +40,6 @@ public class MachineTileEntity extends TileEntity {
     public final int maxEnergyReceive;
     public final int maxEnergyExtract;
     public final int slots;
-    public final int maxSmeltTime = 120;
     public final EnergyStorageImpl energyStorage;
     public final LazyOptional<IEnergyStorage> energy;
     public ITextComponent name;
@@ -101,7 +100,7 @@ public class MachineTileEntity extends TileEntity {
         return nbt;
     }
 
-    public IItemHandler getInventory() {
+    public MachineBlockItemHandler getInventory() {
         return inventory;
     }
 

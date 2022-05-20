@@ -15,17 +15,23 @@ public class AlloySmelterRecipe implements IAlloySmelterRecipe {
     private final Ingredient input1, input2;
     private final ItemStack output;
     private int requiredEnergy = 200;
+    private int smeltTime = 200;
 
-    public AlloySmelterRecipe(ResourceLocation id, Ingredient input1, Ingredient input2, ItemStack output, int requiredEnergy) {
+    public AlloySmelterRecipe(ResourceLocation id, Ingredient input1, Ingredient input2, ItemStack output, int requiredEnergy, int smeltTime) {
         this.id = id;
         this.input1 = input1;
         this.input2 = input2;
         this.output = output;
         this.requiredEnergy = requiredEnergy;
+        this.smeltTime = smeltTime;
     }
 
     public int getRequiredEnergy() {
         return requiredEnergy;
+    }
+
+    public int getSmeltTime() {
+        return smeltTime;
     }
 
     public int getCount(ItemStack item) {

@@ -31,6 +31,7 @@ public class AlloySmelterRecipeBuilder {
 	private final Advancement.Builder advancement = Advancement.Builder.advancement();
 	private String group;
 	private static int requiredEnergy = 200;
+	private static int smeltTime = 200;
 
 	public AlloySmelterRecipeBuilder(IItemProvider provider, int count) {
 		this.result = provider.asItem();
@@ -47,6 +48,11 @@ public class AlloySmelterRecipeBuilder {
 
 	public AlloySmelterRecipeBuilder requiredEnergy(int requiredEnergy) {
 		this.requiredEnergy = requiredEnergy;
+		return this;
+	}
+
+	public AlloySmelterRecipeBuilder smeltTime(int smeltTime) {
+		this.smeltTime = smeltTime;
 		return this;
 	}
 
@@ -167,6 +173,7 @@ public class AlloySmelterRecipeBuilder {
 
 			json.add("output", jsonobject);
 			json.addProperty("required_energy", requiredEnergy);
+			json.addProperty("smelt_time", smeltTime);
 		}
 
 		public IRecipeSerializer<?> getType() {

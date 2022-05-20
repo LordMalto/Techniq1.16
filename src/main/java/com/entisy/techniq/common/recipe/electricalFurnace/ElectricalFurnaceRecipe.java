@@ -17,12 +17,14 @@ public class ElectricalFurnaceRecipe implements IElectricalFurnaceRecipe {
 	private Ingredient input;
 	private final ItemStack output;
 	private int requiredEnergy = 200;
+	private int smeltTime = 200;
 	
-	public ElectricalFurnaceRecipe(ResourceLocation id, Ingredient input, ItemStack output, int requiredEnergy) {
+	public ElectricalFurnaceRecipe(ResourceLocation id, Ingredient input, ItemStack output, int requiredEnergy, int smeltTime) {
 		this.id = id;
 		this.input = input;
 		this.output = output;
 		this.requiredEnergy = requiredEnergy;
+		this.smeltTime = smeltTime;
 	}
 	
 	public boolean match(IInventory inv) {
@@ -34,6 +36,10 @@ public class ElectricalFurnaceRecipe implements IElectricalFurnaceRecipe {
 
 	public int getRequiredEnergy() {
 		return requiredEnergy;
+	}
+
+	public int getSmeltTime() {
+		return smeltTime;
 	}
 
 	public int getCount(ItemStack item) {

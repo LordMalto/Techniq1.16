@@ -1,6 +1,7 @@
 package com.entisy.techniq.common.block;
 
 import com.entisy.techniq.common.itemHandlers.AlloySmelterItemHandler;
+import com.entisy.techniq.common.itemHandlers.MachineBlockItemHandler;
 import com.entisy.techniq.common.tileentity.AlloySmelterTileEntity;
 import com.entisy.techniq.core.init.TileEntityTypesInit;
 
@@ -118,7 +119,7 @@ public class AlloySmelterBlock extends MachineBlock
 		TileEntity tileEntity = world.getBlockEntity(pos);
 		if (tileEntity instanceof AlloySmelterTileEntity && state.getBlock() != newState.getBlock()) {
 			AlloySmelterTileEntity furnace = (AlloySmelterTileEntity) tileEntity;
-			((AlloySmelterItemHandler) furnace.getInventory()).toNonNullList().forEach(item -> {
+			furnace.getInventory().toNonNullList().forEach(item -> {
 				ItemEntity itemEntity = new ItemEntity(world, pos.getX(), pos.getY(), pos.getZ(), item);
 				world.addFreshEntity(itemEntity);
 			});

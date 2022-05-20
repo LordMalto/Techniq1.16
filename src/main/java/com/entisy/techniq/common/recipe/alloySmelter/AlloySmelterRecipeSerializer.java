@@ -24,7 +24,8 @@ public class AlloySmelterRecipeSerializer extends ForgeRegistryEntry<IRecipeSeri
 		input2.getItems()[0].setCount(count2);
 		ItemStack output = CraftingHelper.getItemStack(JSONUtils.getAsJsonObject(json, "output"), true);
 		int requiredEnergy = json.get("required_energy").getAsInt();
-		return new AlloySmelterRecipe(id, input1, input2, output, requiredEnergy);
+		int smeltTime = json.get("smelt_time").getAsInt();
+		return new AlloySmelterRecipe(id, input1, input2, output, requiredEnergy, smeltTime);
 	}
 
 	@Override
@@ -37,7 +38,8 @@ public class AlloySmelterRecipeSerializer extends ForgeRegistryEntry<IRecipeSeri
 		input2.getItems()[0].setCount(count2);
 		ItemStack output = buffer.readItem();
 		int requiredEnergy = buffer.readInt();
-		return new AlloySmelterRecipe(id, input1, input2, output, requiredEnergy);
+		int smeltTime = buffer.readInt();
+		return new AlloySmelterRecipe(id, input1, input2, output, requiredEnergy, smeltTime);
 	}
 
 	@Override
@@ -51,5 +53,7 @@ public class AlloySmelterRecipeSerializer extends ForgeRegistryEntry<IRecipeSeri
 		buffer.writeInt(count2);
 		input2.toNetwork(buffer);
 		buffer.writeItemStack(recipe.getResultItem(), false);
+		buffer.writeInt(recipe.getRequiredEnergy());
+		buffer.writeInt(recipe.getSmeltTime());
 	}
 }

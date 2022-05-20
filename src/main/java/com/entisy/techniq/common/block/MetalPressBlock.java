@@ -117,7 +117,7 @@ public class MetalPressBlock extends MachineBlock
 		TileEntity tileEntity = world.getBlockEntity(pos);
 		if (tileEntity instanceof MetalPressTileEntity && state.getBlock() != newState.getBlock()) {
 			MetalPressTileEntity furnace = (MetalPressTileEntity) tileEntity;
-			((MetalPressItemHandler) furnace.getInventory()).toNonNullList().forEach(item -> {
+			furnace.getInventory().toNonNullList().forEach(item -> {
 				ItemEntity itemEntity = new ItemEntity(world, pos.getX(), pos.getY(), pos.getZ(), item);
 				world.addFreshEntity(itemEntity);
 			});

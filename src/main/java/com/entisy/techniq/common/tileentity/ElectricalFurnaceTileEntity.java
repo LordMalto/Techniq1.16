@@ -3,6 +3,7 @@ package com.entisy.techniq.common.tileentity;
 import com.entisy.techniq.Techniq;
 import com.entisy.techniq.common.block.AlloySmelterBlock;
 import com.entisy.techniq.common.container.ElectricalFurnaceContainer;
+import com.entisy.techniq.common.recipe.alloySmelter.AlloySmelterRecipe;
 import com.entisy.techniq.common.recipe.electricalFurnace.ElectricalFurnaceRecipe;
 import com.entisy.techniq.core.energy.EnergyStorageImpl;
 import com.entisy.techniq.core.init.RecipeSerializerInit;
@@ -43,26 +44,24 @@ public class ElectricalFurnaceTileEntity extends MachineTileEntity implements IT
     public void tick() {
         boolean dirty = false;
         if (level != null && !level.isClientSide()) {
-            ElectricalFurnaceRecipe recipe = getRecipe(inventory.getItem(0));
-
-            if (recipe != null) {
-                if (currentEnergy >= recipe.getRequiredEnergy()) {
-                    if (currentSmeltTime != maxSmeltTime) {
-                        if ((inventory.getStackInSlot(1).sameItem(recipe.getResultItem()) || inventory.getStackInSlot(1).getItem() == Items.AIR) && inventory.getStackInSlot(1).getCount() < 64) {
+            if (getRecipe() != null) {
+                if (currentEnergy >= getRecipe().getRequiredEnergy()) {
+                    if (currentSmeltTime != getRecipe().getSmeltTime()) {
+                        if ((inventory.getStackInSlot(1).sameItem(getRecipe().getResultItem()) || inventory.getStackInSlot(1).getItem() == Items.AIR) && inventory.getStackInSlot(1).getCount() < 64) {
                             level.setBlockAndUpdate(getBlockPos(), getBlockState().setValue(AlloySmelterBlock.LIT, true));
                             currentSmeltTime++;
                             dirty = true;
                         }
                     } else {
                         energy.ifPresent(iEnergyStorage -> {
-                            ((EnergyStorageImpl) iEnergyStorage).setEnergyDirectly(iEnergyStorage.getEnergyStored() - recipe.getRequiredEnergy());
+                            ((EnergyStorageImpl) iEnergyStorage).setEnergyDirectly(iEnergyStorage.getEnergyStored() - getRecipe().getRequiredEnergy());
                             currentEnergy = iEnergyStorage.getEnergyStored();
                         });
                         level.setBlockAndUpdate(getBlockPos(), getBlockState().setValue(AlloySmelterBlock.LIT, false));
                         currentSmeltTime = 0;
-                        ItemStack output = recipe.getResultItem();
+                        ItemStack output = getRecipe().getResultItem();
                         inventory.insertItem(1, output.copy(), false);
-                        inventory.shrink(0, recipe.getCount(inventory.getItem(0)));
+                        inventory.shrink(0, getRecipe().getCount(inventory.getItem(0)));
                         dirty = true;
                     }
                 }
@@ -109,5 +108,13 @@ public class ElectricalFurnaceTileEntity extends MachineTileEntity implements IT
             }
         }
         return null;
+    }
+
+    public int getMaxSmeltTime() {
+        return getRecipe().getSmeltTime();
+    }
+
+    public ElectricalFurnaceRecipe getRecipe() {
+        return getRecipe(getInventory().getItem(0));
     }
 }

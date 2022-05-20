@@ -29,6 +29,7 @@ public class MetalPressRecipeBuilder {
 	private final Item result;
 	private final int count;
 	private static int requiredEnergy = 200;
+	private static int smeltTime = 200;
 	private final List<Ingredient> ingredients = Lists.newArrayList();
 	private final Advancement.Builder advancement = Advancement.Builder.advancement();
 	private String group;
@@ -48,6 +49,11 @@ public class MetalPressRecipeBuilder {
 
 	public MetalPressRecipeBuilder requiredEnergy(int requiredEnergy) {
 		this.requiredEnergy = requiredEnergy;
+		return this;
+	}
+
+	public MetalPressRecipeBuilder smeltTime(int smeltTime) {
+		this.smeltTime = smeltTime;
 		return this;
 	}
 
@@ -156,6 +162,7 @@ public class MetalPressRecipeBuilder {
 
 			json.add("output", jsonobject);
 			json.addProperty("required_energy", requiredEnergy);
+			json.addProperty("smelt_time", smeltTime);
 		}
 
 		public IRecipeSerializer<?> getType() {
