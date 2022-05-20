@@ -2,26 +2,31 @@ package com.entisy.techniq.core.energy;
 
 import net.minecraftforge.energy.EnergyStorage;
 
-public class ModEnergyHandler extends EnergyStorage {
+public class ModEnergyStorage extends EnergyStorage {
 
-    public ModEnergyHandler(int capacity) {
+
+    public ModEnergyStorage(int capacity) {
         super(capacity);
     }
 
-    public ModEnergyHandler(int capacity, int maxTransfer) {
+    public ModEnergyStorage(int capacity, int maxTransfer) {
         super(capacity, maxTransfer);
     }
 
-    public ModEnergyHandler(int capacity, int maxReceive, int maxExtract) {
+    public ModEnergyStorage(int capacity, int maxReceive, int maxExtract) {
         super(capacity, maxReceive, maxExtract);
     }
 
-    public ModEnergyHandler(int capacity, int maxReceive, int maxExtract, int energy) {
+    public ModEnergyStorage(int capacity, int maxReceive, int maxExtract, int energy) {
         super(capacity, maxReceive, maxExtract, energy);
     }
 
-    public ModEnergyHandler() {
+    public ModEnergyStorage(){
         super(0);
+    }
+
+    public void setEnergy(int energy){
+        this.energy = energy;
     }
 
     @Override
