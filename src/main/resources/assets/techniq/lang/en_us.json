@@ -44,6 +44,8 @@
 	"block.techniq.end_quartz_ore": "End Quartz Ore",
 	"block.techniq.cable": "Cable",
 	"block.techniq.transfer_node": "Transfer Node",
+	"block.techniq.battery": "Battery",
+	"block.techniq.furnace_generator": "Furnace Generator",
 
 	"TABS": "TABS",
 	"itemGroup.techniq_tab": "Techniq"

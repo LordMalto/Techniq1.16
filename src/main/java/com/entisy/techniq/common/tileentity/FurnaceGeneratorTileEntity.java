@@ -65,7 +65,7 @@ public class FurnaceGeneratorTileEntity extends MachineTileEntity implements ITi
             AVAILABLE_FUELS.append(i,100);
         }
         for (Item i:ItemTags.PLANKS.getValues()) {
-            AVAILABLE_FUELS.append(i,25);
+            AVAILABLE_FUELS.append(i,50);
         }
         inventory = new FurnaceGeneratorItemHandler(slots);
         energyStorage = createEnergy(maxEnergy);
