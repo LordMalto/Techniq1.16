@@ -6,5 +6,5 @@
   "output": {
     "item": "minecraft:lapis_lazuli"
   },
-  "required_energy": 0
+  "required_energy": 200
 }

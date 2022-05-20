@@ -71,7 +71,6 @@ public class CableNetwork implements IEnergyStorage {
         buildConnections();
         int received = Math.min(getMaxEnergyStored() - energyStored, Math.min(maxReceive, TRANSFER_PER_CONNECTION));
         if (received > 0) {
-//            SilentMechanisms.LOGGER.debug("receive ({}): {}, {} -> {}", simulate, received, energyStored, energyStored + received);
             if (!simulate) {
                 energyStored += received;
                 updateEnergy();
@@ -183,7 +182,7 @@ public class CableNetwork implements IEnergyStorage {
 
     @Override
     public String toString() {
-        return String.format("WireNetwork %s, %d wires, %,d FE", Integer.toHexString(hashCode()), connections.size(), energyStored);
+        return String.format("WireNetwork %s, %d wires, %,d RF", Integer.toHexString(hashCode()), connections.size(), energyStored);
     }
 
     public static class Connection implements IEnergyStorage {

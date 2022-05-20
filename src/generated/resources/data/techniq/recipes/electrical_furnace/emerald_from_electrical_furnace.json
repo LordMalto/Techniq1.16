@@ -6,5 +6,5 @@
   "output": {
     "item": "minecraft:emerald"
   },
-  "required_energy": 0
+  "required_energy": 200
 }

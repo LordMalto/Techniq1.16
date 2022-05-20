@@ -6,5 +6,5 @@
   "output": {
     "item": "techniq:copper_ingot"
   },
-  "required_energy": 0
+  "required_energy": 200
 }

@@ -31,7 +31,7 @@ public class ElectricalFurnaceRecipeBuilder {
 	private final List<Ingredient> ingredients = Lists.newArrayList();
 	private final Advancement.Builder advancement = Advancement.Builder.advancement();
 	private String group;
-	private static int requiredEnergy;
+	private static int requiredEnergy = 200;
 
 	public ElectricalFurnaceRecipeBuilder(IItemProvider provider, int count, int requiredEnergy) {
 		this.result = provider.asItem();
