@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "III",
+    "III",
+    "III"
+  ],
+  "key": {
+    "I": {
+      "item": "techniq:steel_ingot"
+    }
+  },
+  "result": {
+    "item": "techniq:steel_block"
+  }
+}

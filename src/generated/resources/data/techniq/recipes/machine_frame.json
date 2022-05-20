@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "PRP",
+    "R R",
+    "PRP"
+  ],
+  "key": {
+    "R": {
+      "item": "techniq:iron_rod"
+    },
+    "P": {
+      "item": "techniq:iron_plate"
+    }
+  },
+  "result": {
+    "item": "techniq:machine_frame"
+  }
+}

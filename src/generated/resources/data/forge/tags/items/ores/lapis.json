@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:lapis_ore",
+    "techniq:nether_lapis_ore",
+    "techniq:end_lapis_ore"
+  ]
+}

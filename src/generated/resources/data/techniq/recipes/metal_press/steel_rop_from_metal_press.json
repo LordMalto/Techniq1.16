@@ -1,0 +1,10 @@
+{
+  "type": "techniq:metal_press",
+  "input": {
+    "tag": "forge:plates/steel"
+  },
+  "output": {
+    "item": "techniq:steel_rod"
+  },
+  "required_energy": 200
+}
