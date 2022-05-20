@@ -115,6 +115,6 @@ public class ElectricalFurnaceTileEntity extends MachineTileEntity implements IT
     }
 
     public ElectricalFurnaceRecipe getRecipe() {
-        return getRecipe(getInventory().getItem(0));
+        return getRecipe(getInventory().getStackInSlot(0));
     }
 }

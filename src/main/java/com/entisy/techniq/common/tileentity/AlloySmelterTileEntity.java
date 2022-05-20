@@ -144,6 +144,6 @@ public class AlloySmelterTileEntity extends MachineTileEntity implements ITickab
     }
 
     public AlloySmelterRecipe getRecipe() {
-        return getRecipe(getInventory().getItem(0));
+        return getRecipe(getInventory().getStackInSlot(0));
     }
 }

@@ -117,6 +117,6 @@ public class MetalPressTileEntity extends MachineTileEntity implements ITickable
     }
 
     public MetalPressRecipe getRecipe() {
-        return getRecipe(getInventory().getItem(0));
+        return getRecipe(getInventory().getStackInSlot(0));
     }
 }
