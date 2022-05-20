@@ -1,13 +1,5 @@
 package com.entisy.techniq.common.tileentity;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.Collectors;
-
-import javax.annotation.Nullable;
-
 import com.entisy.techniq.Techniq;
 import com.entisy.techniq.common.block.AlloySmelterBlock;
 import com.entisy.techniq.common.container.AlloySmelterContainer;
@@ -16,7 +8,6 @@ import com.entisy.techniq.common.recipe.alloySmelter.AlloySmelterRecipe;
 import com.entisy.techniq.core.energy.ModEnergyHandler;
 import com.entisy.techniq.core.init.RecipeSerializerInit;
 import com.entisy.techniq.core.init.TileEntityTypesInit;
-
 import net.minecraft.block.BlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.world.ClientWorld;
@@ -33,7 +24,6 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.NonNullList;
@@ -47,206 +37,216 @@ import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
-import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.wrapper.RecipeWrapper;
 
+import javax.annotation.Nullable;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
+
 public class AlloySmelterTileEntity extends MachineTileEntity implements ITickableTileEntity, INamedContainerProvider {
 
-	public static final int slots = 3;
-	private ITextComponent name;
-	public int currentSmeltTime;
-	public final int maxSmeltTime = 120;
-	private AlloySmelterItemHandler inventory;
+    public static final int slots = 3;
+    private ITextComponent name;
+    public int currentSmeltTime;
+    public final int maxSmeltTime = 120;
+    private AlloySmelterItemHandler inventory;
 
-	public AtomicInteger currentEnergy = new AtomicInteger(5000);
-	public static final int maxEnergy = 25000;
-	public static final int maxEnergyReceive = 200;
-	public static final int maxEnergyExtract = 200;
+    public AtomicInteger currentEnergy = new AtomicInteger(5000);
+    public static final int maxEnergy = 25000;
+    public static final int maxEnergyReceive = 200;
+    public static final int maxEnergyExtract = 200;
 
-	public AlloySmelterTileEntity(TileEntityType<?> type) {
-		super(type);
-		inventory = new AlloySmelterItemHandler(slots);
-	}
+    public AlloySmelterTileEntity(TileEntityType<?> type) {
+        super(type);
+        inventory = new AlloySmelterItemHandler(slots);
+    }
 
-	LazyOptional<IEnergyStorage> energyStorageLazyOptional = LazyOptional.of(() -> new ModEnergyHandler(maxEnergy, maxEnergyReceive, maxEnergyExtract, currentEnergy.get()));
+    LazyOptional<IEnergyStorage> energyStorageLazyOptional = LazyOptional.of(() -> new ModEnergyHandler(maxEnergy, maxEnergyReceive, maxEnergyExtract, currentEnergy.get()));
 
-	public AlloySmelterTileEntity() {
-		this(TileEntityTypesInit.ALLOY_SMELTER_TILE_ENTITY.get());
-	}
+    public AlloySmelterTileEntity() {
+        this(TileEntityTypesInit.ALLOY_SMELTER_TILE_ENTITY.get());
+    }
 
-	@Override
-	public Container createMenu(final int windowId, final PlayerInventory inv, final PlayerEntity player) {
-		return new AlloySmelterContainer(windowId, inv, this);
-	}
+    @Override
+    public Container createMenu(final int windowId, final PlayerInventory inv, final PlayerEntity player) {
+        return new AlloySmelterContainer(windowId, inv, this);
+    }
 
-	@Override
-	public void tick() {
-		boolean dirty = false;
-		if (level != null && !level.isClientSide()) {
-			AlloySmelterRecipe recipe = getRecipe(inventory.getItem(0));
+    @Override
+    public void tick() {
+        boolean dirty = false;
+        if (level != null && !level.isClientSide()) {
+            AlloySmelterRecipe recipe = getRecipe(inventory.getItem(0));
 
-			if (recipe != null) {
-				if (currentEnergy.get() >= recipe.getRequiredEnergy()) {
-					if (currentSmeltTime != maxSmeltTime) {
-						level.setBlockAndUpdate(getBlockPos(), getBlockState().setValue(AlloySmelterBlock.LIT, true));
-						currentSmeltTime++;
-						dirty = true;
-					} else {
-						energyStorageLazyOptional.ifPresent(iEnergyStorage -> {
-							iEnergyStorage.extractEnergy(recipe.getRequiredEnergy(), false);
-							currentEnergy.set(iEnergyStorage.getEnergyStored());
-						});
-						level.setBlockAndUpdate(getBlockPos(), getBlockState().setValue(AlloySmelterBlock.LIT, false));
-						currentSmeltTime = 0;
-						ItemStack output = recipe.getResultItem();
-						inventory.insertItem(2, output.copy(), false);
+            if (recipe != null) {
+                if (currentEnergy.get() >= recipe.getRequiredEnergy()) {
+                    if (currentSmeltTime != maxSmeltTime) {
+                        level.setBlockAndUpdate(getBlockPos(), getBlockState().setValue(AlloySmelterBlock.LIT, true));
+                        currentSmeltTime++;
+                        dirty = true;
+                    } else {
+                        energyStorageLazyOptional.ifPresent(iEnergyStorage -> {
+                            iEnergyStorage.extractEnergy(recipe.getRequiredEnergy(), false);
+                            currentEnergy.set(iEnergyStorage.getEnergyStored());
+                        });
 
-						inventory.shrink(0, recipe.getCount(inventory.getItem(0)));
-						dirty = true;
-					}
-				}
-			} else {
-				level.setBlockAndUpdate(getBlockPos(), getBlockState().setValue(AlloySmelterBlock.LIT, false));
-				currentSmeltTime = 0;
-				dirty = true;
-			}
-		}
-		if (dirty) {
-			setChanged();
-			level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), Constants.BlockFlags.BLOCK_UPDATE);
-		}
-	}
+                        level.setBlockAndUpdate(getBlockPos(), getBlockState().setValue(AlloySmelterBlock.LIT, false));
+                        currentSmeltTime = 0;
 
-	public void setCustomName(ITextComponent name) {
-		this.name = name;
-	}
+                        //Recipe Handling
+                        ItemStack output = recipe.getResultItem();
+                        inventory.insertItem(2, output.copy(), false);
 
-	public ITextComponent getName() {
-		return name != null ? name : getDefaultName();
-	}
+                        inventory.shrink(0, recipe.getCount(inventory.getItem(0)));
+                        inventory.shrink(1, recipe.getCount(inventory.getItem(1)));
+                        dirty = true;
+                    }
+                }
+            } else {
+                level.setBlockAndUpdate(getBlockPos(), getBlockState().setValue(AlloySmelterBlock.LIT, false));
+                currentSmeltTime = 0;
+                dirty = true;
+            }
+        }
+        if (dirty) {
+            setChanged();
+            level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), Constants.BlockFlags.BLOCK_UPDATE);
+        }
+    }
 
-	public ITextComponent getDefaultName() {
-		return new TranslationTextComponent("container." + Techniq.MOD_ID + ".alloy_smelter");
-	}
+    public void setCustomName(ITextComponent name) {
+        this.name = name;
+    }
 
-	@Override
-	public ITextComponent getDisplayName() {
-		return getName();
-	}
+    public ITextComponent getName() {
+        return name != null ? name : getDefaultName();
+    }
 
-	@Nullable
-	public ITextComponent getCustomName() {
-		return name;
-	}
+    public ITextComponent getDefaultName() {
+        return new TranslationTextComponent("container." + Techniq.MOD_ID + ".alloy_smelter");
+    }
 
-	@Override
-	public void load(BlockState state, CompoundNBT nbt) {
-		super.load(state, nbt);
-		if (nbt.contains("CustomName", Constants.NBT.TAG_STRING)) {
-			name = ITextComponent.Serializer.fromJson(nbt.getString("CustomName"));
-		}
-		NonNullList<ItemStack> inv = NonNullList.<ItemStack>withSize(this.inventory.getSlots(), ItemStack.EMPTY);
-		ItemStackHelper.loadAllItems(nbt, inv);
-		inventory.setNonNullList(inv);
-		currentSmeltTime = nbt.getInt("CurrentSmeltTime");
-		energyStorageLazyOptional.ifPresent(iEnergyStorage -> {
-			currentEnergy.set(nbt.getInt("CurrentEnergy") | iEnergyStorage.getEnergyStored());
-		});
-	}
+    @Override
+    public ITextComponent getDisplayName() {
+        return getName();
+    }
 
-	@Override
-	public CompoundNBT save(CompoundNBT nbt) {
-		super.save(nbt);
-		if (name != null) {
-			nbt.putString("CustomName", ITextComponent.Serializer.toJson(name));
-		}
-		ItemStackHelper.saveAllItems(nbt, inventory.toNonNullList());
-		nbt.putInt("CurrentSmeltTime", currentSmeltTime);
-		energyStorageLazyOptional.ifPresent(iEnergyStorage -> {
-			nbt.putInt("CurrentEnergy", iEnergyStorage.getEnergyStored());
-		});
-		return nbt;
-	}
+    @Nullable
+    public ITextComponent getCustomName() {
+        return name;
+    }
 
-	@Nullable
-	private AlloySmelterRecipe getRecipe(ItemStack stack) {
-		if (stack == null) {
-			return null;
-		}
+    @Override
+    public void load(BlockState state, CompoundNBT nbt) {
+        super.load(state, nbt);
+        if (nbt.contains("CustomName", Constants.NBT.TAG_STRING)) {
+            name = ITextComponent.Serializer.fromJson(nbt.getString("CustomName"));
+        }
+        NonNullList<ItemStack> inv = NonNullList.<ItemStack>withSize(this.inventory.getSlots(), ItemStack.EMPTY);
+        ItemStackHelper.loadAllItems(nbt, inv);
+        inventory.setNonNullList(inv);
+        currentSmeltTime = nbt.getInt("CurrentSmeltTime");
+        energyStorageLazyOptional.ifPresent(iEnergyStorage -> {
+            currentEnergy.set(nbt.getInt("CurrentEnergy") | iEnergyStorage.getEnergyStored());
+        });
+    }
 
-		Set<IRecipe<?>> recipes = findRecipesByType(RecipeSerializerInit.ALLOY_SMELTER_TYPE, level);
-		for (IRecipe<?> iRecipe : recipes) {
-			AlloySmelterRecipe recipe = (AlloySmelterRecipe) iRecipe;
-			if (recipe.matches(new RecipeWrapper(inventory), level)) {
-				return recipe;
-			}
-		}
+    @Override
+    public CompoundNBT save(CompoundNBT nbt) {
+        super.save(nbt);
+        if (name != null) {
+            nbt.putString("CustomName", ITextComponent.Serializer.toJson(name));
+        }
+        ItemStackHelper.saveAllItems(nbt, inventory.toNonNullList());
+        nbt.putInt("CurrentSmeltTime", currentSmeltTime);
+        energyStorageLazyOptional.ifPresent(iEnergyStorage -> {
+            nbt.putInt("CurrentEnergy", iEnergyStorage.getEnergyStored());
+        });
+        return nbt;
+    }
 
-		return null;
-	}
+    @Nullable
+    private AlloySmelterRecipe getRecipe(ItemStack stack) {
+        if (stack == null) {
+            return null;
+        }
 
-	public static Set<IRecipe<?>> findRecipesByType(IRecipeType<?> typeIn, World world) {
-		return world != null ? world.getRecipeManager().getRecipes().stream()
-				.filter(recipe -> recipe.getType() == typeIn).collect(Collectors.toSet()) : Collections.emptySet();
-	}
+        Set<IRecipe<?>> recipes = findRecipesByType(RecipeSerializerInit.ALLOY_SMELTER_TYPE, level);
+        for (IRecipe<?> iRecipe : recipes) {
+            AlloySmelterRecipe recipe = (AlloySmelterRecipe) iRecipe;
+            if (recipe.matches(new RecipeWrapper(inventory), level)) {
+                return recipe;
+            }
+        }
 
-	@SuppressWarnings("resource")
-	@OnlyIn(Dist.CLIENT)
-	public static Set<IRecipe<?>> findRecipesByType(IRecipeType<?> typeIn) {
-		ClientWorld world = Minecraft.getInstance().level;
-		return world != null ? world.getRecipeManager().getRecipes().stream()
-				.filter(recipe -> recipe.getType() == typeIn).collect(Collectors.toSet()) : Collections.emptySet();
-	}
+        return null;
+    }
 
-	public static Set<ItemStack> getAllRecipeInputs(IRecipeType<?> typeIn, World worldIn) {
-		Set<ItemStack> inputs = new HashSet<ItemStack>();
-		Set<IRecipe<?>> recipes = findRecipesByType(typeIn, worldIn);
-		for (IRecipe<?> recipe : recipes) {
-			NonNullList<Ingredient> ingredients = recipe.getIngredients();
-			ingredients.forEach(ingredient -> {
-				for (ItemStack stack : ingredient.getItems()) {
-					inputs.add(stack);
-				}
-			});
-		}
-		return inputs;
-	}
-	
-	@Nullable
-	@Override
-	public SUpdateTileEntityPacket getUpdatePacket() {
-		CompoundNBT nbt = new CompoundNBT();
-		save(nbt);
-		return new SUpdateTileEntityPacket(getBlockPos(), 0, nbt);
-	}
-	
-	@Override
-	public void onDataPacket(NetworkManager manager, SUpdateTileEntityPacket packet) {
-		deserializeNBT(packet.getTag());
-	}
-	
-	@Override
-	public CompoundNBT getUpdateTag() {
-		CompoundNBT nbt = new CompoundNBT();
-		save(nbt);
-		return nbt;
-	}
-	
-	@Override
-	public void handleUpdateTag(BlockState state, CompoundNBT nbt) {
-		deserializeNBT(nbt);
-	}
+    public static Set<IRecipe<?>> findRecipesByType(IRecipeType<?> typeIn, World world) {
+        return world != null ? world.getRecipeManager().getRecipes().stream()
+                .filter(recipe -> recipe.getType() == typeIn).collect(Collectors.toSet()) : Collections.emptySet();
+    }
 
-	@Override
-	public <T> LazyOptional<T> getCapability(Capability<T> capability, Direction side) {
-		if (capability == CapabilityEnergy.ENERGY) {
-			return energyStorageLazyOptional.cast();
-		}
-		return super.getCapability(capability, side);
-	}
-	
-	public IItemHandler getInventory() {
-		return inventory;
-	}
+    @SuppressWarnings("resource")
+    @OnlyIn(Dist.CLIENT)
+    public static Set<IRecipe<?>> findRecipesByType(IRecipeType<?> typeIn) {
+        ClientWorld world = Minecraft.getInstance().level;
+        return world != null ? world.getRecipeManager().getRecipes().stream()
+                .filter(recipe -> recipe.getType() == typeIn).collect(Collectors.toSet()) : Collections.emptySet();
+    }
+
+    public static Set<ItemStack> getAllRecipeInputs(IRecipeType<?> typeIn, World worldIn) {
+        Set<ItemStack> inputs = new HashSet<ItemStack>();
+        Set<IRecipe<?>> recipes = findRecipesByType(typeIn, worldIn);
+        for (IRecipe<?> recipe : recipes) {
+            NonNullList<Ingredient> ingredients = recipe.getIngredients();
+            ingredients.forEach(ingredient -> {
+                for (ItemStack stack : ingredient.getItems()) {
+                    inputs.add(stack);
+                }
+            });
+        }
+        return inputs;
+    }
+
+    @Nullable
+    @Override
+    public SUpdateTileEntityPacket getUpdatePacket() {
+        CompoundNBT nbt = new CompoundNBT();
+        save(nbt);
+        return new SUpdateTileEntityPacket(getBlockPos(), 0, nbt);
+    }
+
+    @Override
+    public void onDataPacket(NetworkManager manager, SUpdateTileEntityPacket packet) {
+        deserializeNBT(packet.getTag());
+    }
+
+    @Override
+    public CompoundNBT getUpdateTag() {
+        CompoundNBT nbt = new CompoundNBT();
+        save(nbt);
+        return nbt;
+    }
+
+    @Override
+    public void handleUpdateTag(BlockState state, CompoundNBT nbt) {
+        deserializeNBT(nbt);
+    }
+
+    @Override
+    public <T> LazyOptional<T> getCapability(Capability<T> capability, Direction side) {
+        if (capability == CapabilityEnergy.ENERGY) {
+            return energyStorageLazyOptional.cast();
+        }
+        return super.getCapability(capability, side);
+    }
+
+    public IItemHandler getInventory() {
+        return inventory;
+    }
 }

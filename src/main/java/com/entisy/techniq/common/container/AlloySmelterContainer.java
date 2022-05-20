@@ -27,7 +27,7 @@ import net.minecraftforge.items.SlotItemHandler;
 
 public class AlloySmelterContainer extends Container {
 
-	private AlloySmelterTileEntity tileEntity;
+	public AlloySmelterTileEntity tileEntity;
 	private IWorldPosCallable canInteractWithCallable;
 	public FunctionalIntReferenceHolder currentSmeltTime;
 	public FunctionalIntReferenceHolder currentEnergy;
@@ -121,7 +121,4 @@ public class AlloySmelterContainer extends Container {
 				: 0;
 	}
 
-	public LazyOptional<IEnergyStorage> getCapabilityFromTE(){
-		return this.tileEntity.getCapability(CapabilityEnergy.ENERGY);
-	}
 }

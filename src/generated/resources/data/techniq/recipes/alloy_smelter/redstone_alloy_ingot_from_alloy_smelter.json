@@ -1,0 +1,17 @@
+{
+  "type": "techniq:alloy_smelter",
+  "ingredients": [
+    {
+      "item": "minecraft:redstone",
+      "count": 3
+    },
+    {
+      "item": "minecraft:iron_ingot",
+      "count": 1
+    }
+  ],
+  "output": {
+    "item": "techniq:redstone_alloy_ingot"
+  },
+  "required_energy": 200
+}
