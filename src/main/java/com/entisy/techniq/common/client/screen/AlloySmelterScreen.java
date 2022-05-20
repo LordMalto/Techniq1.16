@@ -1,4 +1,4 @@
-package com.entisy.techniq.common.block.client.screen;
+package com.entisy.techniq.common.client.screen;
 
 import java.util.concurrent.atomic.AtomicInteger;
 

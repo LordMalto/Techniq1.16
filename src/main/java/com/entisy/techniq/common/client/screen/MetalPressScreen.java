@@ -1,4 +1,4 @@
-package com.entisy.techniq.common.block.client.screen;
+package com.entisy.techniq.common.client.screen;
 
 import com.entisy.techniq.Techniq;
 import com.entisy.techniq.common.container.MetalPressContainer;

@@ -1,4 +1,4 @@
-package com.entisy.techniq.common.block.client.tileentityrenderer;
+package com.entisy.techniq.common.client.tileentityrenderer;
 
 import com.entisy.techniq.common.tileentity.DisplayCaseTileEntity;
 import com.mojang.blaze3d.matrix.MatrixStack;
