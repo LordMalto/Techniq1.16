@@ -55,7 +55,7 @@ public class AlloySmelterTileEntity extends MachineTileEntity implements ITickab
     public final int maxSmeltTime = 120;
     private AlloySmelterItemHandler inventory;
 
-    public AtomicInteger currentEnergy = new AtomicInteger(5000);
+    public AtomicInteger currentEnergy = new AtomicInteger();
     public static final int maxEnergy = 25000;
     public static final int maxEnergyReceive = 200;
     public static final int maxEnergyExtract = 200;

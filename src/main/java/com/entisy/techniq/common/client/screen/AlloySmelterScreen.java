@@ -46,8 +46,8 @@ public class AlloySmelterScreen extends ContainerScreen<AlloySmelterContainer> {
 		this.blit(stack, x, y, 0, 0, getXSize(), getYSize());
 
 		// draw energy bar
-		final AtomicInteger currentEnergy = new AtomicInteger(getMenu().currentEnergy.get());
-		int pixel = currentEnergy.get() != 0 ? currentEnergy.get() * 50 / 25000 : 0;
+		int currentEnergy = getMenu().currentEnergy.get();
+		int pixel = currentEnergy != 0 ? currentEnergy * 50 / 25000 : 0;
 		blit(stack, getGuiLeft() + 154, getGuiTop() + (50 - pixel) + 18, 176, (50 - pixel), 12, 50);
 
 		// draw progress bar/arrow
@@ -76,10 +76,10 @@ public class AlloySmelterScreen extends ContainerScreen<AlloySmelterContainer> {
 
 				// rendering the amount of energy stored e.g. 5000/25000
 
-				final AtomicInteger currentEnergy = new AtomicInteger(getMenu().currentEnergy.get());
+				int currentEnergy = getMenu().currentEnergy.get();
 
 				this.renderTooltip(matrixStack,
-						new StringTextComponent(currentEnergy.get() + "/" + MetalPressTileEntity.maxEnergy), mouseX, mouseY);
+						new StringTextComponent(currentEnergy + "/" + MetalPressTileEntity.maxEnergy), mouseX, mouseY);
 			}
 		}
 	}
