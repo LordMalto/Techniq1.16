@@ -13,6 +13,8 @@ import com.entisy.techniq.core.util.FunctionalIntReferenceHolder;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
+import net.minecraft.inventory.container.FurnaceContainer;
+import net.minecraft.inventory.container.FurnaceResultSlot;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
@@ -48,7 +50,7 @@ public class MetalPressContainer extends Container {
 		// inventory
 		for (int row = 0; row < 3; row++) {
 			for (int col = 0; col < 9; col++) {
-				this.addSlot(new Slot(inv, col + row * 9 + 9, 8 + col * 18, 166 - (4 - row) * 18 - 10));
+				this.addSlot(new Slot(inv, col + row * 9 + 9, 8 + col * slotSizePlus2, 166 - (4 - row) * slotSizePlus2 - 10));
 			}
 		}
 
@@ -82,35 +84,42 @@ public class MetalPressContainer extends Container {
 	public boolean stillValid(PlayerEntity player) {
 		return stillValid(canInteractWithCallable, player, BlockInit.METAL_PRESS.get());
 	}
-	
-	@Nonnull
-	@Override
-	public ItemStack quickMoveStack(final PlayerEntity player, final int index) {
-		ItemStack returnStack = ItemStack.EMPTY;
-		final Slot slot = this.slots.get(index);
-		if (slot != null && slot.hasItem()) {
-			final ItemStack slotStack = slot.getItem();
-			returnStack = slotStack.copy();
 
-			final int containerSlots = this.slots.size() - player.inventory.items.size();
-			if (index < containerSlots) {
-				if (!moveItemStackTo(slotStack, containerSlots, this.slots.size(), true)) {
+	@Override
+	public ItemStack quickMoveStack(PlayerEntity player, int index) {
+		ItemStack itemstack = ItemStack.EMPTY;
+		Slot slot = this.slots.get(index);
+		if (slot != null && slot.hasItem()) {
+			ItemStack itemstack1 = slot.getItem();
+			itemstack = itemstack1.copy();
+
+			final int inventorySize = 2;
+			final int playerInventoryEnd = inventorySize + 27;
+			final int playerHotbarEnd = playerInventoryEnd + 9;
+
+			if (index == 1) {
+				if (!this.moveItemStackTo(itemstack1, inventorySize, playerHotbarEnd, true)) {
 					return ItemStack.EMPTY;
 				}
-			} else if (!moveItemStackTo(slotStack, 0, containerSlots, false)) {
+				slot.onQuickCraft(itemstack1, itemstack);
+			} else if (index != 0) {
+				if (!this.moveItemStackTo(itemstack1, 0, 1, false)) {
+					return ItemStack.EMPTY;
+				}
+			} else if (!this.moveItemStackTo(itemstack1, inventorySize, playerHotbarEnd, false)) {
 				return ItemStack.EMPTY;
 			}
-			if (slotStack.getCount() == 0) {
+			if (itemstack1.isEmpty()) {
 				slot.set(ItemStack.EMPTY);
 			} else {
 				slot.setChanged();
 			}
-			if (slotStack.getCount() == returnStack.getCount()) {
+			if (itemstack1.getCount() == itemstack.getCount()) {
 				return ItemStack.EMPTY;
 			}
-			slot.onTake(player, slotStack);
+			slot.onTake(player, itemstack1);
 		}
-		return returnStack;
+		return itemstack;
 	}
 
 	@OnlyIn(Dist.CLIENT)

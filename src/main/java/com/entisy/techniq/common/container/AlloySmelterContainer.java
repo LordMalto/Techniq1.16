@@ -76,34 +76,41 @@ public class AlloySmelterContainer extends Container {
         return stillValid(canInteractWithCallable, player, BlockInit.ALLOY_SMELTER.get());
     }
 
-    @Nonnull
     @Override
-    public ItemStack quickMoveStack(final PlayerEntity player, final int index) {
-        ItemStack returnStack = ItemStack.EMPTY;
-        final Slot slot = this.slots.get(index);
+    public ItemStack quickMoveStack(PlayerEntity player, int index) {
+        ItemStack itemstack = ItemStack.EMPTY;
+        Slot slot = this.slots.get(index);
         if (slot != null && slot.hasItem()) {
-            final ItemStack slotStack = slot.getItem();
-            returnStack = slotStack.copy();
+            ItemStack itemstack1 = slot.getItem();
+            itemstack = itemstack1.copy();
 
-            final int containerSlots = this.slots.size() - player.inventory.items.size();
-            if (index < containerSlots) {
-                if (!moveItemStackTo(slotStack, containerSlots, this.slots.size(), true)) {
+            final int inventorySize = 3;
+            final int playerInventoryEnd = inventorySize + 27;
+            final int playerHotbarEnd = playerInventoryEnd + 9;
+
+            if (index == 2) {
+                if (!this.moveItemStackTo(itemstack1, inventorySize, playerHotbarEnd, true)) {
                     return ItemStack.EMPTY;
                 }
-            } else if (!moveItemStackTo(slotStack, 0, containerSlots, false)) {
+                slot.onQuickCraft(itemstack1, itemstack);
+            } else if (index != 0) {
+                if (!this.moveItemStackTo(itemstack1, 0, 2, false)) {
+                    return ItemStack.EMPTY;
+                }
+            } else if (!this.moveItemStackTo(itemstack1, inventorySize, playerHotbarEnd, false)) {
                 return ItemStack.EMPTY;
             }
-            if (slotStack.getCount() == 0) {
+            if (itemstack1.isEmpty()) {
                 slot.set(ItemStack.EMPTY);
             } else {
                 slot.setChanged();
             }
-            if (slotStack.getCount() == returnStack.getCount()) {
+            if (itemstack1.getCount() == itemstack.getCount()) {
                 return ItemStack.EMPTY;
             }
-            slot.onTake(player, slotStack);
+            slot.onTake(player, itemstack1);
         }
-        return returnStack;
+        return itemstack;
     }
 
     @OnlyIn(Dist.CLIENT)
