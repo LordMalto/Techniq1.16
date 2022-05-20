@@ -2,6 +2,7 @@ package com.entisy.techniq.common.container;
 
 import com.entisy.techniq.common.slots.OutputSlot;
 import com.entisy.techniq.common.tileentity.AlloySmelterTileEntity;
+import com.entisy.techniq.common.tileentity.DisplayCaseTileEntity;
 import com.entisy.techniq.common.tileentity.FurnaceGeneratorTileEntity;
 import com.entisy.techniq.core.init.BlockInit;
 import com.entisy.techniq.core.init.ContainerTypesInit;
@@ -79,7 +80,30 @@ public class FurnaceGeneratorContainer  extends Container {
 
     @OnlyIn(Dist.CLIENT)
     public int getSmeltProgressionScaled() {
-        return currentSmeltTime.get() != 0 && tileEntity.maxSmeltTime != 0 ? currentSmeltTime.get() * 24 / tileEntity.maxSmeltTime : 0;
+        return currentSmeltTime.get() != 0 && tileEntity.maxSmeltTime != 0 ? currentSmeltTime.get() * 13 / tileEntity.maxSmeltTime : 0;
+    }
+
+    @Override
+    public ItemStack quickMoveStack(PlayerEntity player, int index) {
+        ItemStack stack = ItemStack.EMPTY;
+        Slot slot = slots.get(index);
+        if (slot != null && slot.hasItem()) {
+            ItemStack stack1 = slot.getItem();
+            stack = stack1.copy();
+            if (index < DisplayCaseTileEntity.slots
+                    && !moveItemStackTo(stack1, DisplayCaseTileEntity.slots, slots.size(), true)) {
+                return ItemStack.EMPTY;
+            }
+            if (!moveItemStackTo(stack1, 0, DisplayCaseTileEntity.slots, false)) {
+                return ItemStack.EMPTY;
+            }
+            if (stack1.isEmpty()) {
+                slot.set(ItemStack.EMPTY);
+            } else {
+                slot.setChanged();
+            }
+        }
+        return stack;
     }
 
 }

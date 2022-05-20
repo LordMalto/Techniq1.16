@@ -48,7 +48,7 @@ public class FurnaceGeneratorScreen extends ContainerScreen<FurnaceGeneratorCont
         blit(stack, getGuiLeft() + 154, getGuiTop() + (50 - pixel) + 18, 176, (50 - pixel), 12, 50);
 
         // draw progress bar/arrow
-        //blit(stack, leftPos + 81, topPos + 33, 0, 166, getMenu().getSmeltProgressionScaled(), 14);
+        blit(stack, getGuiLeft() + 81, getGuiTop() + (13-getMenu().getSmeltProgressionScaled()) + 33, 0, 166+(13-getMenu().getSmeltProgressionScaled()), 14, 13);
     }
 
     @Override
