@@ -24,6 +24,8 @@ public class TagsInit {
 		public static final INamedTag<Block> ORES_LAPIS = forge("ores/lapis");
 		public static final INamedTag<Block> ORES_QUARTZ = forge("ores/quartz");
 		public static final INamedTag<Block> STORAGE_BLOCKS_COPPER = forge("storage_blocks/copper");
+
+		public static final INamedTag<Block> MACHINE_BLOCKS = mod("machine_blocks");
 				
 		private static INamedTag<Block> forge(String path) {
 			return BlockTags.bind(new ResourceLocation("forge", path).toString());
@@ -53,6 +55,8 @@ public class TagsInit {
 		public static final INamedTag<Item> PLATES_IRON = forge("plates/iron");
 		public static final INamedTag<Item> PLATES_GOLD = forge("plates/gold");
 		public static final INamedTag<Item> PLATES_DIAMOND = forge("plates/diamond");
+
+		public static final INamedTag<Item> MACHINE_BLOCKS = mod("machine_blocks");
 		
 		private static INamedTag<Item> forge(String path) {
 			return ItemTags.bind(new ResourceLocation("forge", path).toString());

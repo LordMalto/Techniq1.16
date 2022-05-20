@@ -51,7 +51,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.wrapper.RecipeWrapper;
 
-public class ElectricalFurnaceTileEntity extends TileEntity implements ITickableTileEntity, INamedContainerProvider {
+public class ElectricalFurnaceTileEntity extends MachineTileEntity implements ITickableTileEntity, INamedContainerProvider {
 
 	public static final int slots = 2;
 	private ITextComponent name;

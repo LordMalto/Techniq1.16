@@ -32,13 +32,12 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 
-public class AlloySmelterBlock extends Block
+public class AlloySmelterBlock extends MachineBlock
 {
 	public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
 	public static final BooleanProperty LIT = BooleanProperty.create("lit");
 
 	public AlloySmelterBlock() {
-		super(AbstractBlock.Properties.copy(Blocks.IRON_BLOCK));
 		registerDefaultState(stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(LIT, false));
 	}
 
