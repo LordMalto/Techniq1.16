@@ -1,23 +1,13 @@
 package com.entisy.techniq.common.tileentity;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.stream.Collectors;
-
-import javax.annotation.Nullable;
-
 import com.entisy.techniq.Techniq;
 import com.entisy.techniq.common.block.AlloySmelterBlock;
-import com.entisy.techniq.common.block.MetalPressBlock;
 import com.entisy.techniq.common.container.MetalPressContainer;
 import com.entisy.techniq.common.itemHandlers.MetalPressItemHandler;
-import com.entisy.techniq.common.recipe.alloySmelter.AlloySmelterRecipe;
 import com.entisy.techniq.common.recipe.metalPress.MetalPressRecipe;
 import com.entisy.techniq.core.energy.ModEnergyHandler;
 import com.entisy.techniq.core.init.RecipeSerializerInit;
 import com.entisy.techniq.core.init.TileEntityTypesInit;
-
 import net.minecraft.block.BlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.world.ClientWorld;
@@ -34,7 +24,6 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.NonNullList;
@@ -51,7 +40,13 @@ import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.wrapper.RecipeWrapper;
 
-public class MetalPressTileEntity extends TileEntity implements ITickableTileEntity, INamedContainerProvider {
+import javax.annotation.Nullable;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+public class MetalPressTileEntity extends MachineTileEntity implements ITickableTileEntity, INamedContainerProvider {
 
 	public static final int slots = 2;
 	private ITextComponent name;

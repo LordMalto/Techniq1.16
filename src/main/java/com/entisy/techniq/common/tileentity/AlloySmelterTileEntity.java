@@ -50,7 +50,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.wrapper.RecipeWrapper;
 
-public class AlloySmelterTileEntity extends TileEntity implements ITickableTileEntity, INamedContainerProvider {
+public class AlloySmelterTileEntity extends MachineTileEntity implements ITickableTileEntity, INamedContainerProvider {
 
 	public static final int slots = 3;
 	private ITextComponent name;
