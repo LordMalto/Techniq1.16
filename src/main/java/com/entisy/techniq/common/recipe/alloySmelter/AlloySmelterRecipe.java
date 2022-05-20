@@ -40,6 +40,10 @@ public class AlloySmelterRecipe implements IAlloySmelterRecipe {
         return 1;
     }
 
+    public void setSmeltTime(int value) {
+        smeltTime = value;
+    }
+
     @Override
     public ItemStack assemble(RecipeWrapper wrapper) {
         return output;

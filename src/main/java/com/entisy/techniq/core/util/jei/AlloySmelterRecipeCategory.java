@@ -4,7 +4,6 @@ import com.entisy.techniq.Techniq;
 import com.entisy.techniq.common.recipe.alloySmelter.AlloySmelterRecipe;
 import com.entisy.techniq.core.init.BlockInit;
 import com.mojang.blaze3d.matrix.MatrixStack;
-
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.gui.drawable.IDrawable;
@@ -63,14 +62,14 @@ public class AlloySmelterRecipeCategory implements IRecipeCategory<AlloySmelterR
 
 	@Override
 	public void setRecipe(IRecipeLayout recipeLayout, AlloySmelterRecipe recipe, IIngredients ingredients) {
-		recipeLayout.getItemStacks().init(0, true, 55, 34);
-		recipeLayout.getItemStacks().init(1, true, 115, 34);
+		recipeLayout.getItemStacks().init(0, true, 45, 21);
+		recipeLayout.getItemStacks().init(1, true, 45, 48);
 		recipeLayout.getItemStacks().init(2, false, 115, 34);
 		recipeLayout.getItemStacks().set(ingredients);
 	}
 	
 	@Override
 	public void draw(AlloySmelterRecipe recipe, MatrixStack matrixStack, double mouseX, double mouseY) {
-		arrow.draw(matrixStack, 80, 35);
+		arrow.draw(matrixStack, 77, 35);
 	}
 }

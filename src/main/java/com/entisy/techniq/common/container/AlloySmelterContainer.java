@@ -26,6 +26,7 @@ public class AlloySmelterContainer extends Container {
     private IWorldPosCallable canInteractWithCallable;
     public FunctionalIntReferenceHolder currentSmeltTime;
     public FunctionalIntReferenceHolder currentEnergy;
+    public FunctionalIntReferenceHolder maxSmeltTime;
 
     public AlloySmelterContainer(final int id, final PlayerInventory inv, final AlloySmelterTileEntity tileEntity) {
         super(ContainerTypesInit.ALLOY_SMELTER_CONTAINER_TYPE.get(), id);
@@ -55,6 +56,7 @@ public class AlloySmelterContainer extends Container {
 
         addDataSlot(currentSmeltTime = new FunctionalIntReferenceHolder(() -> tileEntity.currentSmeltTime, v -> tileEntity.currentSmeltTime = v));
         addDataSlot(currentEnergy = new FunctionalIntReferenceHolder(() -> tileEntity.currentEnergy, value -> tileEntity.currentEnergy = value));
+        addDataSlot(maxSmeltTime = new FunctionalIntReferenceHolder(tileEntity::getMaxSmeltTime, tileEntity::setMaxSmeltTime));
     }
 
     public AlloySmelterContainer(final int id, final PlayerInventory inv, final PacketBuffer buffer) {
@@ -93,7 +95,7 @@ public class AlloySmelterContainer extends Container {
                     return ItemStack.EMPTY;
                 }
                 slot.onQuickCraft(itemstack1, itemstack);
-            } else if (index != 0) {
+            } else if (index != 0 && index != 1) {
                 if (!this.moveItemStackTo(itemstack1, 0, 2, false)) {
                     return ItemStack.EMPTY;
                 }

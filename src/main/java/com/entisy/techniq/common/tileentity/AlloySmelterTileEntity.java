@@ -143,6 +143,10 @@ public class AlloySmelterTileEntity extends MachineTileEntity implements ITickab
         return getRecipe().getSmeltTime();
     }
 
+    public void setMaxSmeltTime(int value) {
+        getRecipe().setSmeltTime(value);
+    }
+
     public AlloySmelterRecipe getRecipe() {
         return getRecipe(getInventory().getStackInSlot(0));
     }
