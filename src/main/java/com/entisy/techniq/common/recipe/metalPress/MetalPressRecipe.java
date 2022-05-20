@@ -15,19 +15,22 @@ public class MetalPressRecipe implements IMetalPressRecipe {
 	private final ResourceLocation id;
 	private final Ingredient input;
 	private final ItemStack output;
-	private int energyNeeded = 200;
+	private int requiredEnergy = 200;
 	
-	public MetalPressRecipe(ResourceLocation id, Ingredient input, ItemStack output, int energyNeeded) {
+	public MetalPressRecipe(ResourceLocation id, Ingredient input, ItemStack output, int requiredEnergy) {
 		this.id = id;
 		this.input = input;
 		this.output = output;
-		this.energyNeeded = energyNeeded;
-	}
-	
-	public int getRequiredEnergy() {
-		return energyNeeded;
+		this.requiredEnergy = requiredEnergy;
 	}
 
+	public int getRequiredEnergy() {
+		return requiredEnergy;
+	}
+
+	public int getCount(ItemStack item) {
+		return input.getItems()[0].getCount() | 1;
+	}
 	@Override
 	public ItemStack assemble(RecipeWrapper wrapper) {
 		return output;

@@ -4,6 +4,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 import com.entisy.techniq.Techniq;
+import com.entisy.techniq.common.recipe.alloySmelter.AlloySmelterRecipe;
 import com.entisy.techniq.common.recipe.electricalFurnace.ElectricalFurnaceRecipe;
 import com.entisy.techniq.common.recipe.metalPress.MetalPressRecipe;
 import com.entisy.techniq.core.init.BlockInit;
@@ -11,6 +12,7 @@ import com.entisy.techniq.core.init.RecipeSerializerInit;
 
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
+import mezz.jei.api.constants.VanillaRecipeCategoryUid;
 import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
@@ -37,9 +39,11 @@ public class JEIPlugin implements IModPlugin {
 	@Override
 	public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
 		registration.addRecipeCatalyst(new ItemStack(BlockInit.ELECTRICAL_FURNACE.get()),
-				ElectricalFurnaceRecipeCategory.UID);
+				ElectricalFurnaceRecipeCategory.UID, VanillaRecipeCategoryUid.FURNACE);
 		registration.addRecipeCatalyst(new ItemStack(BlockInit.METAL_PRESS.get()),
 				MetalPressRecipeCategory.UID);
+		registration.addRecipeCatalyst(new ItemStack(BlockInit.ALLOY_SMELTER.get()),
+				AlloySmelterRecipeCategory.UID);
 	}
 
 	@SuppressWarnings("resource")
@@ -54,5 +58,9 @@ public class JEIPlugin implements IModPlugin {
 				recipeManager.getAllRecipesFor(RecipeSerializerInit.ELECTRICAL_FURNACE_TYPE).stream()
 						.filter(recipe -> recipe instanceof ElectricalFurnaceRecipe).collect(Collectors.toList()),
 				ElectricalFurnaceRecipeCategory.UID);
+		registration.addRecipes(
+				recipeManager.getAllRecipesFor(RecipeSerializerInit.ALLOY_SMELTER_TYPE).stream()
+						.filter(recipe -> recipe instanceof AlloySmelterRecipe).collect(Collectors.toList()),
+				AlloySmelterRecipeCategory.UID);
 	}
 }

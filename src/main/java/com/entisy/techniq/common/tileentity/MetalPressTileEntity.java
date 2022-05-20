@@ -8,9 +8,11 @@ import java.util.stream.Collectors;
 import javax.annotation.Nullable;
 
 import com.entisy.techniq.Techniq;
+import com.entisy.techniq.common.block.AlloySmelterBlock;
 import com.entisy.techniq.common.block.MetalPressBlock;
 import com.entisy.techniq.common.container.MetalPressContainer;
 import com.entisy.techniq.common.itemHandlers.MetalPressItemHandler;
+import com.entisy.techniq.common.recipe.alloySmelter.AlloySmelterRecipe;
 import com.entisy.techniq.common.recipe.metalPress.MetalPressRecipe;
 import com.entisy.techniq.core.energy.ModEnergyHandler;
 import com.entisy.techniq.core.init.RecipeSerializerInit;
@@ -58,7 +60,7 @@ public class MetalPressTileEntity extends TileEntity implements ITickableTileEnt
 	private MetalPressItemHandler inventory;
 
 //	public static AtomicInteger currentEnergy = new AtomicInteger();
-	public static int currentEnergy;
+	public static int currentEnergy = 5000;
 	public static final int maxEnergy = 25000;
 	public static final int maxEnergyReceive = 200;
 	public static final int maxEnergyExtract = 200;
@@ -83,27 +85,30 @@ public class MetalPressTileEntity extends TileEntity implements ITickableTileEnt
 	public void tick() {
 		boolean dirty = false;
 		if (level != null && !level.isClientSide()) {
-			if (getRecipe(inventory.getStackInSlot(0)) != null) {
-				if (currentEnergy >= getRecipe(inventory.getStackInSlot(0)).getRequiredEnergy()) {
+			MetalPressRecipe recipe = getRecipe(inventory.getItem(0));
+
+			if (recipe != null) {
+				if (currentEnergy >= recipe.getRequiredEnergy()) {
 					if (currentSmeltTime != maxSmeltTime) {
-						level.setBlockAndUpdate(getBlockPos(), getBlockState().setValue(MetalPressBlock.LIT, true));
+						level.setBlockAndUpdate(getBlockPos(), getBlockState().setValue(AlloySmelterBlock.LIT, true));
 						currentSmeltTime++;
 						dirty = true;
 					} else {
 						energyStorageLazyOptional.ifPresent(iEnergyStorage -> {
-							iEnergyStorage.extractEnergy(getRecipe(inventory.getStackInSlot(0)).getRequiredEnergy(), false);
+							iEnergyStorage.extractEnergy(recipe.getRequiredEnergy(), false);
 							currentEnergy = iEnergyStorage.getEnergyStored();
 						});
-						level.setBlockAndUpdate(getBlockPos(), getBlockState().setValue(MetalPressBlock.LIT, false));
+						level.setBlockAndUpdate(getBlockPos(), getBlockState().setValue(AlloySmelterBlock.LIT, false));
 						currentSmeltTime = 0;
-						ItemStack output = getRecipe(inventory.getStackInSlot(0)).getResultItem();
+						ItemStack output = recipe.getResultItem();
 						inventory.insertItem(1, output.copy(), false);
-						inventory.decreaseStackSize(0, 1);
+
+						inventory.shrink(0, recipe.getCount(inventory.getItem(0)));
 						dirty = true;
 					}
 				}
 			} else {
-				level.setBlockAndUpdate(getBlockPos(), getBlockState().setValue(MetalPressBlock.LIT, false));
+				level.setBlockAndUpdate(getBlockPos(), getBlockState().setValue(AlloySmelterBlock.LIT, false));
 				currentSmeltTime = 0;
 				dirty = true;
 			}

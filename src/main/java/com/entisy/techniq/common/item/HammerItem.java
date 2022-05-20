@@ -6,7 +6,7 @@ import net.minecraft.item.ItemStack;
 public class HammerItem extends Item {
 
 	public HammerItem(Properties properties) {
-		super(properties.defaultDurability(110).durability(110));
+		super(properties.defaultDurability(110));
 	}
 	
 	@Override

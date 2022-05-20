@@ -14,6 +14,7 @@ import com.entisy.techniq.common.container.ElectricalFurnaceContainer;
 import com.entisy.techniq.common.itemHandlers.ElectricalFurnaceItemHandler;
 import com.entisy.techniq.common.recipe.alloySmelter.AlloySmelterRecipe;
 import com.entisy.techniq.common.recipe.electricalFurnace.ElectricalFurnaceRecipe;
+import com.entisy.techniq.core.energy.ModEnergyHandler;
 import com.entisy.techniq.core.init.RecipeSerializerInit;
 import com.entisy.techniq.core.init.TileEntityTypesInit;
 
@@ -45,6 +46,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.wrapper.RecipeWrapper;
@@ -57,10 +59,17 @@ public class ElectricalFurnaceTileEntity extends TileEntity implements ITickable
 	public final int maxSmeltTime = 60;
 	private ElectricalFurnaceItemHandler inventory;
 
+	public static int currentEnergy = 5000;
+	public static final int maxEnergy = 25000;
+	public static final int maxEnergyReceive = 200;
+	public static final int maxEnergyExtract = 200;
+
 	public ElectricalFurnaceTileEntity(TileEntityType<?> type) {
 		super(type);
 		inventory = new ElectricalFurnaceItemHandler(slots);
 	}
+
+	LazyOptional<IEnergyStorage> energyStorageLazyOptional = LazyOptional.of(() -> new ModEnergyHandler(maxEnergy, maxEnergyReceive, maxEnergyExtract, currentEnergy));
 
 	public ElectricalFurnaceTileEntity() {
 		this(TileEntityTypesInit.ELECTRICAL_FURNACE_TILE_ENTITY.get());
@@ -78,18 +87,23 @@ public class ElectricalFurnaceTileEntity extends TileEntity implements ITickable
 			ElectricalFurnaceRecipe recipe = getRecipe(inventory.getItem(0));
 
 			if (recipe != null) {
-				if (currentSmeltTime != maxSmeltTime) {
-					level.setBlockAndUpdate(getBlockPos(), getBlockState().setValue(AlloySmelterBlock.LIT, true));
-					currentSmeltTime++;
-					dirty = true;
-				} else {
-					level.setBlockAndUpdate(getBlockPos(), getBlockState().setValue(AlloySmelterBlock.LIT, false));
-					currentSmeltTime = 0;
-					ItemStack output = recipe.getResultItem();
-					inventory.insertItem(1, output.copy(), false);
-
-					inventory.shrink(0, recipe.getCount(inventory.getItem(0)));
-					dirty = true;
+				if (currentEnergy >= recipe.getRequiredEnergy()) {
+					if (currentSmeltTime != maxSmeltTime) {
+						level.setBlockAndUpdate(getBlockPos(), getBlockState().setValue(AlloySmelterBlock.LIT, true));
+						currentSmeltTime++;
+						dirty = true;
+					} else {
+						energyStorageLazyOptional.ifPresent(iEnergyStorage -> {
+							iEnergyStorage.extractEnergy(recipe.getRequiredEnergy(), false);
+							currentEnergy = iEnergyStorage.getEnergyStored();
+						});
+						level.setBlockAndUpdate(getBlockPos(), getBlockState().setValue(AlloySmelterBlock.LIT, false));
+						currentSmeltTime = 0;
+						ItemStack output = recipe.getResultItem();
+						inventory.insertItem(1, output.copy(), false);
+						inventory.shrink(0, recipe.getCount(inventory.getItem(0)));
+						dirty = true;
+					}
 				}
 			} else {
 				level.setBlockAndUpdate(getBlockPos(), getBlockState().setValue(AlloySmelterBlock.LIT, false));
@@ -135,6 +149,9 @@ public class ElectricalFurnaceTileEntity extends TileEntity implements ITickable
 		ItemStackHelper.loadAllItems(nbt, inv);
 		inventory.setNonNullList(inv);
 		currentSmeltTime = nbt.getInt("CurrentSmeltTime");
+		energyStorageLazyOptional.ifPresent(iEnergyStorage -> {
+			currentEnergy = nbt.getInt("CurrentEnergy") | iEnergyStorage.getEnergyStored();
+		});
 	}
 
 	@Override
@@ -145,6 +162,9 @@ public class ElectricalFurnaceTileEntity extends TileEntity implements ITickable
 		}
 		ItemStackHelper.saveAllItems(nbt, inventory.toNonNullList());
 		nbt.putInt("CurrentSmeltTime", currentSmeltTime);
+		energyStorageLazyOptional.ifPresent(iEnergyStorage -> {
+			nbt.putInt("CurrentEnergy", iEnergyStorage.getEnergyStored());
+		});
 		return nbt;
 	}
 

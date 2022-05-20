@@ -18,7 +18,7 @@ public class MetalPressRecipeSerializer extends ForgeRegistryEntry<IRecipeSerial
 	public MetalPressRecipe fromJson(ResourceLocation id, JsonObject json) {
 		Ingredient input = Ingredient.fromJson(JSONUtils.getAsJsonObject(json, "input"));
 		ItemStack output = CraftingHelper.getItemStack(JSONUtils.getAsJsonObject(json, "output"), true);
-		int energyNeeded = JSONUtils.getAsInt(json, "energy_needed");
+		int energyNeeded = json.get("required_energy").getAsInt();
 		return new MetalPressRecipe(id, input, output, energyNeeded);
 	}
 

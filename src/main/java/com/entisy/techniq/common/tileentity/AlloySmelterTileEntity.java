@@ -58,7 +58,7 @@ public class AlloySmelterTileEntity extends TileEntity implements ITickableTileE
 	public final int maxSmeltTime = 120;
 	private AlloySmelterItemHandler inventory;
 
-	public static int currentEnergy = 400;
+	public static int currentEnergy = 5000;
 	public static final int maxEnergy = 25000;
 	public static final int maxEnergyReceive = 200;
 	public static final int maxEnergyExtract = 200;
@@ -85,7 +85,7 @@ public class AlloySmelterTileEntity extends TileEntity implements ITickableTileE
 		if (level != null && !level.isClientSide()) {
 			AlloySmelterRecipe recipe = getRecipe(inventory.getItem(0));
 
-			if (recipe != null && recipe != null) {
+			if (recipe != null) {
 				if (currentEnergy >= recipe.getRequiredEnergy()) {
 					if (currentSmeltTime != maxSmeltTime) {
 						level.setBlockAndUpdate(getBlockPos(), getBlockState().setValue(AlloySmelterBlock.LIT, true));
@@ -102,7 +102,6 @@ public class AlloySmelterTileEntity extends TileEntity implements ITickableTileE
 						inventory.insertItem(2, output.copy(), false);
 
 						inventory.shrink(0, recipe.getCount(inventory.getItem(0)));
-						inventory.shrink(1, recipe.getCount(inventory.getItem(1))); // Game crashes at this line
 						dirty = true;
 					}
 				}
