@@ -37,6 +37,7 @@ public class AlloySmelterBlock extends MachineBlock
 	public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
 	public static final BooleanProperty LIT = BooleanProperty.create("lit");
 
+
 	public AlloySmelterBlock() {
 		registerDefaultState(stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(LIT, false));
 	}
