@@ -63,9 +63,6 @@ public class MetalPressRecipe implements IMetalPressRecipe {
 
 	@Override
 	public boolean matches(RecipeWrapper wrapper, World world) {
-		if (input.test(wrapper.getItem(0))) {
-			return true;
-		}
-		return false;
+		return input.test(wrapper.getItem(0));
 	}
 }
