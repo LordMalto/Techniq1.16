@@ -61,8 +61,8 @@ public class AlloySmelterContainer extends Container {
 
 		addDataSlot(currentSmeltTime = new FunctionalIntReferenceHolder(() -> tileEntity.currentSmeltTime,
 				v -> tileEntity.currentSmeltTime = v));
-		addDataSlot(currentEnergy = new FunctionalIntReferenceHolder(() -> tileEntity.currentEnergy,
-				value -> tileEntity.currentEnergy = value));
+		addDataSlot(currentEnergy = new FunctionalIntReferenceHolder(() -> tileEntity.currentEnergy.get(),
+				value -> tileEntity.currentEnergy.set(value)));
 	}
 
 	public AlloySmelterContainer(final int id, final PlayerInventory inv, final PacketBuffer buffer) {
