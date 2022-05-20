@@ -64,5 +64,6 @@ public class ModBlockTagsProvider extends BlockTagsProvider
         tag(TagsInit.Blocks.MACHINE_BLOCKS).add(BlockInit.ELECTRICAL_FURNACE.get());
         tag(TagsInit.Blocks.MACHINE_BLOCKS).add(BlockInit.METAL_PRESS.get());
         tag(TagsInit.Blocks.MACHINE_BLOCKS).add(BlockInit.CABLE.get());
+        tag(TagsInit.Blocks.MACHINE_BLOCKS).add(BlockInit.TRANSFER_NODE.get());
     }
 }

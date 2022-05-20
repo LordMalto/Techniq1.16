@@ -2,6 +2,7 @@ package com.entisy.techniq.core.init;
 
 import com.entisy.techniq.Techniq;
 import com.entisy.techniq.common.block.cable.CableTileEntity;
+import com.entisy.techniq.common.block.transferNodes.TransferNodeTileEntity;
 import com.entisy.techniq.common.tileentity.AlloySmelterTileEntity;
 import com.entisy.techniq.common.tileentity.BlockBreakerTileEntity;
 import com.entisy.techniq.common.tileentity.DisplayCaseTileEntity;
@@ -36,4 +37,7 @@ public class TileEntityTypesInit {
 	public static final RegistryObject<TileEntityType<CableTileEntity>> CABLE_TILE_ENTITY = TILE_ENTITY_TYPES
 			.register("cable", () -> TileEntityType.Builder
 					.of(CableTileEntity::new, BlockInit.CABLE.get()).build(null));
+	public static final RegistryObject<TileEntityType<TransferNodeTileEntity>> TRANSFER_NODE_TILE_ENTITY = TILE_ENTITY_TYPES
+			.register("transfer_node", () -> TileEntityType.Builder
+					.of(TransferNodeTileEntity::new, BlockInit.TRANSFER_NODE.get()).build(null));
 }

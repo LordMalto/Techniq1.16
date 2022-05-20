@@ -4,6 +4,7 @@ import com.entisy.techniq.Techniq;
 import com.entisy.techniq.common.block.*;
 import com.entisy.techniq.common.block.cable.CableBlock;
 
+import com.entisy.techniq.common.block.transferNodes.TransferNodeBlock;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
@@ -89,4 +90,6 @@ public class BlockInit {
 	 */
 	public static final RegistryObject<Block> CABLE = BLOCKS.register("cable",
 			() -> new CableBlock(AbstractBlock.Properties.of(Material.DECORATION).strength(1, 5)));
+	public static final RegistryObject<Block> TRANSFER_NODE = BLOCKS.register("transfer_node",
+			() -> new TransferNodeBlock(AbstractBlock.Properties.of(Material.DECORATION).strength(1, 5)));
 }
