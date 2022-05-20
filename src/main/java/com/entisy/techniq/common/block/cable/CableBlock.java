@@ -117,9 +117,6 @@ public class CableBlock extends SixWayMachineBlock {
 				}
 			}
 		}
-		if (tileEntity instanceof MachineTileEntity) {
-			return ConnectionType.OUT;
-		}
 		return ConnectionType.NONE;
 	}
 

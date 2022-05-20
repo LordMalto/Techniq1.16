@@ -5,7 +5,9 @@ import com.entisy.techniq.common.block.AlloySmelterBlock;
 import com.entisy.techniq.common.block.FurnaceGeneratorBlock;
 import com.entisy.techniq.common.container.FurnaceGeneratorContainer;
 import com.entisy.techniq.core.energy.EnergyStorageImpl;
+import com.entisy.techniq.core.energy.IEnergyHandler;
 import com.entisy.techniq.core.init.TileEntityTypesInit;
+import com.entisy.techniq.core.util.EnergyUtils;
 import com.entisy.techniq.core.util.SimpleMap;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -20,7 +22,7 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.common.util.Constants;
 
-public class FurnaceGeneratorTileEntity extends MachineTileEntity implements ITickableTileEntity, INamedContainerProvider {
+public class FurnaceGeneratorTileEntity extends MachineTileEntity implements ITickableTileEntity, INamedContainerProvider, IEnergyHandler {
 
     //Item - RF in total
     public static final SimpleMap<Item, Integer> AVAILABLE_FUELS = new SimpleMap<>();
@@ -50,6 +52,9 @@ public class FurnaceGeneratorTileEntity extends MachineTileEntity implements ITi
     public void tick() {
         boolean dirty = false;
         if (level != null && !level.isClientSide()) {
+            if (maxEnergyExtract > 0) {
+                EnergyUtils.trySendToNeighbors(level, worldPosition, this, maxEnergyExtract);
+            }
             if (AVAILABLE_FUELS.getKeys().contains(inventory.getStackInSlot(0).getItem())) {
                 Item fuel = inventory.getStackInSlot(0).getItem();
                 if (currentEnergy + AVAILABLE_FUELS.getValue(fuel) < maxEnergy) {
@@ -103,5 +108,10 @@ public class FurnaceGeneratorTileEntity extends MachineTileEntity implements ITi
 
     public int getMaxSmeltTime() {
         return 200;
+    }
+
+    @Override
+    public EnergyStorageImpl getEnergyImpl() {
+        return energyStorage;
     }
 }

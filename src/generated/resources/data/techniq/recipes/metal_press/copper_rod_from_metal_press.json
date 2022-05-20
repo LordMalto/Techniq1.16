@@ -7,5 +7,5 @@
     "item": "techniq:copper_rod"
   },
   "required_energy": 200,
-  "smelt_time": 20
+  "smelt_time": 200
 }
