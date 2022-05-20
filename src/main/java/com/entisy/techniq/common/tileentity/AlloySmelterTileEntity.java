@@ -17,6 +17,7 @@ import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.item.crafting.Ingredient;
@@ -54,7 +55,7 @@ public class AlloySmelterTileEntity extends MachineTileEntity implements ITickab
     public final int maxSmeltTime = 120;
     private AlloySmelterItemHandler inventory;
 
-    public int currentEnergy;
+    public int currentEnergy = 0;
     public static final int maxEnergy = 25000;
     public static final int maxEnergyReceive = 200;
     public static final int maxEnergyExtract = 200;
@@ -67,7 +68,7 @@ public class AlloySmelterTileEntity extends MachineTileEntity implements ITickab
         super(type);
         inventory = new AlloySmelterItemHandler(slots);
         energyStorage = createEnergy(maxEnergy);
-        energy = LazyOptional.of(()-> energyStorage);
+        energy = LazyOptional.of(() -> energyStorage);
     }
 
     public AlloySmelterTileEntity() {
@@ -88,9 +89,11 @@ public class AlloySmelterTileEntity extends MachineTileEntity implements ITickab
             if (recipe != null) {
                 if (currentEnergy >= recipe.getRequiredEnergy()) {
                     if (currentSmeltTime != maxSmeltTime) {
-                        level.setBlockAndUpdate(getBlockPos(), getBlockState().setValue(AlloySmelterBlock.LIT, true));
-                        currentSmeltTime++;
-                        dirty = true;
+                        if ((inventory.getStackInSlot(2).sameItem(recipe.getResultItem()) || inventory.getStackInSlot(2).getItem() == Items.AIR) && inventory.getStackInSlot(2).getCount() < 64) {
+                            level.setBlockAndUpdate(getBlockPos(), getBlockState().setValue(AlloySmelterBlock.LIT, true));
+                            currentSmeltTime++;
+                            dirty = true;
+                        }
                     } else {
                         energy.ifPresent(iEnergyStorage -> {
                             iEnergyStorage.extractEnergy(recipe.getRequiredEnergy(), false);
@@ -154,7 +157,7 @@ public class AlloySmelterTileEntity extends MachineTileEntity implements ITickab
         inventory.setNonNullList(inv);
         currentSmeltTime = nbt.getInt("CurrentSmeltTime");
         currentEnergy = nbt.getInt("CurrentEnergy");
-        energyStorage.setEnergy(currentEnergy);
+        energyStorage.setEnergy(currentEnergy); //Original
     }
 
     @Override
@@ -253,8 +256,8 @@ public class AlloySmelterTileEntity extends MachineTileEntity implements ITickab
     }
 
 
-    private ModEnergyStorage createEnergy(int capacity){
-        return new ModEnergyStorage(capacity,maxEnergyReceive,maxEnergyExtract,currentEnergy);
+    private ModEnergyStorage createEnergy(int capacity) {
+        return new ModEnergyStorage(capacity, maxEnergyReceive, maxEnergyExtract, currentEnergy);
     }
 
     @Override

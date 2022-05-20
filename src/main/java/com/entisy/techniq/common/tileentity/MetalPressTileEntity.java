@@ -17,6 +17,7 @@ import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.item.crafting.Ingredient;
@@ -89,9 +90,11 @@ public class MetalPressTileEntity extends MachineTileEntity implements ITickable
 			if (recipe != null) {
 				if (currentEnergy >= recipe.getRequiredEnergy()) {
 					if (currentSmeltTime != maxSmeltTime) {
-						level.setBlockAndUpdate(getBlockPos(), getBlockState().setValue(AlloySmelterBlock.LIT, true));
-						currentSmeltTime++;
-						dirty = true;
+						if ((inventory.getStackInSlot(2).sameItem(recipe.getResultItem()) || inventory.getStackInSlot(2).getItem() == Items.AIR) && inventory.getStackInSlot(2).getCount() < 64) {
+							level.setBlockAndUpdate(getBlockPos(), getBlockState().setValue(AlloySmelterBlock.LIT, true));
+							currentSmeltTime++;
+							dirty = true;
+						}
 					} else {
 						energy.ifPresent(iEnergyStorage -> {
 							iEnergyStorage.extractEnergy(recipe.getRequiredEnergy(), false);
