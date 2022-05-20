@@ -36,6 +36,14 @@ public class SimpleMap<K, V> {
         return keys.list();
     }
 
+    public K[] getKeyArray() {
+        return keys.get();
+    }
+
+    public V[] getValueArray() {
+        return values.get();
+    }
+
     public List<V> getValues() {
         return values.list();
     }
