@@ -46,6 +46,8 @@ public class ModItemModelProvider extends ItemModelProvider {
 		withExistingParent("metal_press", modLoc("block/metal_press"));
 		withExistingParent("alloy_smelter", modLoc("block/alloy_smelter"));
 		withExistingParent("steel_block", modLoc("block/steel_block"));
+		withExistingParent("battery",modLoc("block/battery"));
+		withExistingParent("furnace_generator",modLoc("block/furnace_generator"));
 
 		ModelFile itemGenerated = getExistingFile(mcLoc("item/generated"));
 

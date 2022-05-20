@@ -81,6 +81,10 @@ public class BlockInit {
 			() -> new ElectricalFurnaceBlock());
 	public static final RegistryObject<Block> ALLOY_SMELTER = BLOCKS.register("alloy_smelter",
 			() -> new AlloySmelterBlock());
+	public static final RegistryObject<Block> BATTERY = BLOCKS.register("battery",
+			() -> new BatteryBlock());
+	public static final RegistryObject<Block> FURNACE_GENERATOR = BLOCKS.register("furnace_generator",
+			() -> new FurnaceGeneratorBlock());
 	
 	/*
 	 * CABLES

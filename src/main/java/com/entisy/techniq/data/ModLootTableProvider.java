@@ -7,6 +7,7 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
+import com.entisy.techniq.common.block.BatteryBlock;
 import com.entisy.techniq.core.init.BlockInit;
 import com.google.common.collect.ImmutableList;
 import com.mojang.datafixers.util.Pair;
@@ -74,6 +75,8 @@ public class ModLootTableProvider extends LootTableProvider
             dropSelf(BlockInit.CABLE.get());
             dropSelf(BlockInit.TRANSFER_NODE.get());
             dropSelf(BlockInit.STEEL_BLOCK.get());
+            dropSelf(BlockInit.BATTERY.get());
+            dropSelf(BlockInit.FURNACE_GENERATOR.get());
 
             //dropOther(ModBlocks.MACHINE_BLOCK.get(), ModItems.RUBY.get());
 

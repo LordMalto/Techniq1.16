@@ -46,6 +46,8 @@ public class ModBlockStateProvider extends BlockStateProvider {
 		simpleBlock(BlockInit.ELECTRICAL_FURNACE.get());
 		simpleBlock(BlockInit.METAL_PRESS.get());
 		simpleBlock(BlockInit.ALLOY_SMELTER.get());
+		simpleBlock(BlockInit.BATTERY.get());
+		simpleBlock(BlockInit.FURNACE_GENERATOR.get());
 		
 //		horizontalBlock(BlockInit.ELECTRICAL_FURNACE.get(),
 //				models().orientableWithBottom(BlockInit.ELECTRICAL_FURNACE.get().getRegistryName().getPath(),

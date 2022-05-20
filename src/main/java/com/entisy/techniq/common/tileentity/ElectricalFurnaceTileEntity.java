@@ -1,21 +1,13 @@
 package com.entisy.techniq.common.tileentity;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.stream.Collectors;
-
-import javax.annotation.Nullable;
-
 import com.entisy.techniq.Techniq;
 import com.entisy.techniq.common.block.AlloySmelterBlock;
 import com.entisy.techniq.common.container.ElectricalFurnaceContainer;
 import com.entisy.techniq.common.itemHandlers.ElectricalFurnaceItemHandler;
 import com.entisy.techniq.common.recipe.electricalFurnace.ElectricalFurnaceRecipe;
-import com.entisy.techniq.core.energy.ModEnergyStorage;
+import com.entisy.techniq.core.energy.EnergyStorageImpl;
 import com.entisy.techniq.core.init.RecipeSerializerInit;
 import com.entisy.techniq.core.init.TileEntityTypesInit;
-
 import net.minecraft.block.BlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.world.ClientWorld;
@@ -49,6 +41,12 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.wrapper.RecipeWrapper;
 
+import javax.annotation.Nullable;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 public class ElectricalFurnaceTileEntity extends MachineTileEntity implements ITickableTileEntity, INamedContainerProvider {
 
 	public static final int slots = 2;
@@ -60,7 +58,7 @@ public class ElectricalFurnaceTileEntity extends MachineTileEntity implements IT
 	public int currentEnergy;
 	public static final int maxEnergy = 25000;
 	public static final int maxEnergyReceive = 200;
-	public static final int maxEnergyExtract = 200;
+	public static final int maxEnergyExtract = 0;
 
 	public ElectricalFurnaceTileEntity(TileEntityType<?> type) {
 		super(type);
@@ -68,7 +66,7 @@ public class ElectricalFurnaceTileEntity extends MachineTileEntity implements IT
 		energyStorage = createEnergy(maxEnergy);
 		energy = LazyOptional.of(()-> energyStorage);
 	}
-	private final ModEnergyStorage energyStorage;
+	private final EnergyStorageImpl energyStorage;
 
 	private final LazyOptional<IEnergyStorage> energy;
 
@@ -97,7 +95,7 @@ public class ElectricalFurnaceTileEntity extends MachineTileEntity implements IT
 						}
 					} else {
 						energy.ifPresent(iEnergyStorage -> {
-							iEnergyStorage.extractEnergy(recipe.getRequiredEnergy(), false);
+							((EnergyStorageImpl)iEnergyStorage).setEnergyDirectly(iEnergyStorage.getEnergyStored() - recipe.getRequiredEnergy());
 							currentEnergy = iEnergyStorage.getEnergyStored();
 						});
 						level.setBlockAndUpdate(getBlockPos(), getBlockState().setValue(AlloySmelterBlock.LIT, false));
@@ -153,7 +151,7 @@ public class ElectricalFurnaceTileEntity extends MachineTileEntity implements IT
 		inventory.setNonNullList(inv);
 		currentSmeltTime = nbt.getInt("CurrentSmeltTime");
 		currentEnergy = nbt.getInt("CurrentEnergy");
-		energyStorage.setEnergy(currentEnergy);
+		energyStorage.setEnergyDirectly(currentEnergy);
 	}
 
 	@Override
@@ -247,8 +245,8 @@ public class ElectricalFurnaceTileEntity extends MachineTileEntity implements IT
 	public IItemHandler getInventory() {
 		return inventory;
 	}
-	private ModEnergyStorage createEnergy(int capacity){
-		return new ModEnergyStorage(capacity,maxEnergyReceive,maxEnergyExtract,currentEnergy);
+	private EnergyStorageImpl createEnergy(int capacity){
+		return new EnergyStorageImpl(capacity,maxEnergyReceive,maxEnergyExtract,this);
 	}
 	@Override
 	protected void invalidateCaps() {

@@ -8,6 +8,7 @@ import java.util.Set;
 
 import com.entisy.techniq.api.ConnectionType;
 
+import com.entisy.techniq.core.util.EnergyUtils;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
@@ -97,20 +98,20 @@ public class CableNetwork implements IEnergyStorage {
         buildConnections();
 
         // Send stored energy to connected blocks
-//        for (Map.Entry<BlockPos, Set<Connection>> entry : connections.entrySet()) {
-//            BlockPos pos = entry.getKey();
-//            Set<Connection> connections = entry.getValue();
-//            for (Connection con : connections) {
-//                if (con.type.canExtract()) {
-//                    IEnergyStorage energy = EnergyUtils.getEnergy(world, pos.relative(con.side));
-//                    if (energy != null && energy.canReceive()) {
-//                        int toSend = extractEnergy(TRANSFER_PER_CONNECTION, true);
-//                        int accepted = energy.receiveEnergy(toSend, false);
-//                        extractEnergy(accepted, false);
-//                  }
-//                }
-//            }
-//        }
+        for (Map.Entry<BlockPos, Set<Connection>> entry : connections.entrySet()) {
+            BlockPos pos = entry.getKey();
+            Set<Connection> connections = entry.getValue();
+            for (Connection con : connections) {
+                if (con.type.canExtract()) {
+                    IEnergyStorage energy = EnergyUtils.getEnergy(world, pos.relative(con.side));
+                    if (energy != null && energy.canReceive()) {
+                        int toSend = extractEnergy(TRANSFER_PER_CONNECTION, true);
+                        int accepted = energy.receiveEnergy(toSend, false);
+                        extractEnergy(accepted, false);
+                  }
+                }
+            }
+        }
     }
 
     @Override

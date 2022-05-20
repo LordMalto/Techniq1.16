@@ -3,11 +3,7 @@ package com.entisy.techniq.core.init;
 import com.entisy.techniq.Techniq;
 import com.entisy.techniq.common.block.cable.CableTileEntity;
 import com.entisy.techniq.common.block.transferNodes.TransferNodeTileEntity;
-import com.entisy.techniq.common.tileentity.AlloySmelterTileEntity;
-import com.entisy.techniq.common.tileentity.BlockBreakerTileEntity;
-import com.entisy.techniq.common.tileentity.DisplayCaseTileEntity;
-import com.entisy.techniq.common.tileentity.ElectricalFurnaceTileEntity;
-import com.entisy.techniq.common.tileentity.MetalPressTileEntity;
+import com.entisy.techniq.common.tileentity.*;
 
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraftforge.fml.RegistryObject;
@@ -40,4 +36,11 @@ public class TileEntityTypesInit {
 	public static final RegistryObject<TileEntityType<TransferNodeTileEntity>> TRANSFER_NODE_TILE_ENTITY = TILE_ENTITY_TYPES
 			.register("transfer_node", () -> TileEntityType.Builder
 					.of(TransferNodeTileEntity::new, BlockInit.TRANSFER_NODE.get()).build(null));
+	public static final RegistryObject<TileEntityType<BatteryTileEntity>> BATTERY_TILE_ENTITY = TILE_ENTITY_TYPES
+			.register("battery", () -> TileEntityType.Builder
+					.of(BatteryTileEntity::new, BlockInit.BATTERY.get()).build(null));
+
+	public static final RegistryObject<TileEntityType<FurnaceGeneratorTileEntity>> FURNACE_GENERATOR_TILE_ENTITY = TILE_ENTITY_TYPES
+			.register("furnace_generator", () -> TileEntityType.Builder
+					.of(FurnaceGeneratorTileEntity::new, BlockInit.FURNACE_GENERATOR.get()).build(null));
 }

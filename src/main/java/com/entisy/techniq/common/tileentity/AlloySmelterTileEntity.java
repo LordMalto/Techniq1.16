@@ -5,7 +5,7 @@ import com.entisy.techniq.common.block.AlloySmelterBlock;
 import com.entisy.techniq.common.container.AlloySmelterContainer;
 import com.entisy.techniq.common.itemHandlers.AlloySmelterItemHandler;
 import com.entisy.techniq.common.recipe.alloySmelter.AlloySmelterRecipe;
-import com.entisy.techniq.core.energy.ModEnergyStorage;
+import com.entisy.techniq.core.energy.EnergyStorageImpl;
 import com.entisy.techniq.core.init.RecipeSerializerInit;
 import com.entisy.techniq.core.init.TileEntityTypesInit;
 import net.minecraft.block.BlockState;
@@ -58,9 +58,9 @@ public class AlloySmelterTileEntity extends MachineTileEntity implements ITickab
     public int currentEnergy = 0;
     public static final int maxEnergy = 25000;
     public static final int maxEnergyReceive = 200;
-    public static final int maxEnergyExtract = 200;
+    public static final int maxEnergyExtract = 0;
 
-    private final ModEnergyStorage energyStorage;
+    private final EnergyStorageImpl energyStorage;
 
     private final LazyOptional<IEnergyStorage> energy;
 
@@ -96,8 +96,8 @@ public class AlloySmelterTileEntity extends MachineTileEntity implements ITickab
                         }
                     } else {
                         energy.ifPresent(iEnergyStorage -> {
-                            iEnergyStorage.extractEnergy(recipe.getRequiredEnergy(), false);
-                            currentEnergy = (iEnergyStorage.getEnergyStored());
+                            ((EnergyStorageImpl)iEnergyStorage).setEnergyDirectly(iEnergyStorage.getEnergyStored() - recipe.getRequiredEnergy());
+                            currentEnergy = iEnergyStorage.getEnergyStored();
                         });
 
                         level.setBlockAndUpdate(getBlockPos(), getBlockState().setValue(AlloySmelterBlock.LIT, false));
@@ -157,7 +157,7 @@ public class AlloySmelterTileEntity extends MachineTileEntity implements ITickab
         inventory.setNonNullList(inv);
         currentSmeltTime = nbt.getInt("CurrentSmeltTime");
         currentEnergy = nbt.getInt("CurrentEnergy");
-        energyStorage.setEnergy(currentEnergy); //Original
+        energyStorage.setEnergyDirectly(currentEnergy); //Original
     }
 
     @Override
@@ -256,8 +256,8 @@ public class AlloySmelterTileEntity extends MachineTileEntity implements ITickab
     }
 
 
-    private ModEnergyStorage createEnergy(int capacity) {
-        return new ModEnergyStorage(capacity, maxEnergyReceive, maxEnergyExtract, currentEnergy);
+    private EnergyStorageImpl createEnergy(int capacity) {
+        return new EnergyStorageImpl(capacity, maxEnergyReceive, maxEnergyExtract,this);
     }
 
     @Override

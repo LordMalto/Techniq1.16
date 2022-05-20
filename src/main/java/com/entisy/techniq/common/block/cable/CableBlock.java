@@ -7,6 +7,7 @@ import javax.annotation.Nullable;
 import com.entisy.techniq.api.ConnectionType;
 import com.entisy.techniq.common.block.SixWayMachineBlock;
 import com.entisy.techniq.common.tileentity.MachineTileEntity;
+import com.entisy.techniq.core.util.EnergyUtils;
 import com.google.common.collect.Maps;
 
 import net.minecraft.block.Block;
@@ -106,15 +107,15 @@ public class CableBlock extends SixWayMachineBlock {
 		TileEntity tileEntity = worldIn.getBlockEntity(pos.relative(side));
 		if (tileEntity instanceof CableTileEntity) {
 			return ConnectionType.BOTH;
-//		} else if (tileEntity != null) {
-//			IEnergyStorage energy = EnergyUtils.getEnergyFromSideOrNull(tileEntity, side.getOpposite());
-//			if (energy != null) {
-//				if (energy.canExtract()) {
-//					return current == ConnectionType.NONE ? ConnectionType.IN : current;
-//				} else if (energy.canReceive()) {
-//					return current == ConnectionType.NONE ? ConnectionType.OUT : current;
-//				}
-//			}
+		} else if (tileEntity != null) {
+			IEnergyStorage energy = EnergyUtils.getEnergyFromSideOrNull(tileEntity, side.getOpposite());
+			if (energy != null) {
+				if (energy.canExtract()) {
+					return current == ConnectionType.NONE ? ConnectionType.IN : current;
+				} else if (energy.canReceive()) {
+					return current == ConnectionType.NONE ? ConnectionType.OUT : current;
+				}
+			}
 		}
 		if (tileEntity instanceof MachineTileEntity) {
 			return ConnectionType.OUT;

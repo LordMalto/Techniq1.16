@@ -1,12 +1,10 @@
 package com.entisy.techniq.core.init;
 
 import com.entisy.techniq.Techniq;
-import com.entisy.techniq.common.container.AlloySmelterContainer;
-import com.entisy.techniq.common.container.DisplayCaseContainer;
-import com.entisy.techniq.common.container.ElectricalFurnaceContainer;
-import com.entisy.techniq.common.container.MetalPressContainer;
+import com.entisy.techniq.common.container.*;
 
 import net.minecraft.inventory.container.ContainerType;
+import net.minecraft.inventory.container.FurnaceContainer;
 import net.minecraftforge.common.extensions.IForgeContainerType;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
@@ -25,4 +23,8 @@ public class ContainerTypesInit {
 			.register("electrical_furnace", () -> IForgeContainerType.create(ElectricalFurnaceContainer::new));
 	public static final RegistryObject<ContainerType<AlloySmelterContainer>> ALLOY_SMELTER_CONTAINER_TYPE = CONTAINER_TYPES
 			.register("alloy_smelter", () -> IForgeContainerType.create(AlloySmelterContainer::new));
+	public static final RegistryObject<ContainerType<BatteryContainer>> BATTERY_CONTAINER_TYPE = CONTAINER_TYPES
+			.register("battery", () -> IForgeContainerType.create(BatteryContainer::new));
+	public static final RegistryObject<ContainerType<FurnaceGeneratorContainer>> FURNACE_GENERATOR_CONTAINER_TYPE = CONTAINER_TYPES
+			.register("furnace_container", () -> IForgeContainerType.create(FurnaceGeneratorContainer::new));
 }

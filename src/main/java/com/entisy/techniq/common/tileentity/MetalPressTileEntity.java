@@ -5,7 +5,7 @@ import com.entisy.techniq.common.block.AlloySmelterBlock;
 import com.entisy.techniq.common.container.MetalPressContainer;
 import com.entisy.techniq.common.itemHandlers.MetalPressItemHandler;
 import com.entisy.techniq.common.recipe.metalPress.MetalPressRecipe;
-import com.entisy.techniq.core.energy.ModEnergyStorage;
+import com.entisy.techniq.core.energy.EnergyStorageImpl;
 import com.entisy.techniq.core.init.RecipeSerializerInit;
 import com.entisy.techniq.core.init.TileEntityTypesInit;
 import net.minecraft.block.BlockState;
@@ -59,9 +59,9 @@ public class MetalPressTileEntity extends MachineTileEntity implements ITickable
 	public int currentEnergy;
 	public static final int maxEnergy = 25000;
 	public static final int maxEnergyReceive = 200;
-	public static final int maxEnergyExtract = 200;
+	public static final int maxEnergyExtract = 0;
 
-	private final ModEnergyStorage energyStorage;
+	private final EnergyStorageImpl energyStorage;
 
 	private final LazyOptional<IEnergyStorage> energy;
 
@@ -97,7 +97,7 @@ public class MetalPressTileEntity extends MachineTileEntity implements ITickable
 						}
 					} else {
 						energy.ifPresent(iEnergyStorage -> {
-							iEnergyStorage.extractEnergy(recipe.getRequiredEnergy(), false);
+							((EnergyStorageImpl)iEnergyStorage).setEnergyDirectly(iEnergyStorage.getEnergyStored() - recipe.getRequiredEnergy());
 							currentEnergy = iEnergyStorage.getEnergyStored();
 						});
 						level.setBlockAndUpdate(getBlockPos(), getBlockState().setValue(AlloySmelterBlock.LIT, false));
@@ -154,7 +154,7 @@ public class MetalPressTileEntity extends MachineTileEntity implements ITickable
 		inventory.setNonNullList(inv);
 		currentSmeltTime = nbt.getInt("CurrentSmeltTime");
 		currentEnergy = nbt.getInt("CurrentEnergy");
-		energyStorage.setEnergy(currentEnergy);
+		energyStorage.setEnergyDirectly(currentEnergy);
 	}
 
 	@Override
@@ -251,8 +251,8 @@ public class MetalPressTileEntity extends MachineTileEntity implements ITickable
 	public IItemHandler getInventory() {
 		return inventory;
 	}
-	private ModEnergyStorage createEnergy(int capacity){
-		return new ModEnergyStorage(capacity,maxEnergyReceive,maxEnergyExtract,currentEnergy);
+	private EnergyStorageImpl createEnergy(int capacity){
+		return new EnergyStorageImpl(capacity,maxEnergyReceive,maxEnergyExtract,this);
 	}
 	@Override
 	protected void invalidateCaps() {
