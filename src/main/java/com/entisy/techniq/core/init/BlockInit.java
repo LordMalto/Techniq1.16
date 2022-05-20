@@ -18,13 +18,15 @@ public class BlockInit {
 	public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS,
 			Techniq.MOD_ID);
 
-	/*
+	/**
 	 * METAL
 	 */
 	public static final RegistryObject<Block> COPPER_BLOCK = BLOCKS.register("copper_block",
 			() -> new Block(AbstractBlock.Properties.copy(Blocks.IRON_BLOCK)));
+	public static final RegistryObject<Block> STEEL_BLOCK = BLOCKS.register("steel_block",
+			() -> new Block(AbstractBlock.Properties.copy(Blocks.IRON_BLOCK)));
 
-	/*
+	/**
 	 * ORE
 	 */
 	public static final RegistryObject<Block> COPPER_ORE = BLOCKS.register("copper_ore",
@@ -79,11 +81,6 @@ public class BlockInit {
 			() -> new ElectricalFurnaceBlock());
 	public static final RegistryObject<Block> ALLOY_SMELTER = BLOCKS.register("alloy_smelter",
 			() -> new AlloySmelterBlock());
-
-//	public static final RegistryObject<Block> IRON_MACHINE_FRAME = BLOCKS.register("machine_frame",
-//			() -> new IronMachineFrameBlock());
-//	public static final RegistryObject<Block> STEEL_MACHINE_FRAME = BLOCKS.register("heavy_machine_frame",
-//			() -> new SteelMachineFrameBlock());
 	
 	/*
 	 * CABLES

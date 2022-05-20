@@ -27,8 +27,10 @@ public class ModItemTagsProvider extends ItemTagsProvider
         copy(TagsInit.Blocks.ORES_REDSTONE, TagsInit.Items.ORES_REDSTONE);
         copy(TagsInit.Blocks.ORES_EMERALD, TagsInit.Items.ORES_EMERALD);
         copy(TagsInit.Blocks.ORES_DIAMOND, TagsInit.Items.ORES_DIAMOND);
+        copy(TagsInit.Blocks.ORES_LAPIS, TagsInit.Items.ORES_LAPIS);
         copy(Tags.Blocks.ORES, Tags.Items.ORES);
         copy(TagsInit.Blocks.STORAGE_BLOCKS_COPPER, TagsInit.Items.STORAGE_BLOCKS_COPPER);
+        copy(TagsInit.Blocks.STORAGE_BLOCKS_STEEL, TagsInit.Items.STORAGE_BLOCKS_STEEL);
         copy(Tags.Blocks.STORAGE_BLOCKS, Tags.Items.STORAGE_BLOCKS);
 
         // MOD TAGS
@@ -43,5 +45,10 @@ public class ModItemTagsProvider extends ItemTagsProvider
         tag(TagsInit.Items.PLATES_IRON).add(ItemInit.IRON_PLATE.get());
         tag(TagsInit.Items.PLATES_GOLD).add(ItemInit.GOLD_PLATE.get());
         tag(TagsInit.Items.PLATES_DIAMOND).add(ItemInit.DIAMOND_PLATE.get());
+        tag(TagsInit.Items.RODS_COPPER).add(ItemInit.COPPER_ROD.get());
+        tag(TagsInit.Items.RODS_IRON).add(ItemInit.IRON_ROD.get());
+        tag(TagsInit.Items.RODS_STEEL).add(ItemInit.STEEL_ROD.get());
+        tag(TagsInit.Items.PLATES_STEEL).add(ItemInit.STEEL_PLATE.get());
+        tag(TagsInit.Items.INGOTS_STEEL).add(ItemInit.STEEL_INGOT.get());
     }
 }

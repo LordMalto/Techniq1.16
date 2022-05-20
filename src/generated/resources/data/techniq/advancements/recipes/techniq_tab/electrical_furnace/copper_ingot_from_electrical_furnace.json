@@ -11,7 +11,7 @@
       "conditions": {
         "items": [
           {
-            "item": "techniq:copper_ore"
+            "tag": "forge:ores/copper"
           }
         ]
       }

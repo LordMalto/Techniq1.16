@@ -41,7 +41,8 @@ public class ModBlockStateProvider extends BlockStateProvider {
 		simpleBlock(BlockInit.NETHER_EMERALD_ORE.get());
 		simpleBlock(BlockInit.END_EMERALD_ORE.get());
 		simpleBlock(BlockInit.DISPLAY_CASE.get());
-		
+		simpleBlock(BlockInit.STEEL_BLOCK.get());
+
 		simpleBlock(BlockInit.ELECTRICAL_FURNACE.get());
 		simpleBlock(BlockInit.METAL_PRESS.get());
 		simpleBlock(BlockInit.ALLOY_SMELTER.get());

@@ -45,9 +45,10 @@ public class ModItemModelProvider extends ItemModelProvider {
 		withExistingParent("electrical_furnace", modLoc("block/electrical_furnace"));
 		withExistingParent("metal_press", modLoc("block/metal_press"));
 		withExistingParent("alloy_smelter", modLoc("block/alloy_smelter"));
-		
+		withExistingParent("steel_block", modLoc("block/steel_block"));
+
 		ModelFile itemGenerated = getExistingFile(mcLoc("item/generated"));
-		
+
 		builder("copper_ingot", itemGenerated);
 		builder("redstone_alloy_ingot", itemGenerated);
 		builder("copper_plate", itemGenerated);
@@ -55,6 +56,11 @@ public class ModItemModelProvider extends ItemModelProvider {
 		builder("gold_plate", itemGenerated);
 		builder("diamond_plate", itemGenerated);
 		builder("hammer", itemGenerated);
+		builder("iron_rod", itemGenerated);
+		builder("copper_rod", itemGenerated);
+		builder("steel_rod", itemGenerated);
+		builder("steel_plate", itemGenerated);
+		builder("steel_ingot", itemGenerated);
 	}
 	
 	private ItemModelBuilder builder(String name, ModelFile parent) {

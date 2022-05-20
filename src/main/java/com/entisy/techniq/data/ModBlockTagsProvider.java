@@ -58,6 +58,8 @@ public class ModBlockTagsProvider extends BlockTagsProvider
         tag(Tags.Blocks.ORES).addTag(TagsInit.Blocks.ORES_IRON);
         tag(TagsInit.Blocks.STORAGE_BLOCKS_COPPER).add(BlockInit.COPPER_BLOCK.get());
         tag(Tags.Blocks.STORAGE_BLOCKS).addTag(TagsInit.Blocks.STORAGE_BLOCKS_COPPER);
+        tag(TagsInit.Blocks.STORAGE_BLOCKS_STEEL).add(BlockInit.STEEL_BLOCK.get());
+        tag(Tags.Blocks.STORAGE_BLOCKS).addTag(TagsInit.Blocks.STORAGE_BLOCKS_STEEL);
 
         // MOD TAGS
         tag(TagsInit.Blocks.MACHINE_BLOCKS).add(BlockInit.ALLOY_SMELTER.get());
