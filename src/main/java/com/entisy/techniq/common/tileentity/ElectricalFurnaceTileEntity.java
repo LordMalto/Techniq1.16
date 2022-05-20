@@ -9,12 +9,10 @@ import javax.annotation.Nullable;
 
 import com.entisy.techniq.Techniq;
 import com.entisy.techniq.common.block.AlloySmelterBlock;
-import com.entisy.techniq.common.block.ElectricalFurnaceBlock;
 import com.entisy.techniq.common.container.ElectricalFurnaceContainer;
 import com.entisy.techniq.common.itemHandlers.ElectricalFurnaceItemHandler;
-import com.entisy.techniq.common.recipe.alloySmelter.AlloySmelterRecipe;
 import com.entisy.techniq.common.recipe.electricalFurnace.ElectricalFurnaceRecipe;
-import com.entisy.techniq.core.energy.ModEnergyHandler;
+import com.entisy.techniq.core.energy.ModEnergyStorage;
 import com.entisy.techniq.core.init.RecipeSerializerInit;
 import com.entisy.techniq.core.init.TileEntityTypesInit;
 
@@ -27,6 +25,7 @@ import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.item.crafting.Ingredient;
@@ -34,7 +33,6 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.NonNullList;
@@ -59,7 +57,7 @@ public class ElectricalFurnaceTileEntity extends MachineTileEntity implements IT
 	public final int maxSmeltTime = 60;
 	private ElectricalFurnaceItemHandler inventory;
 
-	public static int currentEnergy = 5000;
+	public int currentEnergy;
 	public static final int maxEnergy = 25000;
 	public static final int maxEnergyReceive = 200;
 	public static final int maxEnergyExtract = 200;
@@ -67,9 +65,12 @@ public class ElectricalFurnaceTileEntity extends MachineTileEntity implements IT
 	public ElectricalFurnaceTileEntity(TileEntityType<?> type) {
 		super(type);
 		inventory = new ElectricalFurnaceItemHandler(slots);
+		energyStorage = createEnergy(maxEnergy);
+		energy = LazyOptional.of(()-> energyStorage);
 	}
+	private final ModEnergyStorage energyStorage;
 
-	LazyOptional<IEnergyStorage> energyStorageLazyOptional = LazyOptional.of(() -> new ModEnergyHandler(maxEnergy, maxEnergyReceive, maxEnergyExtract, currentEnergy));
+	private final LazyOptional<IEnergyStorage> energy;
 
 	public ElectricalFurnaceTileEntity() {
 		this(TileEntityTypesInit.ELECTRICAL_FURNACE_TILE_ENTITY.get());
@@ -89,11 +90,13 @@ public class ElectricalFurnaceTileEntity extends MachineTileEntity implements IT
 			if (recipe != null) {
 				if (currentEnergy >= recipe.getRequiredEnergy()) {
 					if (currentSmeltTime != maxSmeltTime) {
-						level.setBlockAndUpdate(getBlockPos(), getBlockState().setValue(AlloySmelterBlock.LIT, true));
-						currentSmeltTime++;
-						dirty = true;
+						if ((inventory.getStackInSlot(2).sameItem(recipe.getResultItem()) || inventory.getStackInSlot(2).getItem() == Items.AIR) && inventory.getStackInSlot(2).getCount() < 64) {
+							level.setBlockAndUpdate(getBlockPos(), getBlockState().setValue(AlloySmelterBlock.LIT, true));
+							currentSmeltTime++;
+							dirty = true;
+						}
 					} else {
-						energyStorageLazyOptional.ifPresent(iEnergyStorage -> {
+						energy.ifPresent(iEnergyStorage -> {
 							iEnergyStorage.extractEnergy(recipe.getRequiredEnergy(), false);
 							currentEnergy = iEnergyStorage.getEnergyStored();
 						});
@@ -149,9 +152,8 @@ public class ElectricalFurnaceTileEntity extends MachineTileEntity implements IT
 		ItemStackHelper.loadAllItems(nbt, inv);
 		inventory.setNonNullList(inv);
 		currentSmeltTime = nbt.getInt("CurrentSmeltTime");
-		energyStorageLazyOptional.ifPresent(iEnergyStorage -> {
-			currentEnergy = nbt.getInt("CurrentEnergy") | iEnergyStorage.getEnergyStored();
-		});
+		currentEnergy = nbt.getInt("CurrentEnergy");
+		energyStorage.setEnergy(currentEnergy);
 	}
 
 	@Override
@@ -162,7 +164,7 @@ public class ElectricalFurnaceTileEntity extends MachineTileEntity implements IT
 		}
 		ItemStackHelper.saveAllItems(nbt, inventory.toNonNullList());
 		nbt.putInt("CurrentSmeltTime", currentSmeltTime);
-		energyStorageLazyOptional.ifPresent(iEnergyStorage -> {
+		energy.ifPresent(iEnergyStorage -> {
 			nbt.putInt("CurrentEnergy", iEnergyStorage.getEnergyStored());
 		});
 		return nbt;
@@ -244,5 +246,12 @@ public class ElectricalFurnaceTileEntity extends MachineTileEntity implements IT
 
 	public IItemHandler getInventory() {
 		return inventory;
+	}
+	private ModEnergyStorage createEnergy(int capacity){
+		return new ModEnergyStorage(capacity,maxEnergyReceive,maxEnergyExtract,currentEnergy);
+	}
+	@Override
+	protected void invalidateCaps() {
+		super.invalidateCaps();
 	}
 }
