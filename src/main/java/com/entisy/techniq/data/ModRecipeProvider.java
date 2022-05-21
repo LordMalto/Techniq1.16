@@ -1,9 +1,9 @@
 package com.entisy.techniq.data;
 
 import com.entisy.techniq.Techniq;
-import com.entisy.techniq.common.recipe.alloySmelter.AlloySmelterRecipeBuilder;
-import com.entisy.techniq.common.recipe.metalPress.MetalPressRecipeBuilder;
-import com.entisy.techniq.common.recipe.electricalFurnace.ElectricalFurnaceRecipeBuilder;
+import com.entisy.techniq.common.block.alloySmelter.recipe.AlloySmelterRecipeBuilder;
+import com.entisy.techniq.common.block.metalPress.recipe.MetalPressRecipeBuilder;
+import com.entisy.techniq.common.block.electricalFurnace.recipe.ElectricalFurnaceRecipeBuilder;
 import com.entisy.techniq.core.init.BlockInit;
 import com.entisy.techniq.core.init.ItemInit;
 import com.entisy.techniq.core.init.TagsInit;

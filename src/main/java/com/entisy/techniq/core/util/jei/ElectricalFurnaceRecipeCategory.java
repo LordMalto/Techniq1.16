@@ -1,7 +1,7 @@
 package com.entisy.techniq.core.util.jei;
 
 import com.entisy.techniq.Techniq;
-import com.entisy.techniq.common.recipe.electricalFurnace.ElectricalFurnaceRecipe;
+import com.entisy.techniq.common.block.electricalFurnace.recipe.ElectricalFurnaceRecipe;
 import com.entisy.techniq.core.init.BlockInit;
 import com.mojang.blaze3d.matrix.MatrixStack;
 

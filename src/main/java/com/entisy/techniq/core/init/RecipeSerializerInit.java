@@ -1,15 +1,15 @@
 package com.entisy.techniq.core.init;
 
 import com.entisy.techniq.Techniq;
-import com.entisy.techniq.common.recipe.alloySmelter.AlloySmelterRecipe;
-import com.entisy.techniq.common.recipe.alloySmelter.AlloySmelterRecipeSerializer;
-import com.entisy.techniq.common.recipe.alloySmelter.IAlloySmelterRecipe;
-import com.entisy.techniq.common.recipe.electricalFurnace.ElectricalFurnaceRecipe;
-import com.entisy.techniq.common.recipe.electricalFurnace.ElectricalFurnaceRecipeSerializer;
-import com.entisy.techniq.common.recipe.electricalFurnace.IElectricalFurnaceRecipe;
-import com.entisy.techniq.common.recipe.metalPress.IMetalPressRecipe;
-import com.entisy.techniq.common.recipe.metalPress.MetalPressRecipe;
-import com.entisy.techniq.common.recipe.metalPress.MetalPressRecipeSerializer;
+import com.entisy.techniq.common.block.alloySmelter.recipe.AlloySmelterRecipe;
+import com.entisy.techniq.common.block.alloySmelter.recipe.AlloySmelterRecipeSerializer;
+import com.entisy.techniq.common.block.alloySmelter.recipe.IAlloySmelterRecipe;
+import com.entisy.techniq.common.block.electricalFurnace.recipe.ElectricalFurnaceRecipe;
+import com.entisy.techniq.common.block.electricalFurnace.recipe.ElectricalFurnaceRecipeSerializer;
+import com.entisy.techniq.common.block.electricalFurnace.recipe.IElectricalFurnaceRecipe;
+import com.entisy.techniq.common.block.metalPress.recipe.IMetalPressRecipe;
+import com.entisy.techniq.common.block.metalPress.recipe.MetalPressRecipe;
+import com.entisy.techniq.common.block.metalPress.recipe.MetalPressRecipeSerializer;
 
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.IRecipeSerializer;

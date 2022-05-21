@@ -1,8 +1,13 @@
 package com.entisy.techniq.core.util;
 
 import com.entisy.techniq.Techniq;
-import com.entisy.techniq.common.client.screen.*;
-import com.entisy.techniq.common.client.tileentityrenderer.DisplayCaseTileEntityRenderer;
+import com.entisy.techniq.common.block.alloySmelter.AlloySmelterScreen;
+import com.entisy.techniq.common.block.battery.BatteryScreen;
+import com.entisy.techniq.common.block.displayCase.DisplayCaseScreen;
+import com.entisy.techniq.common.block.electricalFurnace.ElectricalFurnaceScreen;
+import com.entisy.techniq.common.block.furnaceGenerator.FurnaceGeneratorScreen;
+import com.entisy.techniq.common.block.metalPress.MetalPressScreen;
+import com.entisy.techniq.common.block.displayCase.DisplayCaseTileEntityRenderer;
 import com.entisy.techniq.core.init.ContainerTypesInit;
 import com.entisy.techniq.core.init.TileEntityTypesInit;
 

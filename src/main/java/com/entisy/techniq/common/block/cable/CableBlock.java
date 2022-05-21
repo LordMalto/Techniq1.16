@@ -6,13 +6,11 @@ import javax.annotation.Nullable;
 
 import com.entisy.techniq.api.ConnectionType;
 import com.entisy.techniq.common.block.SixWayMachineBlock;
-import com.entisy.techniq.common.tileentity.MachineTileEntity;
 import com.entisy.techniq.core.util.EnergyUtils;
 import com.google.common.collect.Maps;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.SixWayBlock;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.state.EnumProperty;
 import net.minecraft.state.StateContainer;

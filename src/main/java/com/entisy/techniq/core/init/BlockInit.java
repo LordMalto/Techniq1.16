@@ -1,9 +1,15 @@
 package com.entisy.techniq.core.init;
 
 import com.entisy.techniq.Techniq;
-import com.entisy.techniq.common.block.*;
+import com.entisy.techniq.common.block.alloySmelter.AlloySmelterBlock;
+import com.entisy.techniq.common.block.battery.BatteryBlock;
+import com.entisy.techniq.common.block.blockBreaker.BlockBreakerBlock;
 import com.entisy.techniq.common.block.cable.CableBlock;
 
+import com.entisy.techniq.common.block.displayCase.DisplayCaseBlock;
+import com.entisy.techniq.common.block.electricalFurnace.ElectricalFurnaceBlock;
+import com.entisy.techniq.common.block.furnaceGenerator.FurnaceGeneratorBlock;
+import com.entisy.techniq.common.block.metalPress.MetalPressBlock;
 import com.entisy.techniq.common.block.transferNodes.TransferNodeBlock;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;

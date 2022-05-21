@@ -1,9 +1,15 @@
 package com.entisy.techniq.core.init;
 
 import com.entisy.techniq.Techniq;
+import com.entisy.techniq.common.block.alloySmelter.AlloySmelterTileEntity;
+import com.entisy.techniq.common.block.battery.BatteryTileEntity;
+import com.entisy.techniq.common.block.blockBreaker.BlockBreakerTileEntity;
 import com.entisy.techniq.common.block.cable.CableTileEntity;
+import com.entisy.techniq.common.block.displayCase.DisplayCaseTileEntity;
+import com.entisy.techniq.common.block.electricalFurnace.ElectricalFurnaceTileEntity;
+import com.entisy.techniq.common.block.furnaceGenerator.FurnaceGeneratorTileEntity;
+import com.entisy.techniq.common.block.metalPress.MetalPressTileEntity;
 import com.entisy.techniq.common.block.transferNodes.TransferNodeTileEntity;
-import com.entisy.techniq.common.tileentity.*;
 
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraftforge.fml.RegistryObject;

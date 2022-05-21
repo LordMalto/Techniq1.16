@@ -1,10 +1,14 @@
 package com.entisy.techniq.core.init;
 
 import com.entisy.techniq.Techniq;
-import com.entisy.techniq.common.container.*;
+import com.entisy.techniq.common.block.alloySmelter.AlloySmelterContainer;
+import com.entisy.techniq.common.block.battery.BatteryContainer;
+import com.entisy.techniq.common.block.displayCase.DisplayCaseContainer;
+import com.entisy.techniq.common.block.electricalFurnace.ElectricalFurnaceContainer;
+import com.entisy.techniq.common.block.furnaceGenerator.FurnaceGeneratorContainer;
+import com.entisy.techniq.common.block.metalPress.MetalPressContainer;
 
 import net.minecraft.inventory.container.ContainerType;
-import net.minecraft.inventory.container.FurnaceContainer;
 import net.minecraftforge.common.extensions.IForgeContainerType;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;

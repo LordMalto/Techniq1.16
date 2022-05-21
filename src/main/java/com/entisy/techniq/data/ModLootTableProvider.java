@@ -7,7 +7,6 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
-import com.entisy.techniq.common.block.BatteryBlock;
 import com.entisy.techniq.core.init.BlockInit;
 import com.google.common.collect.ImmutableList;
 import com.mojang.datafixers.util.Pair;

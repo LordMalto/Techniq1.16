@@ -2,7 +2,7 @@ package com.entisy.techniq.common.block.transferNodes;
 
 import com.entisy.techniq.api.ConnectionType;
 import com.entisy.techniq.common.block.SixWayMachineBlock;
-import com.entisy.techniq.common.tileentity.MachineTileEntity;
+import com.entisy.techniq.common.block.MachineTileEntity;
 import com.google.common.collect.Maps;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
