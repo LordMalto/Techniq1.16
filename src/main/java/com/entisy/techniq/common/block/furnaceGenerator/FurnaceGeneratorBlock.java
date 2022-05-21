@@ -26,9 +26,6 @@ import net.minecraftforge.fml.network.NetworkHooks;
 
 public class FurnaceGeneratorBlock extends MachineBlock
 {
-    public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
-    public static final BooleanProperty LIT = BooleanProperty.create("lit");
-
 
     public FurnaceGeneratorBlock() {
         registerDefaultState(stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(LIT, false));
@@ -45,33 +42,6 @@ public class FurnaceGeneratorBlock extends MachineBlock
     }
 
     @Override
-    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
-        super.createBlockStateDefinition(builder);
-        builder.add(FACING, LIT);
-    }
-
-    @SuppressWarnings("deprecation")
-    @Override
-    public BlockState mirror(BlockState state, Mirror mirror) {
-        return state.rotate(mirror.getRotation(state.getValue(FACING)));
-    }
-
-    @Override
-    public BlockState rotate(BlockState state, Rotation rotation) {
-        return state.setValue(FACING, rotation.rotate(state.getValue(FACING)));
-    }
-
-    @Override
-    public int getLightValue(BlockState state, IBlockReader world, BlockPos pos) {
-        return state.getValue(LIT) ? super.getLightValue(state, world, pos) : 0;
-    }
-
-    @Override
-    public BlockState getStateForPlacement(BlockItemUseContext context) {
-        return defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
-    }
-
-    @Override
     public void setPlacedBy(World world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack item) {
         super.setPlacedBy(world, pos, state, placer, item);
         if (!item.getDisplayName().getString().isEmpty()) {
@@ -80,16 +50,6 @@ public class FurnaceGeneratorBlock extends MachineBlock
                 ((FurnaceGeneratorTileEntity) tileEntity).setCustomName(item.getDisplayName());
             }
         }
-    }
-
-    @Override
-    public boolean hasAnalogOutputSignal(BlockState state) {
-        return true;
-    }
-
-    @Override
-    public int getAnalogOutputSignal(BlockState state, World world, BlockPos pos) {
-        return Container.getRedstoneSignalFromBlockEntity(world.getBlockEntity(pos));
     }
 
     @Override

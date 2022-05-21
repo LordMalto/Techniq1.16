@@ -26,3 +26,5 @@ forge*changelog.txt
 target
 README.txt
 pom.xml
+.cache
+cache

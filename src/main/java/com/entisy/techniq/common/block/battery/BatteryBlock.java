@@ -22,7 +22,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 
 public class BatteryBlock extends MachineBlock {
-    public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
 
     public BatteryBlock() {
         registerDefaultState(stateDefinition.any().setValue(FACING, Direction.NORTH));
@@ -35,28 +34,6 @@ public class BatteryBlock extends MachineBlock {
     @Override
     public TileEntity createTileEntity(BlockState state, IBlockReader world) {
         return TileEntityTypesInit.BATTERY_TILE_ENTITY.get().create();
-    }
-
-
-    @Override
-    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
-        super.createBlockStateDefinition(builder);
-        builder.add(FACING);
-    }
-
-    @SuppressWarnings("deprecation")
-    @Override
-    public BlockState mirror(BlockState state, Mirror mirror) {
-        return state.rotate(mirror.getRotation(state.getValue(FACING)));
-    }
-
-    @Override
-    public BlockState rotate(BlockState state, Rotation rotation) {
-        return state.setValue(FACING, rotation.rotate(state.getValue(FACING)));
-    }
-    @Override
-    public BlockState getStateForPlacement(BlockItemUseContext context) {
-        return defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
     }
 
     @Override
