@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "SIS",
+    "IHI",
+    "BIB"
+  ],
+  "key": {
+    "S": {
+      "item": "techniq:steel_block"
+    },
+    "B": {
+      "item": "minecraft:iron_block"
+    },
+    "I": {
+      "item": "techniq:steel_ingot"
+    },
+    "H": {
+      "item": "techniq:heavy_machine_frame"
+    }
+  },
+  "result": {
+    "item": "techniq:metal_press"
+  }
+}

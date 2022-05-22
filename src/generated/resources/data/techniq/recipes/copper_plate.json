@@ -2,7 +2,7 @@
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
     {
-      "item": "techniq:copper_ingot"
+      "tag": "forge:ingots/copper"
     },
     {
       "item": "techniq:hammer"

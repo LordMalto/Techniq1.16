@@ -1,0 +1,11 @@
+{
+  "type": "techniq:metal_press",
+  "input": {
+    "tag": "forge:plates/steel"
+  },
+  "output": {
+    "item": "techniq:steel_rod"
+  },
+  "required_energy": 300,
+  "smelt_time": 200
+}

@@ -1,10 +1,9 @@
 package com.entisy.techniq.core.util.jei;
 
 import com.entisy.techniq.Techniq;
-import com.entisy.techniq.common.recipe.alloySmelter.AlloySmelterRecipe;
-import com.entisy.techniq.core.init.BlockInit;
+import com.entisy.techniq.common.block.alloySmelter.recipe.AlloySmelterRecipe;
+import com.entisy.techniq.core.init.ModBlocks;
 import com.mojang.blaze3d.matrix.MatrixStack;
-
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.gui.drawable.IDrawable;
@@ -26,7 +25,7 @@ public class AlloySmelterRecipeCategory implements IRecipeCategory<AlloySmelterR
 	
 	public AlloySmelterRecipeCategory(IGuiHelper helper) {
 		this.background = helper.createDrawable(TEXTURE, 0, 0, 176, 80);
-		this.icon = helper.createDrawableIngredient(new ItemStack(BlockInit.ALLOY_SMELTER.get()));
+		this.icon = helper.createDrawableIngredient(new ItemStack(ModBlocks.ALLOY_SMELTER.get()));
 		this.arrow = helper.createDrawable(TEXTURE, 0, 166, 22, 16);
 	}
 	
@@ -42,7 +41,7 @@ public class AlloySmelterRecipeCategory implements IRecipeCategory<AlloySmelterR
 
 	@Override
 	public String getTitle() {
-		return BlockInit.ALLOY_SMELTER.get().getName().getString();
+		return ModBlocks.ALLOY_SMELTER.get().getName().getString();
 	}
 
 	@Override
@@ -63,14 +62,14 @@ public class AlloySmelterRecipeCategory implements IRecipeCategory<AlloySmelterR
 
 	@Override
 	public void setRecipe(IRecipeLayout recipeLayout, AlloySmelterRecipe recipe, IIngredients ingredients) {
-		recipeLayout.getItemStacks().init(0, true, 55, 34);
-		recipeLayout.getItemStacks().init(1, true, 115, 34);
+		recipeLayout.getItemStacks().init(0, true, 45, 21);
+		recipeLayout.getItemStacks().init(1, true, 45, 48);
 		recipeLayout.getItemStacks().init(2, false, 115, 34);
 		recipeLayout.getItemStacks().set(ingredients);
 	}
 	
 	@Override
 	public void draw(AlloySmelterRecipe recipe, MatrixStack matrixStack, double mouseX, double mouseY) {
-		arrow.draw(matrixStack, 80, 35);
+		arrow.draw(matrixStack, 77, 35);
 	}
 }

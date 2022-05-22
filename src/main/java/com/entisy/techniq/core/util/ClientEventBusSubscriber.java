@@ -1,13 +1,15 @@
 package com.entisy.techniq.core.util;
 
 import com.entisy.techniq.Techniq;
-import com.entisy.techniq.common.client.screen.AlloySmelterScreen;
-import com.entisy.techniq.common.client.screen.DisplayCaseScreen;
-import com.entisy.techniq.common.client.screen.ElectricalFurnaceScreen;
-import com.entisy.techniq.common.client.screen.MetalPressScreen;
-import com.entisy.techniq.common.client.tileentityrenderer.DisplayCaseTileEntityRenderer;
-import com.entisy.techniq.core.init.ContainerTypesInit;
-import com.entisy.techniq.core.init.TileEntityTypesInit;
+import com.entisy.techniq.common.block.alloySmelter.AlloySmelterScreen;
+import com.entisy.techniq.common.block.battery.BatteryScreen;
+import com.entisy.techniq.common.block.displayCase.DisplayCaseScreen;
+import com.entisy.techniq.common.block.electricalFurnace.ElectricalFurnaceScreen;
+import com.entisy.techniq.common.block.furnaceGenerator.FurnaceGeneratorScreen;
+import com.entisy.techniq.common.block.metalPress.MetalPressScreen;
+import com.entisy.techniq.common.block.displayCase.DisplayCaseTileEntityRenderer;
+import com.entisy.techniq.core.init.ModContainerTypes;
+import com.entisy.techniq.core.init.ModTileEntityTypes;
 
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraftforge.api.distmarker.Dist;
@@ -22,12 +24,14 @@ public class ClientEventBusSubscriber {
 
 	@SubscribeEvent
 	public static void clientSetup(FMLClientSetupEvent event) {
-		ScreenManager.register(ContainerTypesInit.DISPLAY_CASE_CONTAINER_TYPE.get(), DisplayCaseScreen::new);
-		ScreenManager.register(ContainerTypesInit.METAL_PRESS_CONTAINER_TYPE.get(), MetalPressScreen::new);
-		ScreenManager.register(ContainerTypesInit.ELECTRICAL_FURNACE_CONTAINER_TYPE.get(), ElectricalFurnaceScreen::new);
-		ScreenManager.register(ContainerTypesInit.ALLOY_SMELTER_CONTAINER_TYPE.get(), AlloySmelterScreen::new);
+		ScreenManager.register(ModContainerTypes.DISPLAY_CASE_CONTAINER_TYPE.get(), DisplayCaseScreen::new);
+		ScreenManager.register(ModContainerTypes.METAL_PRESS_CONTAINER_TYPE.get(), MetalPressScreen::new);
+		ScreenManager.register(ModContainerTypes.ELECTRICAL_FURNACE_CONTAINER_TYPE.get(), ElectricalFurnaceScreen::new);
+		ScreenManager.register(ModContainerTypes.ALLOY_SMELTER_CONTAINER_TYPE.get(), AlloySmelterScreen::new);
+		ScreenManager.register(ModContainerTypes.BATTERY_CONTAINER_TYPE.get(), BatteryScreen::new);
+		ScreenManager.register(ModContainerTypes.FURNACE_GENERATOR_CONTAINER_TYPE.get(), FurnaceGeneratorScreen::new);
 
-		ClientRegistry.bindTileEntityRenderer(TileEntityTypesInit.DISPLAY_CASE_TILE_ENTITY_TYPE.get(),
+		ClientRegistry.bindTileEntityRenderer(ModTileEntityTypes.DISPLAY_CASE_TILE_ENTITY_TYPE.get(),
 				DisplayCaseTileEntityRenderer::new);
 	}
 }

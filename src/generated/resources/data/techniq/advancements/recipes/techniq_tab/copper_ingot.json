@@ -11,7 +11,7 @@
       "conditions": {
         "items": [
           {
-            "item": "techniq:copper_ingot"
+            "item": "techniq:copper_block"
           }
         ]
       }

@@ -6,5 +6,6 @@
   "output": {
     "item": "minecraft:iron_ingot"
   },
-  "required_energy": 0
+  "required_energy": 200,
+  "smelt_time": 200
 }

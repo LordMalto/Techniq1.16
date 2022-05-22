@@ -8,6 +8,7 @@ import java.util.Set;
 
 import com.entisy.techniq.api.ConnectionType;
 
+import com.entisy.techniq.core.util.EnergyUtils;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
@@ -51,7 +52,7 @@ public class CableNetwork implements IEnergyStorage {
         return new Connection(this, side, ConnectionType.NONE);
     }
 
-    private void updateWireEnergy() {
+    private void updateEnergy() {
         int energyPerWire = energyStored / getWireCount();
         connections.keySet().forEach(p -> {
             TileEntity tileEntity = world.getBlockEntity(p);
@@ -70,10 +71,9 @@ public class CableNetwork implements IEnergyStorage {
         buildConnections();
         int received = Math.min(getMaxEnergyStored() - energyStored, Math.min(maxReceive, TRANSFER_PER_CONNECTION));
         if (received > 0) {
-//            SilentMechanisms.LOGGER.debug("receive ({}): {}, {} -> {}", simulate, received, energyStored, energyStored + received);
             if (!simulate) {
                 energyStored += received;
-                updateWireEnergy();
+                updateEnergy();
             }
         }
         return received;
@@ -87,7 +87,7 @@ public class CableNetwork implements IEnergyStorage {
 //            SilentMechanisms.LOGGER.debug("extract ({}): {}, {} -> {}", simulate, extracted, energyStored, energyStored - extracted);
             if (!simulate) {
                 energyStored -= extracted;
-                updateWireEnergy();
+                updateEnergy();
             }
         }
         return extracted;
@@ -97,20 +97,20 @@ public class CableNetwork implements IEnergyStorage {
         buildConnections();
 
         // Send stored energy to connected blocks
-//        for (Map.Entry<BlockPos, Set<Connection>> entry : connections.entrySet()) {
-//            BlockPos pos = entry.getKey();
-//            Set<Connection> connections = entry.getValue();
-//            for (Connection con : connections) {
-//                if (con.type.canExtract()) {
-//                    IEnergyStorage energy = EnergyUtils.getEnergy(world, pos.relative(con.side));
-//                    if (energy != null && energy.canReceive()) {
-//                        int toSend = extractEnergy(TRANSFER_PER_CONNECTION, true);
-//                        int accepted = energy.receiveEnergy(toSend, false);
-//                        extractEnergy(accepted, false);
-//                  }
-//                }
-//            }
-//        }
+        for (Map.Entry<BlockPos, Set<Connection>> entry : connections.entrySet()) {
+            BlockPos pos = entry.getKey();
+            Set<Connection> connections = entry.getValue();
+            for (Connection con : connections) {
+                if (con.type.canExtract()) {
+                    IEnergyStorage energy = EnergyUtils.getEnergy(world, pos.relative(con.side));
+                    if (energy != null && energy.canReceive()) {
+                        int toSend = extractEnergy(TRANSFER_PER_CONNECTION, true);
+                        int accepted = energy.receiveEnergy(toSend, false);
+                        extractEnergy(accepted, false);
+                  }
+                }
+            }
+        }
     }
 
     @Override
@@ -182,7 +182,7 @@ public class CableNetwork implements IEnergyStorage {
 
     @Override
     public String toString() {
-        return String.format("WireNetwork %s, %d wires, %,d FE", Integer.toHexString(hashCode()), connections.size(), energyStored);
+        return String.format("WireNetwork %s, %d wires, %,d RF", Integer.toHexString(hashCode()), connections.size(), energyStored);
     }
 
     public static class Connection implements IEnergyStorage {

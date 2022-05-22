@@ -4,6 +4,9 @@
     "techniq:alloy_smelter",
     "techniq:electrical_furnace",
     "techniq:metal_press",
-    "techniq:cable"
+    "techniq:cable",
+    "techniq:transfer_node",
+    "techniq:battery",
+    "techniq:furnace_generator"
   ]
 }

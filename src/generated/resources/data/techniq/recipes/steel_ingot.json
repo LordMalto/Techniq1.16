@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "techniq:steel_block"
+    }
+  ],
+  "result": {
+    "item": "techniq:steel_ingot",
+    "count": 9
+  }
+}

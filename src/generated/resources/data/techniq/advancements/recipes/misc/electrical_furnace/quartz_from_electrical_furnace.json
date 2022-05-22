@@ -11,7 +11,7 @@
       "conditions": {
         "items": [
           {
-            "item": "techniq:quartz_ore"
+            "tag": "forge:ores/quartz"
           }
         ]
       }

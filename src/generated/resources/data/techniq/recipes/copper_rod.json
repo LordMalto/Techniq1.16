@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "tag": "forge:plates/copper"
+    },
+    {
+      "item": "techniq:hammer"
+    }
+  ],
+  "result": {
+    "item": "techniq:copper_rod"
+  }
+}

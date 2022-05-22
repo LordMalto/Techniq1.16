@@ -1,0 +1,11 @@
+{
+  "type": "techniq:metal_press",
+  "input": {
+    "tag": "forge:ingots/steel"
+  },
+  "output": {
+    "item": "techniq:steel_plate"
+  },
+  "required_energy": 400,
+  "smelt_time": 200
+}
