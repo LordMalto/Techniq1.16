@@ -1,6 +1,6 @@
 package com.entisy.techniq.common.block.furnaceGenerator;
 
-import com.entisy.techniq.common.block.displayCase.DisplayCaseTileEntity;
+//import com.entisy.techniq.common.block.displayCase.DisplayCaseTileEntity;
 import com.entisy.techniq.core.init.ModBlocks;
 import com.entisy.techniq.core.init.ModContainerTypes;
 import com.entisy.techniq.core.util.FunctionalIntReferenceHolder;
@@ -86,11 +86,11 @@ public class FurnaceGeneratorContainer  extends Container {
         if (slot != null && slot.hasItem()) {
             ItemStack stack1 = slot.getItem();
             stack = stack1.copy();
-            if (index < DisplayCaseTileEntity.slots
-                    && !moveItemStackTo(stack1, DisplayCaseTileEntity.slots, slots.size(), true)) {
+            if (index < FurnaceGeneratorTileEntity.slots
+                    && !moveItemStackTo(stack1, FurnaceGeneratorTileEntity.slots, slots.size(), true)) {
                 return ItemStack.EMPTY;
             }
-            if (!moveItemStackTo(stack1, 0, DisplayCaseTileEntity.slots, false)) {
+            if (!moveItemStackTo(stack1, 0, FurnaceGeneratorTileEntity.slots, false)) {
                 return ItemStack.EMPTY;
             }
             if (stack1.isEmpty()) {

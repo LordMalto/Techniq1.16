@@ -3,9 +3,9 @@ package com.entisy.techniq.core.init;
 import com.entisy.techniq.Techniq;
 import com.entisy.techniq.common.block.alloySmelter.AlloySmelterBlock;
 import com.entisy.techniq.common.block.battery.BatteryBlock;
-import com.entisy.techniq.common.block.blockBreaker.BlockBreakerBlock;
+//import com.entisy.techniq.common.block.blockBreaker.BlockBreakerBlock;
 import com.entisy.techniq.common.block.cable.CableBlock;
-import com.entisy.techniq.common.block.displayCase.DisplayCaseBlock;
+//import com.entisy.techniq.common.block.displayCase.DisplayCaseBlock;
 import com.entisy.techniq.common.block.electricalFurnace.ElectricalFurnaceBlock;
 import com.entisy.techniq.common.block.fluidCable.FluidCableBlock;
 import com.entisy.techniq.common.block.furnaceGenerator.FurnaceGeneratorBlock;
@@ -77,10 +77,10 @@ public class ModBlocks {
     /*
      * MACHINE
      */
-    public static final RegistryObject<Block> BLOCK_BREAKER = BLOCKS.register("block_breaker",
-            () -> new BlockBreakerBlock());
-    public static final RegistryObject<Block> DISPLAY_CASE = BLOCKS.register("display_case",
-            () -> new DisplayCaseBlock());
+//    public static final RegistryObject<Block> BLOCK_BREAKER = BLOCKS.register("block_breaker",
+//            () -> new BlockBreakerBlock());
+//    public static final RegistryObject<Block> DISPLAY_CASE = BLOCKS.register("display_case",
+//            () -> new DisplayCaseBlock());
     public static final RegistryObject<Block> METAL_PRESS = BLOCKS.register("metal_press",
             () -> new MetalPressBlock());
     public static final RegistryObject<Block> ELECTRICAL_FURNACE = BLOCKS.register("electrical_furnace",

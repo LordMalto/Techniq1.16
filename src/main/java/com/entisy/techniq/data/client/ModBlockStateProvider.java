@@ -40,7 +40,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
 		simpleBlock(ModBlocks.END_LAPIS_ORE.get());
 		simpleBlock(ModBlocks.NETHER_EMERALD_ORE.get());
 		simpleBlock(ModBlocks.END_EMERALD_ORE.get());
-		simpleBlock(ModBlocks.DISPLAY_CASE.get());
+//		simpleBlock(ModBlocks.DISPLAY_CASE.get());
 		simpleBlock(ModBlocks.STEEL_BLOCK.get());
 
 		simpleBlock(ModBlocks.ELECTRICAL_FURNACE.get());

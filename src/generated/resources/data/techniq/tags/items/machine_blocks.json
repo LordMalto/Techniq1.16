@@ -5,7 +5,8 @@
     "techniq:electrical_furnace",
     "techniq:metal_press",
     "techniq:cable",
-    "techniq:transfer_node",
+    "techniq:item_cable",
+    "techniq:fluid_cable",
     "techniq:battery",
     "techniq:furnace_generator"
   ]

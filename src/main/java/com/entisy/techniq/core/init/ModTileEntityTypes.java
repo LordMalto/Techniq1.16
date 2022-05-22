@@ -3,9 +3,9 @@ package com.entisy.techniq.core.init;
 import com.entisy.techniq.Techniq;
 import com.entisy.techniq.common.block.alloySmelter.AlloySmelterTileEntity;
 import com.entisy.techniq.common.block.battery.BatteryTileEntity;
-import com.entisy.techniq.common.block.blockBreaker.BlockBreakerTileEntity;
+//import com.entisy.techniq.common.block.blockBreaker.BlockBreakerTileEntity;
 import com.entisy.techniq.common.block.cable.CableTileEntity;
-import com.entisy.techniq.common.block.displayCase.DisplayCaseTileEntity;
+//import com.entisy.techniq.common.block.displayCase.DisplayCaseTileEntity;
 import com.entisy.techniq.common.block.electricalFurnace.ElectricalFurnaceTileEntity;
 import com.entisy.techniq.common.block.fluidCable.FluidCableTileEntity;
 import com.entisy.techniq.common.block.furnaceGenerator.FurnaceGeneratorTileEntity;
@@ -22,13 +22,13 @@ public class ModTileEntityTypes {
 	public static final DeferredRegister<TileEntityType<?>> TILE_ENTITY_TYPES = DeferredRegister
 			.create(ForgeRegistries.TILE_ENTITIES, Techniq.MOD_ID);
 
-	public static final RegistryObject<TileEntityType<BlockBreakerTileEntity>> BLOCK_BREAKER_TILE_ENTITY_TYPE = TILE_ENTITY_TYPES
-			.register("block_breaker", () -> TileEntityType.Builder
-					.of(BlockBreakerTileEntity::new, ModBlocks.BLOCK_BREAKER.get()).build(null));
-
-	public static final RegistryObject<TileEntityType<DisplayCaseTileEntity>> DISPLAY_CASE_TILE_ENTITY_TYPE = TILE_ENTITY_TYPES
-			.register("display_case", () -> TileEntityType.Builder
-					.of(DisplayCaseTileEntity::new, ModBlocks.DISPLAY_CASE.get()).build(null));
+//	public static final RegistryObject<TileEntityType<BlockBreakerTileEntity>> BLOCK_BREAKER_TILE_ENTITY_TYPE = TILE_ENTITY_TYPES
+//			.register("block_breaker", () -> TileEntityType.Builder
+//					.of(BlockBreakerTileEntity::new, ModBlocks.BLOCK_BREAKER.get()).build(null));
+//
+//	public static final RegistryObject<TileEntityType<DisplayCaseTileEntity>> DISPLAY_CASE_TILE_ENTITY_TYPE = TILE_ENTITY_TYPES
+//			.register("display_case", () -> TileEntityType.Builder
+//					.of(DisplayCaseTileEntity::new, ModBlocks.DISPLAY_CASE.get()).build(null));
 
 	public static final RegistryObject<TileEntityType<MetalPressTileEntity>> METAL_PRESS_TILE_ENTITY = TILE_ENTITY_TYPES
 			.register("metal_press", () -> TileEntityType.Builder

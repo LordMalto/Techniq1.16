@@ -69,8 +69,8 @@ public class ModLootTableProvider extends LootTableProvider
             dropSelf(ModBlocks.ELECTRICAL_FURNACE.get());
             dropSelf(ModBlocks.METAL_PRESS.get());
             dropSelf(ModBlocks.ALLOY_SMELTER.get());
-            dropSelf(ModBlocks.BLOCK_BREAKER.get());
-            dropSelf(ModBlocks.DISPLAY_CASE.get());
+//            dropSelf(ModBlocks.BLOCK_BREAKER.get());
+//            dropSelf(ModBlocks.DISPLAY_CASE.get());
             dropSelf(ModBlocks.CABLE.get());
             dropSelf(ModBlocks.ITEM_CABLE.get());
             dropSelf(ModBlocks.FLUID_CABLE.get());

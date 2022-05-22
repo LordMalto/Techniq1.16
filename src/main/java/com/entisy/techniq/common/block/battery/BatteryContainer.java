@@ -1,6 +1,6 @@
 package com.entisy.techniq.common.block.battery;
 
-import com.entisy.techniq.common.block.displayCase.DisplayCaseTileEntity;
+//import com.entisy.techniq.common.block.displayCase.DisplayCaseTileEntity;
 import com.entisy.techniq.core.init.ModBlocks;
 import com.entisy.techniq.core.init.ModContainerTypes;
 import com.entisy.techniq.core.util.FunctionalIntReferenceHolder;
@@ -62,28 +62,5 @@ public class BatteryContainer extends Container {
     @Override
     public boolean stillValid(PlayerEntity player) {
         return stillValid(canInteractWithCallable, player, ModBlocks.BATTERY.get());
-    }
-
-    @Override
-    public ItemStack quickMoveStack(PlayerEntity player, int index) {
-        ItemStack stack = ItemStack.EMPTY;
-        Slot slot = slots.get(index);
-        if (slot != null && slot.hasItem()) {
-            ItemStack stack1 = slot.getItem();
-            stack = stack1.copy();
-            if (index < DisplayCaseTileEntity.slots
-                    && !moveItemStackTo(stack1, DisplayCaseTileEntity.slots, slots.size(), true)) {
-                return ItemStack.EMPTY;
-            }
-            if (!moveItemStackTo(stack1, 0, DisplayCaseTileEntity.slots, false)) {
-                return ItemStack.EMPTY;
-            }
-            if (stack1.isEmpty()) {
-                slot.set(ItemStack.EMPTY);
-            } else {
-                slot.setChanged();
-            }
-        }
-        return stack;
     }
 }
