@@ -2,7 +2,7 @@ package com.entisy.techniq.common.block.displayCase;
 
 import java.util.stream.Stream;
 
-import com.entisy.techniq.core.init.TileEntityTypesInit;
+import com.entisy.techniq.core.init.ModTileEntityTypes;
 
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
@@ -107,7 +107,7 @@ public class DisplayCaseBlock extends Block {
 
 	@Override
 	public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-		return TileEntityTypesInit.DISPLAY_CASE_TILE_ENTITY_TYPE.get().create();
+		return ModTileEntityTypes.DISPLAY_CASE_TILE_ENTITY_TYPE.get().create();
 	}
 
 	@SuppressWarnings("deprecation")

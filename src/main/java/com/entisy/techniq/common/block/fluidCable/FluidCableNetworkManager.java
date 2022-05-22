@@ -1,4 +1,4 @@
-package com.entisy.techniq.common.block.transferNodes;
+package com.entisy.techniq.common.block.fluidCable;
 
 import com.entisy.techniq.Techniq;
 import net.minecraft.util.math.BlockPos;
@@ -15,22 +15,24 @@ import java.util.Collections;
 import java.util.stream.Collectors;
 
 @Mod.EventBusSubscriber(modid = Techniq.MOD_ID)
-public class TransferNodeNetworkManager {
-	
-	private static final Collection<LazyOptional<TransferNodeNetwork>> NETWORK_LIST = Collections.synchronizedList(new ArrayList<>());
+public class FluidCableNetworkManager {
 
-    private TransferNodeNetworkManager() {throw new IllegalAccessError("Utility class");}
+    private static final Collection<LazyOptional<FluidCableNetwork>> NETWORK_LIST = Collections.synchronizedList(new ArrayList<>());
+
+    private FluidCableNetworkManager() {
+        throw new IllegalAccessError("Utility class");
+    }
 
     @Nullable
-    public static TransferNodeNetwork get(IWorldReader world, BlockPos pos) {
+    public static FluidCableNetwork get(IWorldReader world, BlockPos pos) {
         return getLazy(world, pos).orElse(null);
     }
 
-    public static LazyOptional<TransferNodeNetwork> getLazy(IWorldReader world, BlockPos pos) {
+    public static LazyOptional<FluidCableNetwork> getLazy(IWorldReader world, BlockPos pos) {
         synchronized (NETWORK_LIST) {
-            for (LazyOptional<TransferNodeNetwork> network : NETWORK_LIST) {
+            for (LazyOptional<FluidCableNetwork> network : NETWORK_LIST) {
                 if (network.isPresent()) {
-                    TransferNodeNetwork net = network.orElseThrow(IllegalStateException::new);
+                    FluidCableNetwork net = network.orElseThrow(IllegalStateException::new);
                     if (net.contains(world, pos)) {
 //                    SilentMechanisms.LOGGER.debug("get network {}", network);
                         return network;
@@ -39,24 +41,24 @@ public class TransferNodeNetworkManager {
             }
 
             // Create new
-            TransferNodeNetwork network = TransferNodeNetwork.buildNetwork(world, pos);
-            LazyOptional<TransferNodeNetwork> lazy = LazyOptional.of(() -> network);
+            FluidCableNetwork network = FluidCableNetwork.buildNetwork(world, pos);
+            LazyOptional<FluidCableNetwork> lazy = LazyOptional.of(() -> network);
             NETWORK_LIST.add(lazy);
             return lazy;
         }
     }
 
     public static void invalidateNetwork(IWorldReader world, BlockPos pos) {
-        Collection<LazyOptional<TransferNodeNetwork>> toRemove = NETWORK_LIST.stream()
+        Collection<LazyOptional<FluidCableNetwork>> toRemove = NETWORK_LIST.stream()
                 .filter(n -> n != null && n.isPresent() && n.orElseThrow(IllegalStateException::new).contains(world, pos))
                 .collect(Collectors.toList());
-        toRemove.forEach(TransferNodeNetworkManager::invalidateNetwork);
+        toRemove.forEach(FluidCableNetworkManager::invalidateNetwork);
     }
 
-    private static void invalidateNetwork(LazyOptional<TransferNodeNetwork> network) {
+    private static void invalidateNetwork(LazyOptional<FluidCableNetwork> network) {
         synchronized (NETWORK_LIST) {
             NETWORK_LIST.removeIf(n -> n.isPresent() && n.equals(network));
-            network.ifPresent(TransferNodeNetwork::invalidate);
+            network.ifPresent(FluidCableNetwork::invalidate);
             network.invalidate();
         }
     }
@@ -67,7 +69,7 @@ public class TransferNodeNetworkManager {
         synchronized (NETWORK_LIST) {
             NETWORK_LIST.stream()
                     .filter(n -> n != null && n.isPresent())
-                    .forEach(n -> n.ifPresent(TransferNodeNetwork::sendEnergy));
+                    .forEach(n -> n.ifPresent(FluidCableNetwork::sendEnergy));
         }
     }
 }

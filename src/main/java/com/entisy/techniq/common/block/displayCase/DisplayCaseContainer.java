@@ -2,8 +2,8 @@ package com.entisy.techniq.common.block.displayCase;
 
 import java.util.Objects;
 
-import com.entisy.techniq.core.init.BlockInit;
-import com.entisy.techniq.core.init.ContainerTypesInit;
+import com.entisy.techniq.core.init.ModBlocks;
+import com.entisy.techniq.core.init.ModContainerTypes;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -21,7 +21,7 @@ public class DisplayCaseContainer extends Container {
 	private final IWorldPosCallable canInteractWithCallable;
 
 	public DisplayCaseContainer(final int windowId, final PlayerInventory inv, final DisplayCaseTileEntity tileEntity) {
-		super(ContainerTypesInit.DISPLAY_CASE_CONTAINER_TYPE.get(), windowId);
+		super(ModContainerTypes.DISPLAY_CASE_CONTAINER_TYPE.get(), windowId);
 		this.tileEntity = tileEntity;
 		this.canInteractWithCallable = IWorldPosCallable.create(tileEntity.getLevel(), tileEntity.getBlockPos());
 
@@ -57,7 +57,7 @@ public class DisplayCaseContainer extends Container {
 
 	@Override
 	public boolean stillValid(PlayerEntity player) {
-		return stillValid(canInteractWithCallable, player, BlockInit.DISPLAY_CASE.get());
+		return stillValid(canInteractWithCallable, player, ModBlocks.DISPLAY_CASE.get());
 	}
 
 	@Override

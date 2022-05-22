@@ -6,6 +6,6 @@
   "output": {
     "item": "techniq:steel_plate"
   },
-  "required_energy": 200,
+  "required_energy": 400,
   "smelt_time": 200
 }

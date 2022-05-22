@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "BIB",
+    "IMI",
+    "BFB"
+  ],
+  "key": {
+    "B": {
+      "item": "minecraft:iron_block"
+    },
+    "I": {
+      "item": "techniq:steel_ingot"
+    },
+    "M": {
+      "item": "techniq:heavy_machine_frame"
+    },
+    "F": {
+      "item": "minecraft:furnace"
+    }
+  },
+  "result": {
+    "item": "techniq:furnace_generator"
+  }
+}

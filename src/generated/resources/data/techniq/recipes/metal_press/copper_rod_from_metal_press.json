@@ -6,6 +6,6 @@
   "output": {
     "item": "techniq:copper_rod"
   },
-  "required_energy": 200,
+  "required_energy": 300,
   "smelt_time": 200
 }

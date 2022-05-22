@@ -1,8 +1,8 @@
 package com.entisy.techniq.common.block.alloySmelter;
 
 import com.entisy.techniq.common.slots.OutputSlot;
-import com.entisy.techniq.core.init.BlockInit;
-import com.entisy.techniq.core.init.ContainerTypesInit;
+import com.entisy.techniq.core.init.ModBlocks;
+import com.entisy.techniq.core.init.ModContainerTypes;
 import com.entisy.techniq.core.util.FunctionalIntReferenceHolder;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -27,7 +27,7 @@ public class AlloySmelterContainer extends Container {
     private IWorldPosCallable canInteractWithCallable;
 
     public AlloySmelterContainer(final int id, final PlayerInventory inv, final AlloySmelterTileEntity tileEntity) {
-        super(ContainerTypesInit.ALLOY_SMELTER_CONTAINER_TYPE.get(), id);
+        super(ModContainerTypes.ALLOY_SMELTER_CONTAINER_TYPE.get(), id);
         this.tileEntity = tileEntity;
         canInteractWithCallable = IWorldPosCallable.create(tileEntity.getLevel(), tileEntity.getBlockPos());
 
@@ -72,7 +72,7 @@ public class AlloySmelterContainer extends Container {
 
     @Override
     public boolean stillValid(PlayerEntity player) {
-        return stillValid(canInteractWithCallable, player, BlockInit.ALLOY_SMELTER.get());
+        return stillValid(canInteractWithCallable, player, ModBlocks.ALLOY_SMELTER.get());
     }
 
     @Override

@@ -1,6 +1,6 @@
 package com.entisy.techniq.common.block.blockBreaker;
 
-import com.entisy.techniq.core.init.TileEntityTypesInit;
+import com.entisy.techniq.core.init.ModTileEntityTypes;
 
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
@@ -23,6 +23,6 @@ public class BlockBreakerBlock extends Block {
 	
 	@Override
 	public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-		return TileEntityTypesInit.BLOCK_BREAKER_TILE_ENTITY_TYPE.get().create();
+		return ModTileEntityTypes.BLOCK_BREAKER_TILE_ENTITY_TYPE.get().create();
 	}
 }

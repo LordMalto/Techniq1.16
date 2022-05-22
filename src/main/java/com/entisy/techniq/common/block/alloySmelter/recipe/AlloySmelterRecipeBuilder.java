@@ -5,7 +5,7 @@ import java.util.function.Consumer;
 import javax.annotation.Nullable;
 
 import com.entisy.techniq.Techniq;
-import com.entisy.techniq.core.init.RecipeSerializerInit;
+import com.entisy.techniq.core.init.ModRecipe;
 import com.entisy.techniq.core.util.SimpleList;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -177,7 +177,7 @@ public class AlloySmelterRecipeBuilder {
 		}
 
 		public IRecipeSerializer<?> getType() {
-			return RecipeSerializerInit.ALLOY_SMELTER_RECIPE_SERIALIZER;
+			return ModRecipe.ALLOY_SMELTER_RECIPE_SERIALIZER;
 		}
 
 		public ResourceLocation getId() {

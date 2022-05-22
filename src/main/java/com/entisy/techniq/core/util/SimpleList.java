@@ -63,11 +63,14 @@ public class SimpleList<T>
         return list.get(index);
     }
 
-	public void forEach(Consumer<? super T> e)
-	{
+	public void forEach(Consumer<? super T> e) {
 		for (T t : list)
 		{
 			e.accept(t);
 		}
 	}
+
+    public static SimpleList createNew() {
+        return new SimpleList<>();
+    }
 }

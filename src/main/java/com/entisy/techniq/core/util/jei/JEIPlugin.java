@@ -7,8 +7,8 @@ import com.entisy.techniq.Techniq;
 import com.entisy.techniq.common.block.alloySmelter.recipe.AlloySmelterRecipe;
 import com.entisy.techniq.common.block.electricalFurnace.recipe.ElectricalFurnaceRecipe;
 import com.entisy.techniq.common.block.metalPress.recipe.MetalPressRecipe;
-import com.entisy.techniq.core.init.BlockInit;
-import com.entisy.techniq.core.init.RecipeSerializerInit;
+import com.entisy.techniq.core.init.ModBlocks;
+import com.entisy.techniq.core.init.ModRecipe;
 
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
@@ -38,11 +38,11 @@ public class JEIPlugin implements IModPlugin {
 
 	@Override
 	public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
-		registration.addRecipeCatalyst(new ItemStack(BlockInit.ELECTRICAL_FURNACE.get()),
+		registration.addRecipeCatalyst(new ItemStack(ModBlocks.ELECTRICAL_FURNACE.get()),
 				ElectricalFurnaceRecipeCategory.UID, VanillaRecipeCategoryUid.FURNACE);
-		registration.addRecipeCatalyst(new ItemStack(BlockInit.METAL_PRESS.get()),
+		registration.addRecipeCatalyst(new ItemStack(ModBlocks.METAL_PRESS.get()),
 				MetalPressRecipeCategory.UID);
-		registration.addRecipeCatalyst(new ItemStack(BlockInit.ALLOY_SMELTER.get()),
+		registration.addRecipeCatalyst(new ItemStack(ModBlocks.ALLOY_SMELTER.get()),
 				AlloySmelterRecipeCategory.UID);
 	}
 
@@ -51,15 +51,15 @@ public class JEIPlugin implements IModPlugin {
 	public void registerRecipes(IRecipeRegistration registration) {
 		RecipeManager recipeManager = Objects.requireNonNull(Minecraft.getInstance().level).getRecipeManager();
 		registration.addRecipes(
-				recipeManager.getAllRecipesFor(RecipeSerializerInit.METAL_PRESS_TYPE).stream()
+				recipeManager.getAllRecipesFor(ModRecipe.METAL_PRESS_TYPE).stream()
 						.filter(recipe -> recipe instanceof MetalPressRecipe).collect(Collectors.toList()),
 				MetalPressRecipeCategory.UID);
 		registration.addRecipes(
-				recipeManager.getAllRecipesFor(RecipeSerializerInit.ELECTRICAL_FURNACE_TYPE).stream()
+				recipeManager.getAllRecipesFor(ModRecipe.ELECTRICAL_FURNACE_TYPE).stream()
 						.filter(recipe -> recipe instanceof ElectricalFurnaceRecipe).collect(Collectors.toList()),
 				ElectricalFurnaceRecipeCategory.UID);
 		registration.addRecipes(
-				recipeManager.getAllRecipesFor(RecipeSerializerInit.ALLOY_SMELTER_TYPE).stream()
+				recipeManager.getAllRecipesFor(ModRecipe.ALLOY_SMELTER_TYPE).stream()
 						.filter(recipe -> recipe instanceof AlloySmelterRecipe).collect(Collectors.toList()),
 				AlloySmelterRecipeCategory.UID);
 	}

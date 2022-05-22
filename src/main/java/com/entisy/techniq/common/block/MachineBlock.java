@@ -1,6 +1,6 @@
 package com.entisy.techniq.common.block;
 
-import com.entisy.techniq.core.init.TagsInit;
+import com.entisy.techniq.core.init.ModTags;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -36,7 +36,7 @@ public class MachineBlock extends Block {
     }
 
     public boolean isSameBlock(Block block) {
-        return TagsInit.Blocks.MACHINE_BLOCKS.contains(block);
+        return ModTags.Blocks.MACHINE_BLOCKS.contains(block);
     }
 
     @Override

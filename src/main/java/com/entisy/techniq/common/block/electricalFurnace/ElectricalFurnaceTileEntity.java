@@ -5,8 +5,8 @@ import com.entisy.techniq.common.block.alloySmelter.AlloySmelterBlock;
 import com.entisy.techniq.common.block.electricalFurnace.recipe.ElectricalFurnaceRecipe;
 import com.entisy.techniq.common.block.MachineTileEntity;
 import com.entisy.techniq.core.energy.EnergyStorageImpl;
-import com.entisy.techniq.core.init.RecipeSerializerInit;
-import com.entisy.techniq.core.init.TileEntityTypesInit;
+import com.entisy.techniq.core.init.ModRecipe;
+import com.entisy.techniq.core.init.ModTileEntityTypes;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
@@ -31,7 +31,7 @@ public class ElectricalFurnaceTileEntity extends MachineTileEntity implements IT
     }
 
     public ElectricalFurnaceTileEntity() {
-        this(TileEntityTypesInit.ELECTRICAL_FURNACE_TILE_ENTITY.get());
+        this(ModTileEntityTypes.ELECTRICAL_FURNACE_TILE_ENTITY.get());
     }
 
     @Override
@@ -99,7 +99,7 @@ public class ElectricalFurnaceTileEntity extends MachineTileEntity implements IT
             return null;
         }
 
-        Set<IRecipe<?>> recipes = findRecipesByType(RecipeSerializerInit.ELECTRICAL_FURNACE_TYPE, level);
+        Set<IRecipe<?>> recipes = findRecipesByType(ModRecipe.ELECTRICAL_FURNACE_TYPE, level);
         for (IRecipe<?> iRecipe : recipes) {
             ElectricalFurnaceRecipe recipe = (ElectricalFurnaceRecipe) iRecipe;
             if (recipe.matches(new RecipeWrapper(inventory), level)) {

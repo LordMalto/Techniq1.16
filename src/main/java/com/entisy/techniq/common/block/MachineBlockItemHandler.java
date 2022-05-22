@@ -45,9 +45,10 @@ public class MachineBlockItemHandler extends ItemStackHandler {
         return stack;
     }
 
-    public void removeStackFromSlot(int index) {
+    public ItemStack removeStackFromSlot(int index) {
         stacks.set(index, ItemStack.EMPTY);
         onContentsChanged(index);
+        return ItemStack.EMPTY;
     }
 
     public NonNullList<ItemStack> toNonNullList() {

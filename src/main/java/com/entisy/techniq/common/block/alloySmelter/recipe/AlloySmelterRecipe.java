@@ -1,6 +1,6 @@
 package com.entisy.techniq.common.block.alloySmelter.recipe;
 
-import com.entisy.techniq.core.init.RecipeSerializerInit;
+import com.entisy.techniq.core.init.ModRecipe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.Ingredient;
@@ -61,7 +61,7 @@ public class AlloySmelterRecipe implements IAlloySmelterRecipe {
 
     @Override
     public IRecipeSerializer<?> getSerializer() {
-        return RecipeSerializerInit.ALLOY_SMELTER_SERIALIZER.get();
+        return ModRecipe.ALLOY_SMELTER_SERIALIZER.get();
     }
 
     @Override

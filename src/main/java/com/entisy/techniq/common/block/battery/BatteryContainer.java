@@ -1,8 +1,8 @@
 package com.entisy.techniq.common.block.battery;
 
 import com.entisy.techniq.common.block.displayCase.DisplayCaseTileEntity;
-import com.entisy.techniq.core.init.BlockInit;
-import com.entisy.techniq.core.init.ContainerTypesInit;
+import com.entisy.techniq.core.init.ModBlocks;
+import com.entisy.techniq.core.init.ModContainerTypes;
 import com.entisy.techniq.core.util.FunctionalIntReferenceHolder;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -22,7 +22,7 @@ public class BatteryContainer extends Container {
     public FunctionalIntReferenceHolder currentEnergy;
 
     public BatteryContainer(final int id, final PlayerInventory inv, final BatteryTileEntity tileEntity) {
-        super(ContainerTypesInit.BATTERY_CONTAINER_TYPE.get(), id);
+        super(ModContainerTypes.BATTERY_CONTAINER_TYPE.get(), id);
         this.tileEntity = tileEntity;
         canInteractWithCallable = IWorldPosCallable.create(tileEntity.getLevel(), tileEntity.getBlockPos());
 
@@ -61,7 +61,7 @@ public class BatteryContainer extends Container {
 
     @Override
     public boolean stillValid(PlayerEntity player) {
-        return stillValid(canInteractWithCallable, player, BlockInit.BATTERY.get());
+        return stillValid(canInteractWithCallable, player, ModBlocks.BATTERY.get());
     }
 
     @Override

@@ -1,8 +1,8 @@
 package com.entisy.techniq.common.block.metalPress;
 
 import com.entisy.techniq.common.slots.OutputSlot;
-import com.entisy.techniq.core.init.BlockInit;
-import com.entisy.techniq.core.init.ContainerTypesInit;
+import com.entisy.techniq.core.init.ModBlocks;
+import com.entisy.techniq.core.init.ModContainerTypes;
 import com.entisy.techniq.core.util.FunctionalIntReferenceHolder;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -23,13 +23,13 @@ import java.util.Objects;
 
 public class MetalPressContainer extends Container {
 
-    private final MetalPressTileEntity tileEntity;
+    public final MetalPressTileEntity tileEntity;
     private final IWorldPosCallable canInteractWithCallable;
     public FunctionalIntReferenceHolder currentSmeltTime;
     public FunctionalIntReferenceHolder currentEnergy;
 
     public MetalPressContainer(final int id, final PlayerInventory inv, final MetalPressTileEntity tileEntity) {
-        super(ContainerTypesInit.METAL_PRESS_CONTAINER_TYPE.get(), id);
+        super(ModContainerTypes.METAL_PRESS_CONTAINER_TYPE.get(), id);
         this.tileEntity = tileEntity;
         canInteractWithCallable = IWorldPosCallable.create(tileEntity.getLevel(), tileEntity.getBlockPos());
 
@@ -73,7 +73,7 @@ public class MetalPressContainer extends Container {
 
     @Override
     public boolean stillValid(PlayerEntity player) {
-        return stillValid(canInteractWithCallable, player, BlockInit.METAL_PRESS.get());
+        return stillValid(canInteractWithCallable, player, ModBlocks.METAL_PRESS.get());
     }
 
     @Override
@@ -83,39 +83,33 @@ public class MetalPressContainer extends Container {
         if (slot != null && slot.hasItem()) {
             ItemStack itemstack1 = slot.getItem();
             itemstack = itemstack1.copy();
-            if (index == 2) {
-                if (!this.moveItemStackTo(itemstack1, 3, 39, true)) {
+
+            final int inventorySize = 2;
+            final int playerInventoryEnd = inventorySize + 27;
+            final int playerHotbarEnd = playerInventoryEnd + 9;
+
+            if (index == 1) {
+                if (!this.moveItemStackTo(itemstack1, inventorySize, playerHotbarEnd, true)) {
                     return ItemStack.EMPTY;
                 }
                 slot.onQuickCraft(itemstack1, itemstack);
-            } else if (index != 1 && index != 0) {
-                if (!this.moveItemStackTo(itemstack1, 0, 2, false)) {
+            } else if (index != 0) {
+                if (!this.moveItemStackTo(itemstack1, 0, 1, false)) {
                     return ItemStack.EMPTY;
                 }
-                if (index >= 3 && index < 30) {
-                    if (!this.moveItemStackTo(itemstack1, 30, 39, false)) {
-                        return ItemStack.EMPTY;
-                    }
-                } else if (index >= 30 && index < 39 && !this.moveItemStackTo(itemstack1, 3, 30, false)) {
-                    return ItemStack.EMPTY;
-                }
-            } else if (!this.moveItemStackTo(itemstack1, 3, 39, false)) {
+            } else if (!this.moveItemStackTo(itemstack1, inventorySize, playerHotbarEnd, false)) {
                 return ItemStack.EMPTY;
             }
-
             if (itemstack1.isEmpty()) {
                 slot.set(ItemStack.EMPTY);
             } else {
                 slot.setChanged();
             }
-
             if (itemstack1.getCount() == itemstack.getCount()) {
                 return ItemStack.EMPTY;
             }
-
             slot.onTake(player, itemstack1);
         }
-
         return itemstack;
     }
 

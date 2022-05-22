@@ -1,4 +1,4 @@
-package com.entisy.techniq.common.block.transferNodes;
+package com.entisy.techniq.common.block.fluidCable;
 
 import com.entisy.techniq.api.ConnectionType;
 import net.minecraft.tileentity.TileEntity;
@@ -12,19 +12,45 @@ import net.minecraftforge.energy.IEnergyStorage;
 
 import java.util.*;
 
-public class TransferNodeNetwork implements IEnergyStorage {
-	
-	public static final int TRANSFER_PER_CONNECTION = 1000;
+public class FluidCableNetwork implements IEnergyStorage {
+
+    public static final int TRANSFER_PER_CONNECTION = 1000;
 
     private final IWorldReader world;
     private final Map<BlockPos, Set<Connection>> connections = new HashMap<>();
     private boolean connectionsBuilt;
     private int energyStored;
 
-    private TransferNodeNetwork(IWorldReader world, Set<BlockPos> wires, int energyStored) {
+    private FluidCableNetwork(IWorldReader world, Set<BlockPos> wires, int energyStored) {
         this.world = world;
         wires.forEach(pos -> connections.put(pos, Collections.emptySet()));
         this.energyStored = energyStored;
+    }
+
+    static FluidCableNetwork buildNetwork(IWorldReader world, BlockPos pos) {
+        Set<BlockPos> wires = buildWireSet(world, pos);
+        int energyStored = wires.stream().mapToInt(p -> {
+            TileEntity tileEntity = world.getBlockEntity(p);
+            return tileEntity instanceof FluidCableTileEntity ? ((FluidCableTileEntity) tileEntity).energyStored : 0;
+        }).sum();
+        return new FluidCableNetwork(world, wires, energyStored);
+    }
+
+    private static Set<BlockPos> buildWireSet(IWorldReader world, BlockPos pos) {
+        return buildWireSet(world, pos, new HashSet<>());
+    }
+
+    private static Set<BlockPos> buildWireSet(IWorldReader world, BlockPos pos, Set<BlockPos> set) {
+        // Get all positions that have a wire connected to the wire at pos
+        set.add(pos);
+        for (Direction side : Direction.values()) {
+            BlockPos pos1 = pos.relative(side);
+            if (!set.contains(pos1) && world.getBlockEntity(pos1) instanceof FluidCableTileEntity) {
+                set.add(pos1);
+                set.addAll(buildWireSet(world, pos1, set));
+            }
+        }
+        return set;
     }
 
     public boolean contains(IWorldReader world, BlockPos pos) {
@@ -50,8 +76,8 @@ public class TransferNodeNetwork implements IEnergyStorage {
         int energyPerWire = energyStored / getWireCount();
         connections.keySet().forEach(p -> {
             TileEntity tileEntity = world.getBlockEntity(p);
-            if (tileEntity instanceof TransferNodeTileEntity) {
-                ((TransferNodeTileEntity) tileEntity).energyStored = energyPerWire;
+            if (tileEntity instanceof FluidCableTileEntity) {
+                ((FluidCableTileEntity) tileEntity).energyStored = energyPerWire;
             }
         });
     }
@@ -128,32 +154,6 @@ public class TransferNodeNetwork implements IEnergyStorage {
         return true;
     }
 
-    static TransferNodeNetwork buildNetwork(IWorldReader world, BlockPos pos) {
-        Set<BlockPos> wires = buildWireSet(world, pos);
-        int energyStored = wires.stream().mapToInt(p -> {
-            TileEntity tileEntity = world.getBlockEntity(p);
-            return tileEntity instanceof TransferNodeTileEntity ? ((TransferNodeTileEntity) tileEntity).energyStored : 0;
-        }).sum();
-        return new TransferNodeNetwork(world, wires, energyStored);
-    }
-
-    private static Set<BlockPos> buildWireSet(IWorldReader world, BlockPos pos) {
-        return buildWireSet(world, pos, new HashSet<>());
-    }
-
-    private static Set<BlockPos> buildWireSet(IWorldReader world, BlockPos pos, Set<BlockPos> set) {
-        // Get all positions that have a wire connected to the wire at pos
-        set.add(pos);
-        for (Direction side : Direction.values()) {
-            BlockPos pos1 = pos.relative(side);
-            if (!set.contains(pos1) && world.getBlockEntity(pos1) instanceof TransferNodeTileEntity) {
-                set.add(pos1);
-                set.addAll(buildWireSet(world, pos1, set));
-            }
-        }
-        return set;
-    }
-
     private void buildConnections() {
         // Determine all connections. This will be done once the connections are actually needed.
         if (!connectionsBuilt) {
@@ -167,8 +167,8 @@ public class TransferNodeNetwork implements IEnergyStorage {
         Set<Connection> connections = new HashSet<>();
         for (Direction direction : Direction.values()) {
             TileEntity te = world.getBlockEntity(pos.relative(direction));
-            if (te != null && !(te instanceof TransferNodeTileEntity) && te.getCapability(CapabilityEnergy.ENERGY).isPresent()) {
-                ConnectionType type = TransferNodeBlock.getConnection(world.getBlockState(pos), direction);
+            if (te != null && !(te instanceof FluidCableTileEntity) && te.getCapability(CapabilityEnergy.ENERGY).isPresent()) {
+                ConnectionType type = FluidCableBlock.getConnection(world.getBlockState(pos), direction);
                 connections.add(new Connection(this, direction, type));
             }
         }
@@ -181,12 +181,12 @@ public class TransferNodeNetwork implements IEnergyStorage {
     }
 
     public static class Connection implements IEnergyStorage {
-        private final TransferNodeNetwork network;
+        private final FluidCableNetwork network;
         private final Direction side;
         private final ConnectionType type;
         private final LazyOptional<Connection> lazyOptional;
 
-        Connection(TransferNodeNetwork network, Direction side, ConnectionType type) {
+        Connection(FluidCableNetwork network, Direction side, ConnectionType type) {
             this.network = network;
             this.side = side;
             this.type = type;

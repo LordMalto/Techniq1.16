@@ -4,8 +4,8 @@ import com.entisy.techniq.Techniq;
 import com.entisy.techniq.common.block.alloySmelter.recipe.AlloySmelterRecipe;
 import com.entisy.techniq.common.block.MachineTileEntity;
 import com.entisy.techniq.core.energy.EnergyStorageImpl;
-import com.entisy.techniq.core.init.RecipeSerializerInit;
-import com.entisy.techniq.core.init.TileEntityTypesInit;
+import com.entisy.techniq.core.init.ModRecipe;
+import com.entisy.techniq.core.init.ModTileEntityTypes;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
@@ -30,7 +30,7 @@ public class AlloySmelterTileEntity extends MachineTileEntity implements ITickab
     }
 
     public AlloySmelterTileEntity() {
-        this(TileEntityTypesInit.ALLOY_SMELTER_TILE_ENTITY.get());
+        this(ModTileEntityTypes.ALLOY_SMELTER_TILE_ENTITY.get());
     }
 
     @Override
@@ -103,7 +103,7 @@ public class AlloySmelterTileEntity extends MachineTileEntity implements ITickab
             return null;
         }
 
-        Set<IRecipe<?>> recipes = findRecipesByType(RecipeSerializerInit.ALLOY_SMELTER_TYPE, level);
+        Set<IRecipe<?>> recipes = findRecipesByType(ModRecipe.ALLOY_SMELTER_TYPE, level);
         for (IRecipe<?> iRecipe : recipes) {
             AlloySmelterRecipe recipe = (AlloySmelterRecipe) iRecipe;
             if (recipe.matches(new RecipeWrapper(inventory), level)) {

@@ -20,7 +20,7 @@ import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
-public class RecipeSerializerInit {
+public class ModRecipe {
 
 	// ELECTRICAL FURNACE
 	public static final IRecipeSerializer<ElectricalFurnaceRecipe> ELECTRICAL_FURNACE_RECIPE_SERIALIZER = new ElectricalFurnaceRecipeSerializer();

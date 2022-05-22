@@ -1,7 +1,7 @@
 package com.entisy.techniq.data.client;
 
 import com.entisy.techniq.Techniq;
-import com.entisy.techniq.core.init.BlockInit;
+import com.entisy.techniq.core.init.ModBlocks;
 
 import net.minecraft.data.DataGenerator;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
@@ -20,34 +20,34 @@ public class ModBlockStateProvider extends BlockStateProvider {
 
 	@Override
 	protected void registerStatesAndModels() {
-		simpleBlock(BlockInit.COPPER_BLOCK.get());
-		simpleBlock(BlockInit.COPPER_ORE.get());
-		simpleBlock(BlockInit.NETHER_COPPER_ORE.get());
-		simpleBlock(BlockInit.END_COPPER_ORE.get());
-		simpleBlock(BlockInit.NETHER_IRON_ORE.get());
-		simpleBlock(BlockInit.END_IRON_ORE.get());
-		simpleBlock(BlockInit.NETHER_GOLD_ORE.get());
-		simpleBlock(BlockInit.END_GOLD_ORE.get());
-		simpleBlock(BlockInit.NETHER_DIAMOND_ORE.get());
-		simpleBlock(BlockInit.END_DIAMOND_ORE.get());
-		simpleBlock(BlockInit.NETHER_REDSTONE_ORE.get());
-		simpleBlock(BlockInit.END_REDSTONE_ORE.get());
-		simpleBlock(BlockInit.QUARTZ_ORE.get());
-		simpleBlock(BlockInit.END_QUARTZ_ORE.get());
-		simpleBlock(BlockInit.NETHER_COAL_ORE.get());
-		simpleBlock(BlockInit.END_COAL_ORE.get());
-		simpleBlock(BlockInit.NETHER_LAPIS_ORE.get());
-		simpleBlock(BlockInit.END_LAPIS_ORE.get());
-		simpleBlock(BlockInit.NETHER_EMERALD_ORE.get());
-		simpleBlock(BlockInit.END_EMERALD_ORE.get());
-		simpleBlock(BlockInit.DISPLAY_CASE.get());
-		simpleBlock(BlockInit.STEEL_BLOCK.get());
+		simpleBlock(ModBlocks.COPPER_BLOCK.get());
+		simpleBlock(ModBlocks.COPPER_ORE.get());
+		simpleBlock(ModBlocks.NETHER_COPPER_ORE.get());
+		simpleBlock(ModBlocks.END_COPPER_ORE.get());
+		simpleBlock(ModBlocks.NETHER_IRON_ORE.get());
+		simpleBlock(ModBlocks.END_IRON_ORE.get());
+		simpleBlock(ModBlocks.NETHER_GOLD_ORE.get());
+		simpleBlock(ModBlocks.END_GOLD_ORE.get());
+		simpleBlock(ModBlocks.NETHER_DIAMOND_ORE.get());
+		simpleBlock(ModBlocks.END_DIAMOND_ORE.get());
+		simpleBlock(ModBlocks.NETHER_REDSTONE_ORE.get());
+		simpleBlock(ModBlocks.END_REDSTONE_ORE.get());
+		simpleBlock(ModBlocks.QUARTZ_ORE.get());
+		simpleBlock(ModBlocks.END_QUARTZ_ORE.get());
+		simpleBlock(ModBlocks.NETHER_COAL_ORE.get());
+		simpleBlock(ModBlocks.END_COAL_ORE.get());
+		simpleBlock(ModBlocks.NETHER_LAPIS_ORE.get());
+		simpleBlock(ModBlocks.END_LAPIS_ORE.get());
+		simpleBlock(ModBlocks.NETHER_EMERALD_ORE.get());
+		simpleBlock(ModBlocks.END_EMERALD_ORE.get());
+		simpleBlock(ModBlocks.DISPLAY_CASE.get());
+		simpleBlock(ModBlocks.STEEL_BLOCK.get());
 
-		simpleBlock(BlockInit.ELECTRICAL_FURNACE.get());
-		simpleBlock(BlockInit.METAL_PRESS.get());
-		simpleBlock(BlockInit.ALLOY_SMELTER.get());
-		simpleBlock(BlockInit.BATTERY.get());
-		simpleBlock(BlockInit.FURNACE_GENERATOR.get());
+		simpleBlock(ModBlocks.ELECTRICAL_FURNACE.get());
+		simpleBlock(ModBlocks.METAL_PRESS.get());
+		simpleBlock(ModBlocks.ALLOY_SMELTER.get());
+		simpleBlock(ModBlocks.BATTERY.get());
+		simpleBlock(ModBlocks.FURNACE_GENERATOR.get());
 		
 //		horizontalBlock(BlockInit.ELECTRICAL_FURNACE.get(),
 //				models().orientableWithBottom(BlockInit.ELECTRICAL_FURNACE.get().getRegistryName().getPath(),

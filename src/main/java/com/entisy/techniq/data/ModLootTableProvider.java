@@ -7,7 +7,7 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
-import com.entisy.techniq.core.init.BlockInit;
+import com.entisy.techniq.core.init.ModBlocks;
 import com.google.common.collect.ImmutableList;
 import com.mojang.datafixers.util.Pair;
 
@@ -46,36 +46,37 @@ public class ModLootTableProvider extends LootTableProvider
         @Override
         protected void addTables()
         {
-            dropSelf(BlockInit.COPPER_BLOCK.get());
-            dropSelf(BlockInit.COPPER_ORE.get());
-            dropSelf(BlockInit.NETHER_COPPER_ORE.get());
-            dropSelf(BlockInit.END_COPPER_ORE.get());
-            dropSelf(BlockInit.NETHER_IRON_ORE.get());
-            dropSelf(BlockInit.END_IRON_ORE.get());
-            dropSelf(BlockInit.NETHER_COAL_ORE.get());
-            dropSelf(BlockInit.END_COAL_ORE.get());
-            dropSelf(BlockInit.QUARTZ_ORE.get());
-            dropSelf(BlockInit.END_QUARTZ_ORE.get());
-            dropSelf(BlockInit.NETHER_GOLD_ORE.get());
-            dropSelf(BlockInit.END_GOLD_ORE.get());
-            dropSelf(BlockInit.NETHER_REDSTONE_ORE.get());
-            dropSelf(BlockInit.END_REDSTONE_ORE.get());
-            dropSelf(BlockInit.NETHER_EMERALD_ORE.get());
-            dropSelf(BlockInit.END_EMERALD_ORE.get());
-            dropSelf(BlockInit.NETHER_DIAMOND_ORE.get());
-            dropSelf(BlockInit.END_DIAMOND_ORE.get());
-            dropSelf(BlockInit.NETHER_LAPIS_ORE.get());
-            dropSelf(BlockInit.END_LAPIS_ORE.get());
-            dropSelf(BlockInit.ELECTRICAL_FURNACE.get());
-            dropSelf(BlockInit.METAL_PRESS.get());
-            dropSelf(BlockInit.ALLOY_SMELTER.get());
-            dropSelf(BlockInit.BLOCK_BREAKER.get());
-            dropSelf(BlockInit.DISPLAY_CASE.get());
-            dropSelf(BlockInit.CABLE.get());
-            dropSelf(BlockInit.TRANSFER_NODE.get());
-            dropSelf(BlockInit.STEEL_BLOCK.get());
-            dropSelf(BlockInit.BATTERY.get());
-            dropSelf(BlockInit.FURNACE_GENERATOR.get());
+            dropSelf(ModBlocks.COPPER_BLOCK.get());
+            dropSelf(ModBlocks.COPPER_ORE.get());
+            dropSelf(ModBlocks.NETHER_COPPER_ORE.get());
+            dropSelf(ModBlocks.END_COPPER_ORE.get());
+            dropSelf(ModBlocks.NETHER_IRON_ORE.get());
+            dropSelf(ModBlocks.END_IRON_ORE.get());
+            dropSelf(ModBlocks.NETHER_COAL_ORE.get());
+            dropSelf(ModBlocks.END_COAL_ORE.get());
+            dropSelf(ModBlocks.QUARTZ_ORE.get());
+            dropSelf(ModBlocks.END_QUARTZ_ORE.get());
+            dropSelf(ModBlocks.NETHER_GOLD_ORE.get());
+            dropSelf(ModBlocks.END_GOLD_ORE.get());
+            dropSelf(ModBlocks.NETHER_REDSTONE_ORE.get());
+            dropSelf(ModBlocks.END_REDSTONE_ORE.get());
+            dropSelf(ModBlocks.NETHER_EMERALD_ORE.get());
+            dropSelf(ModBlocks.END_EMERALD_ORE.get());
+            dropSelf(ModBlocks.NETHER_DIAMOND_ORE.get());
+            dropSelf(ModBlocks.END_DIAMOND_ORE.get());
+            dropSelf(ModBlocks.NETHER_LAPIS_ORE.get());
+            dropSelf(ModBlocks.END_LAPIS_ORE.get());
+            dropSelf(ModBlocks.ELECTRICAL_FURNACE.get());
+            dropSelf(ModBlocks.METAL_PRESS.get());
+            dropSelf(ModBlocks.ALLOY_SMELTER.get());
+            dropSelf(ModBlocks.BLOCK_BREAKER.get());
+            dropSelf(ModBlocks.DISPLAY_CASE.get());
+            dropSelf(ModBlocks.CABLE.get());
+            dropSelf(ModBlocks.ITEM_CABLE.get());
+            dropSelf(ModBlocks.FLUID_CABLE.get());
+            dropSelf(ModBlocks.STEEL_BLOCK.get());
+            dropSelf(ModBlocks.BATTERY.get());
+            dropSelf(ModBlocks.FURNACE_GENERATOR.get());
 
             //dropOther(ModBlocks.MACHINE_BLOCK.get(), ModItems.RUBY.get());
 
@@ -83,7 +84,7 @@ public class ModLootTableProvider extends LootTableProvider
 
         @Override
         protected Iterable<Block> getKnownBlocks() {
-            return BlockInit.BLOCKS.getEntries().stream().map(RegistryObject::get).collect(Collectors.toList());
+            return ModBlocks.BLOCKS.getEntries().stream().map(RegistryObject::get).collect(Collectors.toList());
         }
     }
 }

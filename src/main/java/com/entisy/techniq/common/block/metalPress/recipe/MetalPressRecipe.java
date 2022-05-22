@@ -1,7 +1,6 @@
 package com.entisy.techniq.common.block.metalPress.recipe;
 
-import com.entisy.techniq.common.block.metalPress.recipe.IMetalPressRecipe;
-import com.entisy.techniq.core.init.RecipeSerializerInit;
+import com.entisy.techniq.core.init.ModRecipe;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipeSerializer;
@@ -55,7 +54,7 @@ public class MetalPressRecipe implements IMetalPressRecipe {
 
 	@Override
 	public IRecipeSerializer<?> getSerializer() {
-		return RecipeSerializerInit.METAL_PRESS_SERIALIZER.get();
+		return ModRecipe.METAL_PRESS_SERIALIZER.get();
 	}
 
 	@Override

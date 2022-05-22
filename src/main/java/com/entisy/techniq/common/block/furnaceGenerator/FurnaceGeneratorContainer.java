@@ -1,8 +1,8 @@
 package com.entisy.techniq.common.block.furnaceGenerator;
 
 import com.entisy.techniq.common.block.displayCase.DisplayCaseTileEntity;
-import com.entisy.techniq.core.init.BlockInit;
-import com.entisy.techniq.core.init.ContainerTypesInit;
+import com.entisy.techniq.core.init.ModBlocks;
+import com.entisy.techniq.core.init.ModContainerTypes;
 import com.entisy.techniq.core.util.FunctionalIntReferenceHolder;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -26,7 +26,7 @@ public class FurnaceGeneratorContainer  extends Container {
     public FunctionalIntReferenceHolder currentEnergy;
 
     public FurnaceGeneratorContainer(final int id, final PlayerInventory inv, final FurnaceGeneratorTileEntity tileEntity) {
-        super(ContainerTypesInit.FURNACE_GENERATOR_CONTAINER_TYPE.get(), id);
+        super(ModContainerTypes.FURNACE_GENERATOR_CONTAINER_TYPE.get(), id);
         this.tileEntity = tileEntity;
         canInteractWithCallable = IWorldPosCallable.create(tileEntity.getLevel(), tileEntity.getBlockPos());
 
@@ -69,7 +69,7 @@ public class FurnaceGeneratorContainer  extends Container {
 
     @Override
     public boolean stillValid(PlayerEntity player) {
-        return stillValid(canInteractWithCallable, player, BlockInit.FURNACE_GENERATOR.get());
+        return stillValid(canInteractWithCallable, player, ModBlocks.FURNACE_GENERATOR.get());
     }
 
 

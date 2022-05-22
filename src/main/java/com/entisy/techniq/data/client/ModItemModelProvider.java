@@ -58,6 +58,7 @@ public class ModItemModelProvider extends ItemModelProvider {
 		builder("gold_plate", itemGenerated);
 		builder("diamond_plate", itemGenerated);
 		builder("hammer", itemGenerated);
+		builder("wrench", itemGenerated);
 		builder("iron_rod", itemGenerated);
 		builder("copper_rod", itemGenerated);
 		builder("steel_rod", itemGenerated);

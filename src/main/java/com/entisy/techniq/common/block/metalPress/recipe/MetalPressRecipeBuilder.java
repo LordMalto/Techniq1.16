@@ -6,7 +6,7 @@ import java.util.function.Consumer;
 import javax.annotation.Nullable;
 
 import com.entisy.techniq.Techniq;
-import com.entisy.techniq.core.init.RecipeSerializerInit;
+import com.entisy.techniq.core.init.ModRecipe;
 import com.google.common.collect.Lists;
 import com.google.gson.JsonObject;
 
@@ -166,7 +166,7 @@ public class MetalPressRecipeBuilder {
 		}
 
 		public IRecipeSerializer<?> getType() {
-			return RecipeSerializerInit.METAL_PRESS_RECIPE_SERIALIZER;
+			return ModRecipe.METAL_PRESS_RECIPE_SERIALIZER;
 		}
 
 		public ResourceLocation getId() {

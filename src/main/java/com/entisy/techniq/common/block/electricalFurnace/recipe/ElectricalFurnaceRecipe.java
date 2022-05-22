@@ -1,6 +1,6 @@
 package com.entisy.techniq.common.block.electricalFurnace.recipe;
 
-import com.entisy.techniq.core.init.RecipeSerializerInit;
+import com.entisy.techniq.core.init.ModRecipe;
 
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -63,7 +63,7 @@ public class ElectricalFurnaceRecipe implements IElectricalFurnaceRecipe {
 
 	@Override
 	public IRecipeSerializer<?> getSerializer() {
-		return RecipeSerializerInit.ELECTRICAL_FURNACE_SERIALIZER.get();
+		return ModRecipe.ELECTRICAL_FURNACE_SERIALIZER.get();
 	}
 
 	@Override

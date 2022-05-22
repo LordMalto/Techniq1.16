@@ -1,8 +1,7 @@
 package com.entisy.techniq.common.block.displayCase;
 
 import com.entisy.techniq.Techniq;
-import com.entisy.techniq.common.block.displayCase.DisplayCaseContainer;
-import com.entisy.techniq.core.init.TileEntityTypesInit;
+import com.entisy.techniq.core.init.ModTileEntityTypes;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerInventory;
@@ -28,7 +27,7 @@ public class DisplayCaseTileEntity extends LockableLootTileEntity {
 	
 	public DisplayCaseTileEntity()
 	{
-		this(TileEntityTypesInit.DISPLAY_CASE_TILE_ENTITY_TYPE.get());
+		this(ModTileEntityTypes.DISPLAY_CASE_TILE_ENTITY_TYPE.get());
 	}
 
 	@Override

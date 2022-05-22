@@ -5,23 +5,29 @@ import com.entisy.techniq.common.block.alloySmelter.AlloySmelterBlock;
 import com.entisy.techniq.common.block.metalPress.recipe.MetalPressRecipe;
 import com.entisy.techniq.common.block.MachineTileEntity;
 import com.entisy.techniq.core.energy.EnergyStorageImpl;
-import com.entisy.techniq.core.init.RecipeSerializerInit;
-import com.entisy.techniq.core.init.TileEntityTypesInit;
+import com.entisy.techniq.core.init.ModBlocks;
+import com.entisy.techniq.core.init.ModRecipe;
+import com.entisy.techniq.core.init.ModTileEntityTypes;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
+import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.util.Direction;
+import net.minecraft.util.IWorldPosCallable;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.items.wrapper.RecipeWrapper;
 
 import javax.annotation.Nullable;
+import java.util.Objects;
 import java.util.Set;
 
 public class MetalPressTileEntity extends MachineTileEntity implements ITickableTileEntity, INamedContainerProvider {
@@ -31,7 +37,7 @@ public class MetalPressTileEntity extends MachineTileEntity implements ITickable
     }
 
     public MetalPressTileEntity() {
-        this(TileEntityTypesInit.METAL_PRESS_TILE_ENTITY.get());
+        this(ModTileEntityTypes.METAL_PRESS_TILE_ENTITY.get());
     }
 
     @Override
@@ -83,7 +89,7 @@ public class MetalPressTileEntity extends MachineTileEntity implements ITickable
             return null;
         }
 
-        Set<IRecipe<?>> recipes = findRecipesByType(RecipeSerializerInit.METAL_PRESS_TYPE, level);
+        Set<IRecipe<?>> recipes = findRecipesByType(ModRecipe.METAL_PRESS_TYPE, level);
         for (IRecipe<?> iRecipe : recipes) {
             MetalPressRecipe recipe = (MetalPressRecipe) iRecipe;
             if (recipe.matches(new RecipeWrapper(inventory), level)) {

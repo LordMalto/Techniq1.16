@@ -1,11 +1,11 @@
 package com.entisy.techniq;
 
-import com.entisy.techniq.core.init.BlockInit;
-import com.entisy.techniq.core.init.ContainerTypesInit;
-import com.entisy.techniq.core.init.FeatureInit;
-import com.entisy.techniq.core.init.ItemInit;
-import com.entisy.techniq.core.init.RecipeSerializerInit;
-import com.entisy.techniq.core.init.TileEntityTypesInit;
+import com.entisy.techniq.core.init.ModBlocks;
+import com.entisy.techniq.core.init.ModContainerTypes;
+import com.entisy.techniq.core.init.ModFeatures;
+import com.entisy.techniq.core.init.ModItems;
+import com.entisy.techniq.core.init.ModRecipe;
+import com.entisy.techniq.core.init.ModTileEntityTypes;
 import com.entisy.techniq.core.tab.TechniqTab;
 
 import net.minecraft.item.BlockItem;
@@ -29,19 +29,19 @@ public class Techniq {
 	public Techniq() {
 		IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
 
-		ItemInit.ITEMS.register(bus);
-		BlockInit.BLOCKS.register(bus);
-		TileEntityTypesInit.TILE_ENTITY_TYPES.register(bus);
-		ContainerTypesInit.CONTAINER_TYPES.register(bus);
-		RecipeSerializerInit.RECIPE_SERIALIZERS.register(bus);
+		ModItems.ITEMS.register(bus);
+		ModBlocks.BLOCKS.register(bus);
+		ModTileEntityTypes.TILE_ENTITY_TYPES.register(bus);
+		ModContainerTypes.CONTAINER_TYPES.register(bus);
+		ModRecipe.RECIPE_SERIALIZERS.register(bus);
 		
-		MinecraftForge.EVENT_BUS.addListener(EventPriority.HIGH, FeatureInit::addOres);
+		MinecraftForge.EVENT_BUS.addListener(EventPriority.HIGH, ModFeatures::addOres);
 		MinecraftForge.EVENT_BUS.register(this);
 	}
 
 	@SubscribeEvent
 	public static void onRegisterItems(final RegistryEvent.Register<Item> event) {
-		BlockInit.BLOCKS.getEntries().stream().map(RegistryObject::get).forEach(block -> {
+		ModBlocks.BLOCKS.getEntries().stream().map(RegistryObject::get).forEach(block -> {
 			event.getRegistry().register(new BlockItem(block, new Item.Properties().tab(TechniqTab.TECHNIQ_TAB))
 					.setRegistryName(block.getRegistryName()));
 		});

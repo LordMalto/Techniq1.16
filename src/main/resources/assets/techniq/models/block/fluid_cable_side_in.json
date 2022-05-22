@@ -2,8 +2,8 @@
 	"parent": "block/block",
 	"ambientocclusion": false,
 	"textures": {
-		"0": "techniq:block/transfer_node",
-		"particle": "techniq:block/transfer_node"
+		"0": "techniq:block/fluid_cable",
+		"particle": "techniq:block/fluid_cable"
 	},
 	"elements": [
 		{

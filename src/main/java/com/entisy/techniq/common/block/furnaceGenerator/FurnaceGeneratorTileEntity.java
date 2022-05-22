@@ -5,7 +5,7 @@ import com.entisy.techniq.common.block.alloySmelter.AlloySmelterBlock;
 import com.entisy.techniq.common.block.MachineTileEntity;
 import com.entisy.techniq.core.energy.EnergyStorageImpl;
 import com.entisy.techniq.core.energy.IEnergyHandler;
-import com.entisy.techniq.core.init.TileEntityTypesInit;
+import com.entisy.techniq.core.init.ModTileEntityTypes;
 import com.entisy.techniq.core.util.EnergyUtils;
 import com.entisy.techniq.core.util.SimpleMap;
 import net.minecraft.entity.player.PlayerEntity;
@@ -39,7 +39,7 @@ public class FurnaceGeneratorTileEntity extends MachineTileEntity implements ITi
     }
 
     public FurnaceGeneratorTileEntity() {
-        this(TileEntityTypesInit.FURNACE_GENERATOR_TILE_ENTITY.get());
+        this(ModTileEntityTypes.FURNACE_GENERATOR_TILE_ENTITY.get());
     }
 
     @Override

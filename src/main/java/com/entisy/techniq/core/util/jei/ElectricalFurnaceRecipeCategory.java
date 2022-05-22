@@ -2,7 +2,7 @@ package com.entisy.techniq.core.util.jei;
 
 import com.entisy.techniq.Techniq;
 import com.entisy.techniq.common.block.electricalFurnace.recipe.ElectricalFurnaceRecipe;
-import com.entisy.techniq.core.init.BlockInit;
+import com.entisy.techniq.core.init.ModBlocks;
 import com.mojang.blaze3d.matrix.MatrixStack;
 
 import mezz.jei.api.constants.VanillaTypes;
@@ -26,7 +26,7 @@ public class ElectricalFurnaceRecipeCategory implements IRecipeCategory<Electric
 
 	public ElectricalFurnaceRecipeCategory(IGuiHelper helper) {
 		this.background = helper.createDrawable(TEXTURE, 0, 0, 176, 80);
-		this.icon = helper.createDrawableIngredient(new ItemStack(BlockInit.ELECTRICAL_FURNACE.get()));
+		this.icon = helper.createDrawableIngredient(new ItemStack(ModBlocks.ELECTRICAL_FURNACE.get()));
 		this.arrow = helper.createDrawable(TEXTURE, 0, 166, 22, 16);
 	}
 
@@ -42,7 +42,7 @@ public class ElectricalFurnaceRecipeCategory implements IRecipeCategory<Electric
 
 	@Override
 	public String getTitle() {
-		return BlockInit.ELECTRICAL_FURNACE.get().getName().getString();
+		return ModBlocks.ELECTRICAL_FURNACE.get().getName().getString();
 	}
 
 	@Override

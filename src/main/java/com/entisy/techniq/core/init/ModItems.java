@@ -3,6 +3,7 @@ package com.entisy.techniq.core.init;
 import com.entisy.techniq.Techniq;
 import com.entisy.techniq.common.item.HammerItem;
 import com.entisy.techniq.common.item.MachineFrameItem;
+import com.entisy.techniq.common.item.WrenchItem;
 import com.entisy.techniq.core.tab.TechniqTab;
 
 import net.minecraft.item.Item;
@@ -10,7 +11,7 @@ import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
-public class ItemInit {
+public class ModItems {
 
 	public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, Techniq.MOD_ID);
 
@@ -45,6 +46,8 @@ public class ItemInit {
 	// TOOLS
 	public static final RegistryObject<Item> HAMMER = ITEMS.register("hammer",
 			() -> new HammerItem(new Item.Properties().tab(TechniqTab.TECHNIQ_TAB)));
+	public static final RegistryObject<Item> WRENCH = ITEMS.register("wrench",
+			WrenchItem::new);
 
 	public static final RegistryObject<Item> MACHINE_FRAME = ITEMS.register("machine_frame",
 			() -> new MachineFrameItem(new Item.Properties().tab(TechniqTab.TECHNIQ_TAB)));

@@ -3,8 +3,8 @@ package com.entisy.techniq.common.block.electricalFurnace;
 import java.util.Objects;
 
 import com.entisy.techniq.common.slots.OutputSlot;
-import com.entisy.techniq.core.init.BlockInit;
-import com.entisy.techniq.core.init.ContainerTypesInit;
+import com.entisy.techniq.core.init.ModBlocks;
+import com.entisy.techniq.core.init.ModContainerTypes;
 import com.entisy.techniq.core.util.FunctionalIntReferenceHolder;
 
 import net.minecraft.entity.player.PlayerEntity;
@@ -24,13 +24,13 @@ import net.minecraftforge.items.SlotItemHandler;
 
 public class ElectricalFurnaceContainer extends Container {
 
-	private ElectricalFurnaceTileEntity tileEntity;
+	public ElectricalFurnaceTileEntity tileEntity;
 	private IWorldPosCallable canInteractWithCallable;
 	public FunctionalIntReferenceHolder currentSmeltTime;
 
 	public ElectricalFurnaceContainer(final int id, final PlayerInventory inv,
 			final ElectricalFurnaceTileEntity tileEntity) {
-		super(ContainerTypesInit.ELECTRICAL_FURNACE_CONTAINER_TYPE.get(), id);
+		super(ModContainerTypes.ELECTRICAL_FURNACE_CONTAINER_TYPE.get(), id);
 		this.tileEntity = tileEntity;
 		canInteractWithCallable = IWorldPosCallable.create(tileEntity.getLevel(), tileEntity.getBlockPos());
 
@@ -74,7 +74,7 @@ public class ElectricalFurnaceContainer extends Container {
 
 	@Override
 	public boolean stillValid(PlayerEntity player) {
-		return stillValid(canInteractWithCallable, player, BlockInit.ELECTRICAL_FURNACE.get());
+		return stillValid(canInteractWithCallable, player, ModBlocks.ELECTRICAL_FURNACE.get());
 	}
 
 	@Override

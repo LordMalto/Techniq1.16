@@ -3,7 +3,7 @@ package com.entisy.techniq.common.block.cable;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.entisy.techniq.core.init.TileEntityTypesInit;
+import com.entisy.techniq.core.init.ModTileEntityTypes;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
@@ -18,7 +18,7 @@ public class CableTileEntity extends TileEntity {
 	int energyStored;
 
     public CableTileEntity() {
-        super(TileEntityTypesInit.CABLE_TILE_ENTITY.get());
+        super(ModTileEntityTypes.CABLE_TILE_ENTITY.get());
     }
 
     public String getCableNetworkData() {

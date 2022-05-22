@@ -4,7 +4,8 @@ import com.entisy.techniq.Techniq;
 import com.entisy.techniq.common.block.MachineTileEntity;
 import com.entisy.techniq.core.energy.EnergyStorageImpl;
 import com.entisy.techniq.core.energy.IEnergyHandler;
-import com.entisy.techniq.core.init.TileEntityTypesInit;
+import com.entisy.techniq.core.init.ModTileEntityTypes;
+import com.entisy.techniq.core.util.EnergyUtils;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
@@ -22,11 +23,11 @@ public class BatteryTileEntity extends MachineTileEntity implements ITickableTil
     private static final int MAX_ENERGY_WORKING_TICK = 200;
 
     public BatteryTileEntity(TileEntityType<?> type) {
-        super(0, 500, 0, type);
+        super(0, 500, 500, type);
     }
 
     public BatteryTileEntity() {
-        this(TileEntityTypesInit.BATTERY_TILE_ENTITY.get());
+        this(ModTileEntityTypes.BATTERY_TILE_ENTITY.get());
     }
 
     @Nullable
@@ -59,6 +60,9 @@ public class BatteryTileEntity extends MachineTileEntity implements ITickableTil
             }
         }
         if (dirty) {
+            if (maxEnergyExtract > 0) {
+                EnergyUtils.trySendToNeighbors(level, worldPosition, this, maxEnergyExtract);
+            }
             setChanged();
             level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), Constants.BlockFlags.BLOCK_UPDATE);
         }

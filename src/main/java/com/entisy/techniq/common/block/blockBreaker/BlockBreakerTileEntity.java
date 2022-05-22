@@ -1,6 +1,6 @@
 package com.entisy.techniq.common.block.blockBreaker;
 
-import com.entisy.techniq.core.init.TileEntityTypesInit;
+import com.entisy.techniq.core.init.ModTileEntityTypes;
 
 import net.minecraft.block.Blocks;
 import net.minecraft.tileentity.ITickableTileEntity;
@@ -15,7 +15,7 @@ public class BlockBreakerTileEntity extends TileEntity implements ITickableTileE
 	
 	public BlockBreakerTileEntity()
 	{
-		this(TileEntityTypesInit.BLOCK_BREAKER_TILE_ENTITY_TYPE.get());
+		this(ModTileEntityTypes.BLOCK_BREAKER_TILE_ENTITY_TYPE.get());
 	}
 
 	@Override

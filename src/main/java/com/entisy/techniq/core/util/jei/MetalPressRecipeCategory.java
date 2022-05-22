@@ -2,7 +2,7 @@ package com.entisy.techniq.core.util.jei;
 
 import com.entisy.techniq.Techniq;
 import com.entisy.techniq.common.block.metalPress.recipe.MetalPressRecipe;
-import com.entisy.techniq.core.init.BlockInit;
+import com.entisy.techniq.core.init.ModBlocks;
 import com.mojang.blaze3d.matrix.MatrixStack;
 
 import mezz.jei.api.constants.VanillaTypes;
@@ -26,7 +26,7 @@ public class MetalPressRecipeCategory implements IRecipeCategory<MetalPressRecip
 	
 	public MetalPressRecipeCategory(IGuiHelper helper) {
 		this.background = helper.createDrawable(TEXTURE, 0, 0, 176, 80);
-		this.icon = helper.createDrawableIngredient(new ItemStack(BlockInit.METAL_PRESS.get()));
+		this.icon = helper.createDrawableIngredient(new ItemStack(ModBlocks.METAL_PRESS.get()));
 		this.arrow = helper.createDrawable(TEXTURE, 0, 166, 22, 16);
 	}
 	
@@ -42,7 +42,7 @@ public class MetalPressRecipeCategory implements IRecipeCategory<MetalPressRecip
 
 	@Override
 	public String getTitle() {
-		return BlockInit.METAL_PRESS.get().getName().getString();
+		return ModBlocks.METAL_PRESS.get().getName().getString();
 	}
 
 	@Override

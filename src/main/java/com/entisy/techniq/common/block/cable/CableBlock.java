@@ -5,6 +5,7 @@ import java.util.Map;
 import javax.annotation.Nullable;
 
 import com.entisy.techniq.api.ConnectionType;
+import com.entisy.techniq.api.IWrenchable;
 import com.entisy.techniq.common.block.SixWayMachineBlock;
 import com.entisy.techniq.core.util.EnergyUtils;
 import com.google.common.collect.Maps;
@@ -12,18 +13,22 @@ import com.google.common.collect.Maps;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.BlockItemUseContext;
+import net.minecraft.item.ItemUseContext;
 import net.minecraft.state.EnumProperty;
+import net.minecraft.state.Property;
 import net.minecraft.state.StateContainer;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Util;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
+import net.minecraft.world.World;
 import net.minecraftforge.energy.IEnergyStorage;
 
-public class CableBlock extends SixWayMachineBlock {
+public class CableBlock extends SixWayMachineBlock implements IWrenchable {
 
 	public static final EnumProperty<ConnectionType> NORTH = EnumProperty.create("north", ConnectionType.class);
 	public static final EnumProperty<ConnectionType> EAST = EnumProperty.create("east", ConnectionType.class);
@@ -62,7 +67,7 @@ public class CableBlock extends SixWayMachineBlock {
 	public TileEntity createTileEntity(BlockState state, IBlockReader world) {
 		return new CableTileEntity();
 	}
-	
+
 	@Nullable
 	private static Direction getClickedConnection(Vector3d relative) {
 		if (relative.x < 0.25)
@@ -144,5 +149,38 @@ public class CableBlock extends SixWayMachineBlock {
 
 	public static ConnectionType getConnection(BlockState state, Direction side) {
 		return state.getValue(FACING_TO_PROPERTY_MAP.get(side));
+	}
+
+	@Override
+	public ActionResultType onWrench(ItemUseContext context) {
+		BlockPos pos = context.getClickedPos();
+		World world = context.getLevel();
+		BlockState state = world.getBlockState(pos);
+		Vector3d relative = context.getClickLocation().subtract(pos.getX(), pos.getY(), pos.getZ());
+
+		Direction side = getClickedConnection(relative);
+		if (side != null) {
+			TileEntity other = world.getBlockEntity(pos.relative(side));
+			if (!(other instanceof CableTileEntity)) {
+				BlockState state1 = cycleProperty(state, FACING_TO_PROPERTY_MAP.get(side));
+				world.setBlock(pos, state1, 18);
+				CableNetworkManager.invalidateNetwork(world, pos);
+				return ActionResultType.SUCCESS;
+			}
+		}
+
+		return ActionResultType.PASS;
+	}
+
+	@SuppressWarnings("unchecked")
+	private static <T extends Comparable<T>> BlockState cycleProperty(BlockState state, Property<T> propertyIn) {
+		T value = getAdjacentValue(propertyIn.getPossibleValues(), state.getValue(propertyIn));
+		if (value == ConnectionType.NONE)
+			value = (T) ConnectionType.IN;
+		return state.setValue(propertyIn, value);
+	}
+
+	private static <T> T getAdjacentValue(Iterable<T> iterable, @Nullable T t) {
+		return Util.findNextInIterable(iterable, t);
 	}
 }

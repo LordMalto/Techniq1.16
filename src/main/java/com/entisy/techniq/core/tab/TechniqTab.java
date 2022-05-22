@@ -1,6 +1,6 @@
 package com.entisy.techniq.core.tab;
 
-import com.entisy.techniq.core.init.ItemInit;
+import com.entisy.techniq.core.init.ModItems;
 
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
@@ -15,6 +15,6 @@ public class TechniqTab extends ItemGroup {
 
 	@Override
 	public ItemStack makeIcon() {
-		return new ItemStack(ItemInit.COPPER_INGOT.get());
+		return new ItemStack(ModItems.COPPER_INGOT.get());
 	}
 }
