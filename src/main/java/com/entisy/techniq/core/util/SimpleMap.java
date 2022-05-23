@@ -48,9 +48,9 @@ public class SimpleMap<K, V> {
         return values.list();
     }
 
-    public void append(K k, V v) {
-        keys.append(k);
-        values.append(v);
+    public void append(K key, V value) {
+        keys.append(key);
+        values.append(value);
     }
 
     public int size() {

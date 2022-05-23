@@ -43,6 +43,22 @@ public class ModItems {
 	public static final RegistryObject<Item> STEEL_ROD = ITEMS.register("steel_rod",
 			() -> new Item(new Item.Properties().tab(TechniqTab.TECHNIQ_TAB)));
 
+	// POWDERS
+	public static final RegistryObject<Item> COAL_POWDER = ITEMS.register("coal_powder",
+			() -> new Item(new Item.Properties().tab(TechniqTab.TECHNIQ_TAB)));
+	public static final RegistryObject<Item> IRON_POWDER = ITEMS.register("iron_powder",
+			() -> new Item(new Item.Properties().tab(TechniqTab.TECHNIQ_TAB)));
+	public static final RegistryObject<Item> DIAMOND_POWDER = ITEMS.register("diamond_powder",
+			() -> new Item(new Item.Properties().tab(TechniqTab.TECHNIQ_TAB)));
+	public static final RegistryObject<Item> LAPIS_POWDER = ITEMS.register("lapis_powder",
+			() -> new Item(new Item.Properties().tab(TechniqTab.TECHNIQ_TAB)));
+	public static final RegistryObject<Item> EMERALD_POWDER = ITEMS.register("emerald_powder",
+			() -> new Item(new Item.Properties().tab(TechniqTab.TECHNIQ_TAB)));
+	public static final RegistryObject<Item> GOLD_POWDER = ITEMS.register("gold_powder",
+			() -> new Item(new Item.Properties().tab(TechniqTab.TECHNIQ_TAB)));
+	public static final RegistryObject<Item> QUARTZ_POWDER = ITEMS.register("quartz_powder",
+			() -> new Item(new Item.Properties().tab(TechniqTab.TECHNIQ_TAB)));
+
 	// TOOLS
 	public static final RegistryObject<Item> HAMMER = ITEMS.register("hammer",
 			() -> new HammerItem(new Item.Properties().tab(TechniqTab.TECHNIQ_TAB)));

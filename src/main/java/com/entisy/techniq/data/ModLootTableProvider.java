@@ -77,6 +77,8 @@ public class ModLootTableProvider extends LootTableProvider
             dropSelf(ModBlocks.STEEL_BLOCK.get());
             dropSelf(ModBlocks.BATTERY.get());
             dropSelf(ModBlocks.FURNACE_GENERATOR.get());
+            dropSelf(ModBlocks.SIMPLE_ORE_MINER.get());
+            dropSelf(ModBlocks.ADVANCED_ORE_MINER.get());
 
             //dropOther(ModBlocks.MACHINE_BLOCK.get(), ModItems.RUBY.get());
 

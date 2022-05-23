@@ -78,14 +78,15 @@ public class FluidCableBlock extends SixWayMachineBlock implements IWrenchable {
         if (tileEntity instanceof FluidCableTileEntity) {
             return ConnectionType.BOTH;
         } else if (tileEntity != null) {
-            IEnergyStorage energy = EnergyUtils.getEnergyFromSideOrNull(tileEntity, side.getOpposite());
-            if (energy != null) {
-                if (energy.canExtract()) {
-                    return current == ConnectionType.NONE ? ConnectionType.IN : current;
-                } else if (energy.canReceive()) {
-                    return current == ConnectionType.NONE ? ConnectionType.OUT : current;
-                }
-            }
+            // uncomment later
+//            IEnergyStorage energy = EnergyUtils.getEnergyFromSideOrNull(tileEntity, side.getOpposite());
+//            if (energy != null) {
+//                if (energy.canExtract()) {
+//                    return current == ConnectionType.NONE ? ConnectionType.IN : current;
+//                } else if (energy.canReceive()) {
+//                    return current == ConnectionType.NONE ? ConnectionType.OUT : current;
+//                }
+//            }
         }
         return ConnectionType.NONE;
     }

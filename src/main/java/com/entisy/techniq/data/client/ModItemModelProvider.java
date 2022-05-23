@@ -41,29 +41,42 @@ public class ModItemModelProvider extends ItemModelProvider {
 		withExistingParent("end_quartz_ore", modLoc("block/end_quartz_ore"));
 		withExistingParent("nether_lapis_ore", modLoc("block/nether_lapis_ore"));
 		withExistingParent("end_lapis_ore", modLoc("block/end_lapis_ore"));
-		withExistingParent("display_case", modLoc("block/display_case"));
+//		withExistingParent("display_case", modLoc("block/display_case"));
 		withExistingParent("electrical_furnace", modLoc("block/electrical_furnace"));
 		withExistingParent("metal_press", modLoc("block/metal_press"));
 		withExistingParent("alloy_smelter", modLoc("block/alloy_smelter"));
 		withExistingParent("steel_block", modLoc("block/steel_block"));
 		withExistingParent("battery",modLoc("block/battery"));
 		withExistingParent("furnace_generator",modLoc("block/furnace_generator"));
+		withExistingParent("simple_ore_miner",modLoc("block/simple_ore_miner"));
+		withExistingParent("advanced_ore_miner",modLoc("block/advanced_ore_miner"));
 
 		ModelFile itemGenerated = getExistingFile(mcLoc("item/generated"));
 
 		builder("copper_ingot", itemGenerated);
+		builder("steel_ingot", itemGenerated);
 		builder("redstone_alloy_ingot", itemGenerated);
+
 		builder("copper_plate", itemGenerated);
 		builder("iron_plate", itemGenerated);
 		builder("gold_plate", itemGenerated);
 		builder("diamond_plate", itemGenerated);
+		builder("steel_plate", itemGenerated);
+
 		builder("hammer", itemGenerated);
 		builder("wrench", itemGenerated);
+
 		builder("iron_rod", itemGenerated);
 		builder("copper_rod", itemGenerated);
 		builder("steel_rod", itemGenerated);
-		builder("steel_plate", itemGenerated);
-		builder("steel_ingot", itemGenerated);
+
+		builder("coal_powder", itemGenerated);
+		builder("iron_powder", itemGenerated);
+		builder("diamond_powder", itemGenerated);
+		builder("lapis_powder", itemGenerated);
+		builder("emerald_powder", itemGenerated);
+		builder("gold_powder", itemGenerated);
+		builder("quartz_powder", itemGenerated);
 	}
 	
 	private ItemModelBuilder builder(String name, ModelFile parent) {

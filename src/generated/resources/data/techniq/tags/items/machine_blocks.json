@@ -5,9 +5,9 @@
     "techniq:electrical_furnace",
     "techniq:metal_press",
     "techniq:cable",
-    "techniq:item_cable",
-    "techniq:fluid_cable",
     "techniq:battery",
-    "techniq:furnace_generator"
+    "techniq:furnace_generator",
+    "techniq:simple_ore_miner",
+    "techniq:advanced_ore_miner"
   ]
 }

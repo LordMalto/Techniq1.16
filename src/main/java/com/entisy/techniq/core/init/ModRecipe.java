@@ -10,7 +10,6 @@ import com.entisy.techniq.common.block.electricalFurnace.recipe.IElectricalFurna
 import com.entisy.techniq.common.block.metalPress.recipe.IMetalPressRecipe;
 import com.entisy.techniq.common.block.metalPress.recipe.MetalPressRecipe;
 import com.entisy.techniq.common.block.metalPress.recipe.MetalPressRecipeSerializer;
-
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.IRecipeType;
@@ -22,39 +21,39 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 public class ModRecipe {
 
-	// ELECTRICAL FURNACE
-	public static final IRecipeSerializer<ElectricalFurnaceRecipe> ELECTRICAL_FURNACE_RECIPE_SERIALIZER = new ElectricalFurnaceRecipeSerializer();
-	public static final IRecipeType<IElectricalFurnaceRecipe> ELECTRICAL_FURNACE_TYPE = registerType(
-			IElectricalFurnaceRecipe.RECIPE_TYPE_ID);
-	// METAL PRESS
-	public static final IRecipeSerializer<MetalPressRecipe> METAL_PRESS_RECIPE_SERIALIZER = new MetalPressRecipeSerializer();
-	public static final IRecipeType<IMetalPressRecipe> METAL_PRESS_TYPE = registerType(
-			IMetalPressRecipe.RECIPE_TYPE_ID);
-	// ALLOY SMELTER
-	public static final IRecipeSerializer<AlloySmelterRecipe> ALLOY_SMELTER_RECIPE_SERIALIZER = new AlloySmelterRecipeSerializer();
-	public static final IRecipeType<IAlloySmelterRecipe> ALLOY_SMELTER_TYPE = registerType(
-			IAlloySmelterRecipe.RECIPE_TYPE_ID);
+    // ELECTRICAL FURNACE
+    public static final IRecipeSerializer<ElectricalFurnaceRecipe> ELECTRICAL_FURNACE_RECIPE_SERIALIZER = new ElectricalFurnaceRecipeSerializer();
+    public static final IRecipeType<IElectricalFurnaceRecipe> ELECTRICAL_FURNACE_TYPE = registerType(
+            IElectricalFurnaceRecipe.RECIPE_TYPE_ID);
+    // METAL PRESS
+    public static final IRecipeSerializer<MetalPressRecipe> METAL_PRESS_RECIPE_SERIALIZER = new MetalPressRecipeSerializer();
+    public static final IRecipeType<IMetalPressRecipe> METAL_PRESS_TYPE = registerType(
+            IMetalPressRecipe.RECIPE_TYPE_ID);
+    // ALLOY SMELTER
+    public static final IRecipeSerializer<AlloySmelterRecipe> ALLOY_SMELTER_RECIPE_SERIALIZER = new AlloySmelterRecipeSerializer();
+    public static final IRecipeType<IAlloySmelterRecipe> ALLOY_SMELTER_TYPE = registerType(
+            IAlloySmelterRecipe.RECIPE_TYPE_ID);
 
-	public static final DeferredRegister<IRecipeSerializer<?>> RECIPE_SERIALIZERS = DeferredRegister
-			.create(ForgeRegistries.RECIPE_SERIALIZERS, Techniq.MOD_ID);
+    public static final DeferredRegister<IRecipeSerializer<?>> RECIPE_SERIALIZERS = DeferredRegister
+            .create(ForgeRegistries.RECIPE_SERIALIZERS, Techniq.MOD_ID);
 
-	// SERIALIZERS
-	public static final RegistryObject<IRecipeSerializer<?>> ELECTRICAL_FURNACE_SERIALIZER = RECIPE_SERIALIZERS
-			.register("electrical_furnace", () -> ELECTRICAL_FURNACE_RECIPE_SERIALIZER);
-	public static final RegistryObject<IRecipeSerializer<?>> METAL_PRESS_SERIALIZER = RECIPE_SERIALIZERS
-			.register("metal_press", () -> METAL_PRESS_RECIPE_SERIALIZER);
-	public static final RegistryObject<IRecipeSerializer<?>> ALLOY_SMELTER_SERIALIZER = RECIPE_SERIALIZERS
-			.register("alloy_smelter", () -> ALLOY_SMELTER_RECIPE_SERIALIZER);
+    // SERIALIZERS
+    public static final RegistryObject<IRecipeSerializer<?>> ELECTRICAL_FURNACE_SERIALIZER = RECIPE_SERIALIZERS
+            .register("electrical_furnace", () -> ELECTRICAL_FURNACE_RECIPE_SERIALIZER);
+    public static final RegistryObject<IRecipeSerializer<?>> METAL_PRESS_SERIALIZER = RECIPE_SERIALIZERS
+            .register("metal_press", () -> METAL_PRESS_RECIPE_SERIALIZER);
+    public static final RegistryObject<IRecipeSerializer<?>> ALLOY_SMELTER_SERIALIZER = RECIPE_SERIALIZERS
+            .register("alloy_smelter", () -> ALLOY_SMELTER_RECIPE_SERIALIZER);
 
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-	private static <T extends IRecipeType> T registerType(ResourceLocation recipeTypeId) {
-		return (T) Registry.register(Registry.RECIPE_TYPE, recipeTypeId, new RecipeType<>());
-	}
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    private static <T extends IRecipeType> T registerType(ResourceLocation recipeTypeId) {
+        return (T) Registry.register(Registry.RECIPE_TYPE, recipeTypeId, new RecipeType<>());
+    }
 
-	private static class RecipeType<T extends IRecipe<?>> implements IRecipeType<T> {
-		@Override
-		public String toString() {
-			return Registry.RECIPE_TYPE.getKey(this).toString();
-		}
-	}
+    private static class RecipeType<T extends IRecipe<?>> implements IRecipeType<T> {
+        @Override
+        public String toString() {
+            return Registry.RECIPE_TYPE.getKey(this).toString();
+        }
+    }
 }

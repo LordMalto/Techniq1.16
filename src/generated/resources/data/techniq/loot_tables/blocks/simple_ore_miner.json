@@ -6,7 +6,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "techniq:display_case"
+          "name": "techniq:simple_ore_miner"
         }
       ],
       "conditions": [

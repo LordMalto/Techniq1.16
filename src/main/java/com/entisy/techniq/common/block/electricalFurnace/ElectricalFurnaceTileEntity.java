@@ -5,6 +5,7 @@ import com.entisy.techniq.common.block.alloySmelter.AlloySmelterBlock;
 import com.entisy.techniq.common.block.electricalFurnace.recipe.ElectricalFurnaceRecipe;
 import com.entisy.techniq.common.block.MachineTileEntity;
 import com.entisy.techniq.core.energy.EnergyStorageImpl;
+import com.entisy.techniq.core.energy.IEnergyHandler;
 import com.entisy.techniq.core.init.ModRecipe;
 import com.entisy.techniq.core.init.ModTileEntityTypes;
 import net.minecraft.entity.player.PlayerEntity;
@@ -24,7 +25,7 @@ import net.minecraftforge.items.wrapper.RecipeWrapper;
 import javax.annotation.Nullable;
 import java.util.Set;
 
-public class ElectricalFurnaceTileEntity extends MachineTileEntity implements ITickableTileEntity, INamedContainerProvider {
+public class ElectricalFurnaceTileEntity extends MachineTileEntity implements ITickableTileEntity, INamedContainerProvider, IEnergyHandler {
 
     public ElectricalFurnaceTileEntity(TileEntityType<?> type) {
         super(2, 200, 0, type);
@@ -115,5 +116,10 @@ public class ElectricalFurnaceTileEntity extends MachineTileEntity implements IT
 
     public ElectricalFurnaceRecipe getRecipe() {
         return getRecipe(getInventory().getStackInSlot(0));
+    }
+
+    @Override
+    public EnergyStorageImpl getEnergyImpl() {
+        return energyStorage;
     }
 }

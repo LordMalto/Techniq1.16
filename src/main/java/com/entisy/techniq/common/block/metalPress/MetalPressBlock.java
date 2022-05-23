@@ -22,10 +22,6 @@ import net.minecraftforge.fml.network.NetworkHooks;
 
 public class MetalPressBlock extends MachineBlock {
 
-	public MetalPressBlock() {
-		registerDefaultState(stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(LIT, false));
-	}
-
 	@Override
 	public boolean hasTileEntity(BlockState state) {
 		return true;

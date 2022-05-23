@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "techniq:block/advanced_ore_miner"
+    }
+  }
+}

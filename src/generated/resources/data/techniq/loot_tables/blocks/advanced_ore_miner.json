@@ -6,7 +6,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "techniq:block_breaker"
+          "name": "techniq:advanced_ore_miner"
         }
       ],
       "conditions": [

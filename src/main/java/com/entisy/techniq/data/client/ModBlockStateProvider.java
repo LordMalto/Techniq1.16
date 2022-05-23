@@ -48,6 +48,8 @@ public class ModBlockStateProvider extends BlockStateProvider {
 		simpleBlock(ModBlocks.ALLOY_SMELTER.get());
 		simpleBlock(ModBlocks.BATTERY.get());
 		simpleBlock(ModBlocks.FURNACE_GENERATOR.get());
+		simpleBlock(ModBlocks.SIMPLE_ORE_MINER.get());
+		simpleBlock(ModBlocks.ADVANCED_ORE_MINER.get());
 		
 //		horizontalBlock(BlockInit.ELECTRICAL_FURNACE.get(),
 //				models().orientableWithBottom(BlockInit.ELECTRICAL_FURNACE.get().getRegistryName().getPath(),

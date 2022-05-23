@@ -8,6 +8,8 @@ import com.entisy.techniq.common.block.electricalFurnace.ElectricalFurnaceScreen
 import com.entisy.techniq.common.block.furnaceGenerator.FurnaceGeneratorScreen;
 import com.entisy.techniq.common.block.metalPress.MetalPressScreen;
 //import com.entisy.techniq.common.block.displayCase.DisplayCaseTileEntityRenderer;
+import com.entisy.techniq.common.block.oreMiner.advancedOreMiner.AdvancedOreMinerScreen;
+import com.entisy.techniq.common.block.oreMiner.simpleOreMiner.SimpleOreMinerScreen;
 import com.entisy.techniq.core.init.ModContainerTypes;
 import com.entisy.techniq.core.init.ModTileEntityTypes;
 
@@ -30,6 +32,8 @@ public class ClientEventBusSubscriber {
 		ScreenManager.register(ModContainerTypes.ALLOY_SMELTER_CONTAINER_TYPE.get(), AlloySmelterScreen::new);
 		ScreenManager.register(ModContainerTypes.BATTERY_CONTAINER_TYPE.get(), BatteryScreen::new);
 		ScreenManager.register(ModContainerTypes.FURNACE_GENERATOR_CONTAINER_TYPE.get(), FurnaceGeneratorScreen::new);
+		ScreenManager.register(ModContainerTypes.SIMPLE_ORE_MINER_CONTAINER_TYPE.get(), SimpleOreMinerScreen::new);
+		ScreenManager.register(ModContainerTypes.ADVANCED_ORE_MINER_CONTAINER_TYPE.get(), AdvancedOreMinerScreen::new);
 
 //		ClientRegistry.bindTileEntityRenderer(ModTileEntityTypes.DISPLAY_CASE_TILE_ENTITY_TYPE.get(),
 //				DisplayCaseTileEntityRenderer::new);

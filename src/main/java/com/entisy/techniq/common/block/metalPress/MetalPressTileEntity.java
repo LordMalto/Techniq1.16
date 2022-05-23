@@ -5,6 +5,7 @@ import com.entisy.techniq.common.block.alloySmelter.AlloySmelterBlock;
 import com.entisy.techniq.common.block.metalPress.recipe.MetalPressRecipe;
 import com.entisy.techniq.common.block.MachineTileEntity;
 import com.entisy.techniq.core.energy.EnergyStorageImpl;
+import com.entisy.techniq.core.energy.IEnergyHandler;
 import com.entisy.techniq.core.init.ModBlocks;
 import com.entisy.techniq.core.init.ModRecipe;
 import com.entisy.techniq.core.init.ModTileEntityTypes;
@@ -30,7 +31,7 @@ import javax.annotation.Nullable;
 import java.util.Objects;
 import java.util.Set;
 
-public class MetalPressTileEntity extends MachineTileEntity implements ITickableTileEntity, INamedContainerProvider {
+public class MetalPressTileEntity extends MachineTileEntity implements ITickableTileEntity, INamedContainerProvider, IEnergyHandler {
 
     public MetalPressTileEntity(TileEntityType<?> type) {
         super(2, 200, 0, type);
@@ -53,7 +54,7 @@ public class MetalPressTileEntity extends MachineTileEntity implements ITickable
                 if (currentEnergy >= getRecipe().getRequiredEnergy()) {
                     if (currentSmeltTime != getRecipe().getSmeltTime()) {
                         if ((inventory.getStackInSlot(1).sameItem(getRecipe().getResultItem()) || inventory.getStackInSlot(1).getItem() == Items.AIR) && inventory.getStackInSlot(1).getCount() < 64) {
-                            level.setBlockAndUpdate(getBlockPos(), getBlockState().setValue(AlloySmelterBlock.LIT, true));
+                            level.setBlockAndUpdate(getBlockPos(), getBlockState().setValue(MetalPressBlock.LIT, true));
                             currentSmeltTime++;
                             dirty = true;
                         }
@@ -122,5 +123,10 @@ public class MetalPressTileEntity extends MachineTileEntity implements ITickable
 
     public MetalPressRecipe getRecipe() {
         return getRecipe(getInventory().getStackInSlot(0));
+    }
+
+    @Override
+    public EnergyStorageImpl getEnergyImpl() {
+        return energyStorage;
     }
 }

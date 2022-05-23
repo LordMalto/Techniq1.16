@@ -62,9 +62,11 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
         tag(ModTags.Blocks.MACHINE_BLOCKS).add(ModBlocks.ELECTRICAL_FURNACE.get());
         tag(ModTags.Blocks.MACHINE_BLOCKS).add(ModBlocks.METAL_PRESS.get());
         tag(ModTags.Blocks.MACHINE_BLOCKS).add(ModBlocks.CABLE.get());
-        tag(ModTags.Blocks.MACHINE_BLOCKS).add(ModBlocks.ITEM_CABLE.get());
-        tag(ModTags.Blocks.MACHINE_BLOCKS).add(ModBlocks.FLUID_CABLE.get());
+//        tag(ModTags.Blocks.MACHINE_BLOCKS).add(ModBlocks.ITEM_CABLE.get());
+//        tag(ModTags.Blocks.MACHINE_BLOCKS).add(ModBlocks.FLUID_CABLE.get());
         tag(ModTags.Blocks.MACHINE_BLOCKS).add(ModBlocks.BATTERY.get());
         tag(ModTags.Blocks.MACHINE_BLOCKS).add(ModBlocks.FURNACE_GENERATOR.get());
+        tag(ModTags.Blocks.MACHINE_BLOCKS).add(ModBlocks.SIMPLE_ORE_MINER.get());
+        tag(ModTags.Blocks.MACHINE_BLOCKS).add(ModBlocks.ADVANCED_ORE_MINER.get());
     }
 }
