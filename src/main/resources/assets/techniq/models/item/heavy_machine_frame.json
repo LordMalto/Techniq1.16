@@ -2,8 +2,8 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [64, 64],
 	"textures": {
-		"0": "techniq:block/heavy_machine_frame",
-		"particle": "techniq:block/heavy_machine_frame"
+		"0": "techniq:item/frame/heavy",
+		"particle": "techniq:item/frame/heavy"
 	},
 	"elements": [
 		{

@@ -94,6 +94,20 @@ public class ModRecipeProvider extends RecipeProvider {
                 .unlockedBy("has_item", has(ModItems.HAMMER.get()))
                 .save(consumer);
 
+        ShapelessRecipeBuilder
+                .shapeless(ModItems.GOLD_ROD.get())
+                .requires(ModTags.Items.PLATES_GOLD)
+                .requires(ModItems.HAMMER.get())
+                .unlockedBy("has_item", has(ModItems.HAMMER.get()))
+                .save(consumer);
+
+        ShapelessRecipeBuilder
+                .shapeless(ModItems.DIAMOND_ROD.get())
+                .requires(ModTags.Items.PLATES_DIAMOND)
+                .requires(ModItems.HAMMER.get())
+                .unlockedBy("has_item", has(ModItems.HAMMER.get()))
+                .save(consumer);
+
         // METAL PRESS
         // PLATES
         MetalPressRecipeBuilder
@@ -136,22 +150,36 @@ public class ModRecipeProvider extends RecipeProvider {
                 .metalPress(ModItems.COPPER_ROD.get())
                 .requires(ModTags.Items.PLATES_COPPER)
                 .requiredEnergy(300)
-                .unlockedBy("has_item", has(ModItems.COPPER_INGOT.get()))
+                .unlockedBy("has_item", has(ModItems.COPPER_PLATE.get()))
                 .save(consumer, "copper_rod" + mp);
 
         MetalPressRecipeBuilder
                 .metalPress(ModItems.IRON_ROD.get())
                 .requires(ModTags.Items.PLATES_IRON)
                 .requiredEnergy(300)
-                .unlockedBy("has_item", has(Items.IRON_INGOT))
+                .unlockedBy("has_item", has(ModItems.IRON_PLATE.get()))
                 .save(consumer, "iron_rod" + mp);
 
         MetalPressRecipeBuilder
                 .metalPress(ModItems.STEEL_ROD.get())
                 .requires(ModTags.Items.PLATES_STEEL)
                 .requiredEnergy(300)
-                .unlockedBy("has_item", has(Items.GOLD_INGOT))
+                .unlockedBy("has_item", has(ModItems.STEEL_PLATE.get()))
                 .save(consumer, "steel_rop" + mp);
+
+        MetalPressRecipeBuilder
+                .metalPress(ModItems.GOLD_ROD.get())
+                .requires(ModTags.Items.PLATES_GOLD)
+                .requiredEnergy(300)
+                .unlockedBy("has_item", has(ModItems.GOLD_PLATE.get()))
+                .save(consumer, "gold_rod" + mp);
+
+        MetalPressRecipeBuilder
+                .metalPress(ModItems.DIAMOND_ROD.get())
+                .requires(ModTags.Items.PLATES_DIAMOND)
+                .requiredEnergy(300)
+                .unlockedBy("has_item", has(ModItems.DIAMOND_PLATE.get()))
+                .save(consumer, "diamond_rop" + mp);
 
         // ELECTRICAL FURNACE
         ElectricalFurnaceRecipeBuilder
@@ -231,7 +259,22 @@ public class ModRecipeProvider extends RecipeProvider {
 
 //        CookingRecipeBuilder.smelting(Ingredient.of(ModBlocks.ALUMINUM_ORE.get()), ModItems.ALUMINUM_INGOT.get(), 0.7F, 200).unlockedBy("has_item", has(ModBlocks.ALUMINUM_ORE.get())).save(consumer, modid("aluminium_ore_smelting"));
 
-        // MACHINES
+        // OTHER
+        ShapedRecipeBuilder.shaped(ModItems.DRILL.get()).define('P', ModItems.PLASTIC.get()).define('R', Items.REDSTONE).define('H', ModItems.DRILL_HEAD.get())
+                .pattern("  P")
+                .pattern(" R ")
+                .pattern("H  ").unlockedBy("has_item", has(ModItems.PLASTIC.get())).save(consumer);
+
+        ShapedRecipeBuilder.shaped(ModItems.DRILL_HEAD.get()).define('I', Items.IRON_INGOT).define('S', ModItems.STEEL_INGOT.get())
+                .pattern("ISI")
+                .pattern(" I ").unlockedBy("has_item", has(ModItems.IRON_ROD.get())).save(consumer);
+
+        ShapedRecipeBuilder.shaped(ModItems.WRENCH.get()).define('I', ModItems.COPPER_INGOT.get()).define('R', ModItems.COPPER_ROD.get())
+                .pattern("I I")
+                .pattern(" R ")
+                .pattern(" R ").unlockedBy("has_item", has(ModItems.IRON_ROD.get())).save(consumer);
+
+        // FRAMES
         ShapedRecipeBuilder.shaped(ModItems.MACHINE_FRAME.get()).define('R', ModItems.IRON_ROD.get()).define('P', ModItems.IRON_PLATE.get())
                 .pattern("PRP")
                 .pattern("R R")
@@ -242,6 +285,17 @@ public class ModRecipeProvider extends RecipeProvider {
                 .pattern("R R")
                 .pattern("PRP").unlockedBy("has_item", has(ModItems.STEEL_ROD.get())).save(consumer);
 
+        ShapedRecipeBuilder.shaped(ModItems.GOLD_MACHINE_FRAME.get()).define('R', ModItems.GOLD_ROD.get()).define('P', ModItems.GOLD_PLATE.get())
+                .pattern("PRP")
+                .pattern("R R")
+                .pattern("PRP").unlockedBy("has_item", has(ModItems.GOLD_ROD.get())).save(consumer);
+
+        ShapedRecipeBuilder.shaped(ModItems.DIAMOND_MACHINE_FRAME.get()).define('R', ModItems.DIAMOND_ROD.get()).define('P', ModItems.DIAMOND_PLATE.get())
+                .pattern("PRP")
+                .pattern("R R")
+                .pattern("PRP").unlockedBy("has_item", has(ModItems.DIAMOND_ROD.get())).save(consumer);
+
+        // MACHINES
         ShapedRecipeBuilder.shaped(ModBlocks.ALLOY_SMELTER.get()).define('B', Blocks.IRON_BLOCK).define('I', Items.IRON_INGOT).define('M', ModItems.MACHINE_FRAME.get())
                 .pattern("BIB")
                 .pattern("IMI")
@@ -257,10 +311,20 @@ public class ModRecipeProvider extends RecipeProvider {
                 .pattern("IMI")
                 .pattern("BFB").unlockedBy("has_item", has(ModItems.MACHINE_FRAME.get())).save(consumer);
 
-        ShapedRecipeBuilder.shaped(ModBlocks.METAL_PRESS.get()).define('S', ModBlocks.STEEL_BLOCK.get()).define('B', Blocks.IRON_BLOCK).define('I', ModItems.STEEL_INGOT.get()).define('H', ModItems.HEAVY_MACHINE_FRAME.get())
+        ShapedRecipeBuilder.shaped(ModBlocks.METAL_PRESS.get()).define('S', ModBlocks.STEEL_BLOCK.get()).define('B', Blocks.IRON_BLOCK).define('I', ModItems.STEEL_INGOT.get()).define('D', ModItems.DIAMOND_MACHINE_FRAME.get())
                 .pattern("SIS")
-                .pattern("IHI")
+                .pattern("IDI")
                 .pattern("BIB").unlockedBy("has_item", has(ModItems.MACHINE_FRAME.get())).save(consumer);
+
+        ShapedRecipeBuilder.shaped(ModBlocks.SIMPLE_ORE_MINER.get()).define('G', ModItems.GOLD_MACHINE_FRAME.get()).define('B', Blocks.IRON_BLOCK).define('I', Items.IRON_INGOT).define('D', ModItems.DRILL.get())
+                .pattern("GIG")
+                .pattern("IDI")
+                .pattern("BIB").unlockedBy("has_item", has(ModItems.DRILL.get())).save(consumer);
+
+        ShapedRecipeBuilder.shaped(ModBlocks.ADVANCED_ORE_MINER.get()).define('G', ModItems.DIAMOND_MACHINE_FRAME.get()).define('B', ModBlocks.STEEL_BLOCK.get()).define('I', ModItems.STEEL_INGOT.get()).define('D', ModItems.DRILL.get())
+                .pattern("GIG")
+                .pattern("IDI")
+                .pattern("BIB").unlockedBy("has_item", has(ModItems.DRILL.get())).save(consumer);
 
         // METAL BLOCKS
         ShapedRecipeBuilder.shaped(ModBlocks.COPPER_BLOCK.get()).define('I', ModItems.COPPER_INGOT.get())

@@ -1,6 +1,6 @@
 package com.entisy.techniq.common.block.electricalFurnace.recipe;
 
-import com.entisy.techniq.core.init.ModRecipe;
+import com.entisy.techniq.core.init.ModRecipes;
 
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -25,6 +25,10 @@ public class ElectricalFurnaceRecipe implements IElectricalFurnaceRecipe {
 		this.output = output;
 		this.requiredEnergy = requiredEnergy;
 		this.smeltTime = smeltTime;
+	}
+
+	public double getSmeltTimeInSeconds() {
+		return (float) getSmeltTime() / 20;
 	}
 	
 	public boolean match(IInventory inv) {
@@ -63,7 +67,7 @@ public class ElectricalFurnaceRecipe implements IElectricalFurnaceRecipe {
 
 	@Override
 	public IRecipeSerializer<?> getSerializer() {
-		return ModRecipe.ELECTRICAL_FURNACE_SERIALIZER.get();
+		return ModRecipes.ELECTRICAL_FURNACE_SERIALIZER.get();
 	}
 
 	@Override

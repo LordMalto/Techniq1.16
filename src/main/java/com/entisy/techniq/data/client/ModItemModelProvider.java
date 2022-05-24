@@ -65,10 +65,16 @@ public class ModItemModelProvider extends ItemModelProvider {
 
 		builder("hammer", itemGenerated);
 		builder("wrench", itemGenerated);
+		builder("drill", itemGenerated);
+		builder("drill_head", itemGenerated);
+		builder("plastic", itemGenerated);
+		builder("oil_bucket", itemGenerated);
 
 		builder("iron_rod", itemGenerated);
 		builder("copper_rod", itemGenerated);
 		builder("steel_rod", itemGenerated);
+		builder("gold_rod", itemGenerated);
+		builder("diamond_rod", itemGenerated);
 
 		builder("coal_powder", itemGenerated);
 		builder("iron_powder", itemGenerated);

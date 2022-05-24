@@ -206,7 +206,7 @@ public class AdvancedOreMinerTileEntity extends MachineTileEntity implements ITi
     }
 
     private void registerTriple() {
-        triple.append(Blocks.COAL_ORE, 50, seconds(3));
+        triple.append(Blocks.COAL_ORE, 50, seconds(30));
         triple.append(Blocks.IRON_ORE, 40, seconds(45));
         triple.append(Blocks.DIAMOND_ORE, 10, seconds(145));
         triple.append(Blocks.LAPIS_ORE, 14, minutes(1));

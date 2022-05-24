@@ -3,8 +3,10 @@ package com.entisy.techniq.core.init;
 import com.entisy.techniq.Techniq;
 
 import net.minecraft.block.Block;
+import net.minecraft.fluid.Fluid;
 import net.minecraft.item.Item;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.tags.ITag.INamedTag;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.ResourceLocation;
@@ -59,10 +61,15 @@ public class ModTags {
 		public static final INamedTag<Item> RODS_COPPER = forge("rods/copper");
 		public static final INamedTag<Item> RODS_IRON = forge("rods/iron");
 		public static final INamedTag<Item> RODS_STEEL = forge("rods/steel");
+		public static final INamedTag<Item> RODS_GOLD = forge("rods/gold");
+		public static final INamedTag<Item> RODS_DIAMOND = forge("rods/diamond");
 		public static final INamedTag<Item> PLATES_STEEL = forge("plates/steel");
 		public static final INamedTag<Item> INGOTS_STEEL = forge("ingots/steel");
 
+		public static final INamedTag<Item> BUCKETS_OIL = forge("buckets/oil");
+
 		public static final INamedTag<Item> MACHINE_BLOCKS = mod("machine_blocks");
+		public static final INamedTag<Item> POWDER = mod("powder");
 		
 		private static INamedTag<Item> forge(String path) {
 			return ItemTags.bind(new ResourceLocation("forge", path).toString());
@@ -70,6 +77,19 @@ public class ModTags {
 		
 		private static INamedTag<Item> mod(String path) {
 			return ItemTags.bind(new ResourceLocation(Techniq.MOD_ID, path).toString());
+		}
+	}
+
+	public static final class Fluids {
+
+		public static final INamedTag<Fluid> FLUIDS_OIL = forge("fluids/oil");
+
+		private static INamedTag<Fluid> forge(String path) {
+			return FluidTags.bind(new ResourceLocation("forge", path).toString());
+		}
+
+		private static INamedTag<Fluid> mod(String path) {
+			return FluidTags.bind(new ResourceLocation(Techniq.MOD_ID, path).toString());
 		}
 	}
 }

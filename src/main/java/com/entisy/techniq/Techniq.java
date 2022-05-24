@@ -1,11 +1,6 @@
 package com.entisy.techniq;
 
-import com.entisy.techniq.core.init.ModBlocks;
-import com.entisy.techniq.core.init.ModContainerTypes;
-import com.entisy.techniq.core.init.ModFeatures;
-import com.entisy.techniq.core.init.ModItems;
-import com.entisy.techniq.core.init.ModRecipe;
-import com.entisy.techniq.core.init.ModTileEntityTypes;
+import com.entisy.techniq.core.init.*;
 import com.entisy.techniq.core.tab.TechniqTab;
 
 import net.minecraft.item.BlockItem;
@@ -18,6 +13,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 @Mod("techniq")
@@ -31,11 +27,11 @@ public class Techniq {
 
 		ModItems.ITEMS.register(bus);
 		ModBlocks.BLOCKS.register(bus);
+		ModFluids.FLUIDS.register(bus);
 		ModTileEntityTypes.TILE_ENTITY_TYPES.register(bus);
 		ModContainerTypes.CONTAINER_TYPES.register(bus);
-		ModRecipe.RECIPE_SERIALIZERS.register(bus);
-		
-		MinecraftForge.EVENT_BUS.addListener(EventPriority.HIGH, ModFeatures::addOres);
+		ModRecipes.RECIPE_SERIALIZERS.register(bus);
+
 		MinecraftForge.EVENT_BUS.register(this);
 	}
 

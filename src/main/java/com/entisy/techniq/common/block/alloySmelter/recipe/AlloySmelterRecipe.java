@@ -1,6 +1,6 @@
 package com.entisy.techniq.common.block.alloySmelter.recipe;
 
-import com.entisy.techniq.core.init.ModRecipe;
+import com.entisy.techniq.core.init.ModRecipes;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.Ingredient;
@@ -24,6 +24,10 @@ public class AlloySmelterRecipe implements IAlloySmelterRecipe {
         this.output = output;
         this.requiredEnergy = requiredEnergy;
         this.smeltTime = smeltTime;
+    }
+
+    public double getSmeltTimeInSeconds() {
+        return (float) getSmeltTime() / 20;
     }
 
     public int getRequiredEnergy() {
@@ -61,7 +65,7 @@ public class AlloySmelterRecipe implements IAlloySmelterRecipe {
 
     @Override
     public IRecipeSerializer<?> getSerializer() {
-        return ModRecipe.ALLOY_SMELTER_SERIALIZER.get();
+        return ModRecipes.ALLOY_SMELTER_SERIALIZER.get();
     }
 
     @Override

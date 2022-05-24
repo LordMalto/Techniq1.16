@@ -6,6 +6,7 @@ import com.entisy.techniq.common.item.MachineFrameItem;
 import com.entisy.techniq.common.item.WrenchItem;
 import com.entisy.techniq.core.tab.TechniqTab;
 
+import net.minecraft.item.BucketItem;
 import net.minecraft.item.Item;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
@@ -42,6 +43,10 @@ public class ModItems {
 			() -> new Item(new Item.Properties().tab(TechniqTab.TECHNIQ_TAB)));
 	public static final RegistryObject<Item> STEEL_ROD = ITEMS.register("steel_rod",
 			() -> new Item(new Item.Properties().tab(TechniqTab.TECHNIQ_TAB)));
+	public static final RegistryObject<Item> GOLD_ROD = ITEMS.register("gold_rod",
+			() -> new Item(new Item.Properties().tab(TechniqTab.TECHNIQ_TAB)));
+	public static final RegistryObject<Item> DIAMOND_ROD = ITEMS.register("diamond_rod",
+			() -> new Item(new Item.Properties().tab(TechniqTab.TECHNIQ_TAB)));
 
 	// POWDERS
 	public static final RegistryObject<Item> COAL_POWDER = ITEMS.register("coal_powder",
@@ -65,8 +70,31 @@ public class ModItems {
 	public static final RegistryObject<Item> WRENCH = ITEMS.register("wrench",
 			WrenchItem::new);
 
+	// OTHER
+	public static final RegistryObject<Item> DRILL = ITEMS.register("drill",
+			() -> new Item(new Item.Properties().tab(TechniqTab.TECHNIQ_TAB)));
+	public static final RegistryObject<Item> DRILL_HEAD = ITEMS.register("drill_head",
+			() -> new Item(new Item.Properties().tab(TechniqTab.TECHNIQ_TAB)));
+	public static final RegistryObject<Item> PLASTIC = ITEMS.register("plastic",
+			() -> new Item(new Item.Properties().tab(TechniqTab.TECHNIQ_TAB)));
+
+	// FRAMES
 	public static final RegistryObject<Item> MACHINE_FRAME = ITEMS.register("machine_frame",
 			() -> new MachineFrameItem(new Item.Properties().tab(TechniqTab.TECHNIQ_TAB)));
 	public static final RegistryObject<Item> HEAVY_MACHINE_FRAME = ITEMS.register("heavy_machine_frame",
 			() -> new MachineFrameItem(new Item.Properties().tab(TechniqTab.TECHNIQ_TAB)));
+	public static final RegistryObject<Item> DIAMOND_MACHINE_FRAME = ITEMS.register("diamond_machine_frame",
+			() -> new MachineFrameItem(new Item.Properties().tab(TechniqTab.TECHNIQ_TAB)));
+	public static final RegistryObject<Item> GOLD_MACHINE_FRAME = ITEMS.register("gold_machine_frame",
+			() -> new MachineFrameItem(new Item.Properties().tab(TechniqTab.TECHNIQ_TAB)));
+
+	// BUCKETS
+	public static final RegistryObject<Item> OIL_BUCKET = ITEMS.register("oil_bucket",
+			() -> new BucketItem(
+					() -> ModFluids.OIL_FLUID.get(),
+					new Item.Properties()
+							.tab(TechniqTab.TECHNIQ_TAB)
+							.stacksTo(1)
+			)
+	);
 }

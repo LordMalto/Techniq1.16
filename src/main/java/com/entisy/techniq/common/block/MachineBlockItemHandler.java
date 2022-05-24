@@ -40,9 +40,10 @@ public class MachineBlockItemHandler extends ItemStackHandler {
 
     public ItemStack shrink(int index, int count) {
         ItemStack stack = getStackInSlot(index);
-        stack.shrink(count);
+        ItemStack stack1 = stack.copy();
+        stack1.shrink(count);
         onContentsChanged(index);
-        return stack;
+        return stack1;
     }
 
     public ItemStack removeStackFromSlot(int index) {

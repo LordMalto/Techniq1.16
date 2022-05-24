@@ -15,7 +15,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class AdvancedOreMinerScreen extends ContainerScreen<AdvancedOreMinerContainer> {
 
     private static final ResourceLocation TEXTURE = new ResourceLocation(Techniq.MOD_ID,
-            "textures/gui/advanced_ore_miner.png");
+            "textures/block/advanced_ore_miner/gui.png");
 
     private final AdvancedOreMinerContainer container;
 

@@ -53,6 +53,9 @@ public class SimpleOreMinerTileEntity extends MachineTileEntity implements ITick
         if (level != null && !level.isClientSide()) {
             if (isMinableBlock(getBlock())) {
                 if (uses < getUses(getBlock())) {
+                    energy.ifPresent(iEnergyStorage -> {
+                        currentEnergy = iEnergyStorage.getEnergyStored();
+                    });
                     if (currentEnergy >= getRequiredEnergy()) {
                         if (currentSmeltTime < getMiningTime()) {
                             level.setBlockAndUpdate(getBlockPos(), getBlockState().setValue(SimpleOreMinerBlock.LIT, true));

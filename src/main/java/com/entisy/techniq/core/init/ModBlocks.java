@@ -43,47 +43,14 @@ public class ModBlocks {
     public static final RegistryObject<Block> QUARTZ_ORE = BLOCKS.register("quartz_ore",
             () -> new Block(AbstractBlock.Properties.copy(Blocks.IRON_ORE)));
 
-    public static final RegistryObject<Block> NETHER_COPPER_ORE = BLOCKS.register("nether_copper_ore",
-            () -> new Block(AbstractBlock.Properties.copy(Blocks.IRON_ORE)));
-
-    public static final RegistryObject<Block> NETHER_IRON_ORE = BLOCKS.register("nether_iron_ore",
-            () -> new Block(AbstractBlock.Properties.copy(Blocks.IRON_ORE)));
-
-    public static final RegistryObject<Block> NETHER_GOLD_ORE = BLOCKS.register("nether_gold_ore",
-            () -> new Block(AbstractBlock.Properties.copy(Blocks.GOLD_ORE)));
-
-    public static final RegistryObject<Block> NETHER_LAPIS_ORE = BLOCKS.register("nether_lapis_ore",
-            () -> new Block(AbstractBlock.Properties.copy(Blocks.LAPIS_ORE)));
-
-    public static final RegistryObject<Block> NETHER_REDSTONE_ORE = BLOCKS.register("nether_redstone_ore",
-            () -> new Block(AbstractBlock.Properties.copy(Blocks.LAPIS_ORE)));
-
-    public static final RegistryObject<Block> NETHER_COAL_ORE = BLOCKS.register("nether_coal_ore",
+    /**
+     * END
+     */
+    public static final RegistryObject<Block> END_COAL_ORE = BLOCKS.register("end_coal_ore",
             () -> new Block(AbstractBlock.Properties.copy(Blocks.COAL_ORE)));
-
-    public static final RegistryObject<Block> NETHER_DIAMOND_ORE = BLOCKS.register("nether_diamond_ore",
-            () -> new Block(AbstractBlock.Properties.copy(Blocks.DIAMOND_ORE)));
-
-    public static final RegistryObject<Block> NETHER_EMERALD_ORE = BLOCKS.register("nether_emerald_ore",
-            () -> new Block(AbstractBlock.Properties.copy(Blocks.EMERALD_ORE)));
 
     public static final RegistryObject<Block> END_COPPER_ORE = BLOCKS.register("end_copper_ore",
             () -> new Block(AbstractBlock.Properties.copy(Blocks.IRON_ORE)));
-
-    public static final RegistryObject<Block> END_IRON_ORE = BLOCKS.register("end_iron_ore",
-            () -> new Block(AbstractBlock.Properties.copy(Blocks.IRON_ORE)));
-
-    public static final RegistryObject<Block> END_GOLD_ORE = BLOCKS.register("end_gold_ore",
-            () -> new Block(AbstractBlock.Properties.copy(Blocks.GOLD_ORE)));
-
-    public static final RegistryObject<Block> END_LAPIS_ORE = BLOCKS.register("end_lapis_ore",
-            () -> new Block(AbstractBlock.Properties.copy(Blocks.LAPIS_ORE)));
-
-    public static final RegistryObject<Block> END_REDSTONE_ORE = BLOCKS.register("end_redstone_ore",
-            () -> new Block(AbstractBlock.Properties.copy(Blocks.LAPIS_ORE)));
-
-    public static final RegistryObject<Block> END_COAL_ORE = BLOCKS.register("end_coal_ore",
-            () -> new Block(AbstractBlock.Properties.copy(Blocks.COAL_ORE)));
 
     public static final RegistryObject<Block> END_DIAMOND_ORE = BLOCKS.register("end_diamond_ore",
             () -> new Block(AbstractBlock.Properties.copy(Blocks.DIAMOND_ORE)));
@@ -91,8 +58,47 @@ public class ModBlocks {
     public static final RegistryObject<Block> END_EMERALD_ORE = BLOCKS.register("end_emerald_ore",
             () -> new Block(AbstractBlock.Properties.copy(Blocks.EMERALD_ORE)));
 
+    public static final RegistryObject<Block> END_GOLD_ORE = BLOCKS.register("end_gold_ore",
+            () -> new Block(AbstractBlock.Properties.copy(Blocks.GOLD_ORE)));
+
+    public static final RegistryObject<Block> END_IRON_ORE = BLOCKS.register("end_iron_ore",
+            () -> new Block(AbstractBlock.Properties.copy(Blocks.IRON_ORE)));
+
+    public static final RegistryObject<Block> END_LAPIS_ORE = BLOCKS.register("end_lapis_ore",
+            () -> new Block(AbstractBlock.Properties.copy(Blocks.LAPIS_ORE)));
+
     public static final RegistryObject<Block> END_QUARTZ_ORE = BLOCKS.register("end_quartz_ore",
             () -> new Block(AbstractBlock.Properties.copy(Blocks.IRON_ORE)));
+
+    public static final RegistryObject<Block> END_REDSTONE_ORE = BLOCKS.register("end_redstone_ore",
+            () -> new Block(AbstractBlock.Properties.copy(Blocks.LAPIS_ORE)));
+
+    /**
+     * NETHER
+     */
+    public static final RegistryObject<Block> NETHER_COAL_ORE = BLOCKS.register("nether_coal_ore",
+            () -> new Block(AbstractBlock.Properties.copy(Blocks.COAL_ORE)));
+
+    public static final RegistryObject<Block> NETHER_COPPER_ORE = BLOCKS.register("nether_copper_ore",
+            () -> new Block(AbstractBlock.Properties.copy(Blocks.IRON_ORE)));
+
+    public static final RegistryObject<Block> NETHER_DIAMOND_ORE = BLOCKS.register("nether_diamond_ore",
+            () -> new Block(AbstractBlock.Properties.copy(Blocks.DIAMOND_ORE)));
+
+    public static final RegistryObject<Block> NETHER_EMERALD_ORE = BLOCKS.register("nether_emerald_ore",
+            () -> new Block(AbstractBlock.Properties.copy(Blocks.EMERALD_ORE)));
+
+    public static final RegistryObject<Block> NETHER_GOLD_ORE = BLOCKS.register("nether_gold_ore",
+            () -> new Block(AbstractBlock.Properties.copy(Blocks.GOLD_ORE)));
+
+    public static final RegistryObject<Block> NETHER_IRON_ORE = BLOCKS.register("nether_iron_ore",
+            () -> new Block(AbstractBlock.Properties.copy(Blocks.IRON_ORE)));
+
+    public static final RegistryObject<Block> NETHER_LAPIS_ORE = BLOCKS.register("nether_lapis_ore",
+            () -> new Block(AbstractBlock.Properties.copy(Blocks.LAPIS_ORE)));
+
+    public static final RegistryObject<Block> NETHER_REDSTONE_ORE = BLOCKS.register("nether_redstone_ore",
+            () -> new Block(AbstractBlock.Properties.copy(Blocks.LAPIS_ORE)));
 
     /*
      * MACHINE

@@ -1,0 +1,7 @@
+{
+  "replace": false,
+  "values": [
+    "techniq:oil_flowing",
+    "techniq:oil_fluid"
+  ]
+}

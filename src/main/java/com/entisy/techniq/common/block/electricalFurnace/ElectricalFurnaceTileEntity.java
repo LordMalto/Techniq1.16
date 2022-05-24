@@ -6,7 +6,7 @@ import com.entisy.techniq.common.block.electricalFurnace.recipe.ElectricalFurnac
 import com.entisy.techniq.common.block.MachineTileEntity;
 import com.entisy.techniq.core.energy.EnergyStorageImpl;
 import com.entisy.techniq.core.energy.IEnergyHandler;
-import com.entisy.techniq.core.init.ModRecipe;
+import com.entisy.techniq.core.init.ModRecipes;
 import com.entisy.techniq.core.init.ModTileEntityTypes;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -100,7 +100,7 @@ public class ElectricalFurnaceTileEntity extends MachineTileEntity implements IT
             return null;
         }
 
-        Set<IRecipe<?>> recipes = findRecipesByType(ModRecipe.ELECTRICAL_FURNACE_TYPE, level);
+        Set<IRecipe<?>> recipes = findRecipesByType(ModRecipes.ELECTRICAL_FURNACE_TYPE, level);
         for (IRecipe<?> iRecipe : recipes) {
             ElectricalFurnaceRecipe recipe = (ElectricalFurnaceRecipe) iRecipe;
             if (recipe.matches(new RecipeWrapper(inventory), level)) {

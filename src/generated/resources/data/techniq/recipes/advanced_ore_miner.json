@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "GIG",
+    "IDI",
+    "BIB"
+  ],
+  "key": {
+    "G": {
+      "item": "techniq:diamond_machine_frame"
+    },
+    "B": {
+      "item": "techniq:steel_block"
+    },
+    "I": {
+      "item": "techniq:steel_ingot"
+    },
+    "D": {
+      "item": "techniq:drill"
+    }
+  },
+  "result": {
+    "item": "techniq:advanced_ore_miner"
+  }
+}

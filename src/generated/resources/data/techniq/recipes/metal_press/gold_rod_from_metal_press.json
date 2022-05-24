@@ -1,0 +1,11 @@
+{
+  "type": "techniq:metal_press",
+  "input": {
+    "tag": "forge:plates/gold"
+  },
+  "output": {
+    "item": "techniq:gold_rod"
+  },
+  "required_energy": 300,
+  "smelt_time": 200
+}

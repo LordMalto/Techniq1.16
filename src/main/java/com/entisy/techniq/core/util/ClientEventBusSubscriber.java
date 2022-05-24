@@ -11,9 +11,12 @@ import com.entisy.techniq.common.block.metalPress.MetalPressScreen;
 import com.entisy.techniq.common.block.oreMiner.advancedOreMiner.AdvancedOreMinerScreen;
 import com.entisy.techniq.common.block.oreMiner.simpleOreMiner.SimpleOreMinerScreen;
 import com.entisy.techniq.core.init.ModContainerTypes;
+import com.entisy.techniq.core.init.ModFluids;
 import com.entisy.techniq.core.init.ModTileEntityTypes;
 
 import net.minecraft.client.gui.ScreenManager;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
@@ -37,5 +40,9 @@ public class ClientEventBusSubscriber {
 
 //		ClientRegistry.bindTileEntityRenderer(ModTileEntityTypes.DISPLAY_CASE_TILE_ENTITY_TYPE.get(),
 //				DisplayCaseTileEntityRenderer::new);
+
+		RenderTypeLookup.setRenderLayer(ModFluids.OIL_FLUID.get(), RenderType.translucent());
+		RenderTypeLookup.setRenderLayer(ModFluids.OIL_BLOCK.get(), RenderType.translucent());
+		RenderTypeLookup.setRenderLayer(ModFluids.OIL_FLOWING.get(), RenderType.translucent());
 	}
 }

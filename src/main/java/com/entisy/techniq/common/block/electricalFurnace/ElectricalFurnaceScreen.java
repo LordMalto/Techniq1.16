@@ -16,7 +16,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class ElectricalFurnaceScreen extends ContainerScreen<ElectricalFurnaceContainer> {
 
 	private static final ResourceLocation TEXTURE = new ResourceLocation(Techniq.MOD_ID,
-			"textures/gui/electrical_furnace.png");
+			"textures/block/electrical_furnace/gui.png");
 
 	ElectricalFurnaceContainer container;
 
@@ -55,7 +55,7 @@ public class ElectricalFurnaceScreen extends ContainerScreen<ElectricalFurnaceCo
 
 	@Override
 	protected void renderLabels(MatrixStack stack, int mouseX, int mouseY) {
-		font.draw(stack, title.getContents(), 8.0f, 8.0f, 4210752); // hover text
+		font.draw(stack, getMenu().tileEntity.getDisplayName().getString().replace("[", "").replace("]", ""), 8.0f, 8.0f, 4210752); // hover text
 		font.draw(stack, inventory.getDisplayName().getContents(), 8.0f, 69.0f, 4210752);
 	}
 

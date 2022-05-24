@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "PRP",
+    "R R",
+    "PRP"
+  ],
+  "key": {
+    "R": {
+      "item": "techniq:diamond_rod"
+    },
+    "P": {
+      "item": "techniq:diamond_plate"
+    }
+  },
+  "result": {
+    "item": "techniq:diamond_machine_frame"
+  }
+}
