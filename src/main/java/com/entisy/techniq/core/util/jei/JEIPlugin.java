@@ -91,7 +91,7 @@ public class JEIPlugin implements IModPlugin {
 			registration.addIngredientInfo(
 					new ItemStack(item),
 					ingredientManager.getIngredientType(ItemStack.class),
-					"Can be obtained from Ore Miners.");
+					"Can be obtained from Advanced Ore Miners as a side product.");
 		}
 		// Wrench
 		registration.addIngredientInfo(

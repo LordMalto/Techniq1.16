@@ -10,10 +10,10 @@
       "item": "minecraft:iron_block"
     },
     "I": {
-      "item": "techniq:steel_ingot"
+      "item": "minecraft:iron_ingot"
     },
     "M": {
-      "item": "techniq:heavy_machine_frame"
+      "item": "techniq:machine_frame"
     },
     "F": {
       "item": "minecraft:furnace"

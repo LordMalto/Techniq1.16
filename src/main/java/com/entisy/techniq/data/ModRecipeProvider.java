@@ -306,7 +306,7 @@ public class ModRecipeProvider extends RecipeProvider {
                 .pattern("IMI")
                 .pattern("BFB").unlockedBy("has_item", has(ModItems.MACHINE_FRAME.get())).save(consumer);
 
-        ShapedRecipeBuilder.shaped(ModBlocks.FURNACE_GENERATOR.get()).define('B', Blocks.IRON_BLOCK).define('I', ModItems.STEEL_INGOT.get()).define('M', ModItems.HEAVY_MACHINE_FRAME.get()).define('F', Blocks.FURNACE)
+        ShapedRecipeBuilder.shaped(ModBlocks.FURNACE_GENERATOR.get()).define('B', Blocks.IRON_BLOCK).define('I', Items.IRON_INGOT).define('M', ModItems.MACHINE_FRAME.get()).define('F', Blocks.FURNACE)
                 .pattern("BIB")
                 .pattern("IMI")
                 .pattern("BFB").unlockedBy("has_item", has(ModItems.MACHINE_FRAME.get())).save(consumer);
