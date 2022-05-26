@@ -1,4 +1,4 @@
-package com.entisy.techniq.common.block.cable;
+package com.entisy.techniq.common.block.cable.energyCable;
 
 import java.util.Map;
 
@@ -28,7 +28,7 @@ import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraftforge.energy.IEnergyStorage;
 
-public class CableBlock extends SixWayMachineBlock implements IWrenchable {
+public class EnergyCableBlock extends SixWayMachineBlock implements IWrenchable {
 
 	public static final EnumProperty<ConnectionType> NORTH = EnumProperty.create("north", ConnectionType.class);
 	public static final EnumProperty<ConnectionType> EAST = EnumProperty.create("east", ConnectionType.class);
@@ -46,7 +46,7 @@ public class CableBlock extends SixWayMachineBlock implements IWrenchable {
 				map.put(Direction.DOWN, DOWN);
 			});
 
-	public CableBlock(Properties properties) {
+	public EnergyCableBlock(Properties properties) {
         super(properties);
         this.registerDefaultState(this.stateDefinition.any()
                 .setValue(NORTH, ConnectionType.NONE)
@@ -65,7 +65,7 @@ public class CableBlock extends SixWayMachineBlock implements IWrenchable {
 	@Nullable
 	@Override
 	public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-		return new CableTileEntity();
+		return new EnergyCableTileEntity();
 	}
 
 	@Nullable
@@ -108,7 +108,7 @@ public class CableBlock extends SixWayMachineBlock implements IWrenchable {
 	private static ConnectionType createConnection(IBlockReader worldIn, BlockPos pos, Direction side,
 			ConnectionType current) {
 		TileEntity tileEntity = worldIn.getBlockEntity(pos.relative(side));
-		if (tileEntity instanceof CableTileEntity) {
+		if (tileEntity instanceof EnergyCableTileEntity) {
 			return ConnectionType.BOTH;
 		} else if (tileEntity != null) {
 			IEnergyStorage energy = EnergyUtils.getEnergyFromSideOrNull(tileEntity, side.getOpposite());
@@ -126,8 +126,8 @@ public class CableBlock extends SixWayMachineBlock implements IWrenchable {
 	@Override
 	public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn,
 			BlockPos currentPos, BlockPos facingPos) {
-		if (worldIn.getBlockEntity(facingPos) instanceof CableTileEntity)
-			CableNetworkManager.invalidateNetwork(worldIn, currentPos);
+		if (worldIn.getBlockEntity(facingPos) instanceof EnergyCableTileEntity)
+			EnergyCableNetworkManager.invalidateNetwork(worldIn, currentPos);
 
 		EnumProperty<ConnectionType> property = FACING_TO_PROPERTY_MAP.get(facing);
 		ConnectionType current = stateIn.getValue(property);
@@ -161,10 +161,10 @@ public class CableBlock extends SixWayMachineBlock implements IWrenchable {
 		Direction side = getClickedConnection(relative);
 		if (side != null) {
 			TileEntity other = world.getBlockEntity(pos.relative(side));
-			if (!(other instanceof CableTileEntity)) {
+			if (!(other instanceof EnergyCableTileEntity)) {
 				BlockState state1 = cycleProperty(state, FACING_TO_PROPERTY_MAP.get(side));
 				world.setBlock(pos, state1, 18);
-				CableNetworkManager.invalidateNetwork(world, pos);
+				EnergyCableNetworkManager.invalidateNetwork(world, pos);
 				return ActionResultType.SUCCESS;
 			}
 		}

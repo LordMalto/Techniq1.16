@@ -1,6 +1,6 @@
 package com.entisy.techniq.common.block;
 
-import com.entisy.techniq.common.block.cable.CableBlock;
+import com.entisy.techniq.common.block.cable.energyCable.EnergyCableBlock;
 import com.entisy.techniq.core.init.ModTags;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
@@ -33,7 +33,7 @@ public class ComplexMachineBlock extends ComplexBlock {
         Block block = state.getBlock();
         boolean flag = this.isSameBlock(block);
         boolean flag1 = block instanceof ComplexMachineBlock;
-        boolean flag2 = block instanceof CableBlock; // instanceof SixWayMachineBlock
+        boolean flag2 = block instanceof EnergyCableBlock; // instanceof SixWayMachineBlock
         return !isExceptionForConnection(block) && p_220111_2_ || flag /*|| flag1 || flag2*/ ;
     }
 

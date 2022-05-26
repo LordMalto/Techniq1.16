@@ -1,4 +1,4 @@
-package com.entisy.techniq.common.block.cable;
+package com.entisy.techniq.common.block.cable.energyCable;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -18,7 +18,7 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 
-public class CableNetwork implements IEnergyStorage {
+public class EnergyCableNetwork implements IEnergyStorage {
 	
 	public static final int TRANSFER_PER_CONNECTION = 1000;
 
@@ -27,7 +27,7 @@ public class CableNetwork implements IEnergyStorage {
     private boolean connectionsBuilt;
     private int energyStored;
 
-    private CableNetwork(IWorldReader world, Set<BlockPos> wires, int energyStored) {
+    private EnergyCableNetwork(IWorldReader world, Set<BlockPos> wires, int energyStored) {
         this.world = world;
         wires.forEach(pos -> connections.put(pos, Collections.emptySet()));
         this.energyStored = energyStored;
@@ -56,8 +56,8 @@ public class CableNetwork implements IEnergyStorage {
         int energyPerWire = energyStored / getWireCount();
         connections.keySet().forEach(p -> {
             TileEntity tileEntity = world.getBlockEntity(p);
-            if (tileEntity instanceof CableTileEntity) {
-                ((CableTileEntity) tileEntity).energyStored = energyPerWire;
+            if (tileEntity instanceof EnergyCableTileEntity) {
+                ((EnergyCableTileEntity) tileEntity).energyStored = energyPerWire;
             }
         });
     }
@@ -133,13 +133,13 @@ public class CableNetwork implements IEnergyStorage {
         return true;
     }
 
-    static CableNetwork buildNetwork(IWorldReader world, BlockPos pos) {
+    static EnergyCableNetwork buildNetwork(IWorldReader world, BlockPos pos) {
         Set<BlockPos> wires = buildWireSet(world, pos);
         int energyStored = wires.stream().mapToInt(p -> {
             TileEntity tileEntity = world.getBlockEntity(p);
-            return tileEntity instanceof CableTileEntity ? ((CableTileEntity) tileEntity).energyStored : 0;
+            return tileEntity instanceof EnergyCableTileEntity ? ((EnergyCableTileEntity) tileEntity).energyStored : 0;
         }).sum();
-        return new CableNetwork(world, wires, energyStored);
+        return new EnergyCableNetwork(world, wires, energyStored);
     }
 
     private static Set<BlockPos> buildWireSet(IWorldReader world, BlockPos pos) {
@@ -151,7 +151,7 @@ public class CableNetwork implements IEnergyStorage {
         set.add(pos);
         for (Direction side : Direction.values()) {
             BlockPos pos1 = pos.relative(side);
-            if (!set.contains(pos1) && world.getBlockEntity(pos1) instanceof CableTileEntity) {
+            if (!set.contains(pos1) && world.getBlockEntity(pos1) instanceof EnergyCableTileEntity) {
                 set.add(pos1);
                 set.addAll(buildWireSet(world, pos1, set));
             }
@@ -172,8 +172,8 @@ public class CableNetwork implements IEnergyStorage {
         Set<Connection> connections = new HashSet<>();
         for (Direction direction : Direction.values()) {
             TileEntity te = world.getBlockEntity(pos.relative(direction));
-            if (te != null && !(te instanceof CableTileEntity) && te.getCapability(CapabilityEnergy.ENERGY).isPresent()) {
-                ConnectionType type = CableBlock.getConnection(world.getBlockState(pos), direction);
+            if (te != null && !(te instanceof EnergyCableTileEntity) && te.getCapability(CapabilityEnergy.ENERGY).isPresent()) {
+                ConnectionType type = EnergyCableBlock.getConnection(world.getBlockState(pos), direction);
                 connections.add(new Connection(this, direction, type));
             }
         }
@@ -186,12 +186,12 @@ public class CableNetwork implements IEnergyStorage {
     }
 
     public static class Connection implements IEnergyStorage {
-        private final CableNetwork network;
+        private final EnergyCableNetwork network;
         private final Direction side;
         private final ConnectionType type;
         private final LazyOptional<Connection> lazyOptional;
 
-        Connection(CableNetwork network, Direction side, ConnectionType type) {
+        Connection(EnergyCableNetwork network, Direction side, ConnectionType type) {
             this.network = network;
             this.side = side;
             this.type = type;

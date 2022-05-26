@@ -1,9 +1,10 @@
-package com.entisy.techniq.common.block.itemCable;
+package com.entisy.techniq.common.block.cable.fluidCable;
 
 import com.entisy.techniq.api.ConnectionType;
 import com.entisy.techniq.api.IWrenchable;
 import com.entisy.techniq.common.block.SixWayMachineBlock;
-import com.entisy.techniq.core.util.EnergyUtils;
+import com.entisy.techniq.core.capabilities.fluid.IFluidStorage;
+import com.entisy.techniq.core.util.FluidUtils;
 import com.google.common.collect.Maps;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -21,12 +22,11 @@ import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
-import net.minecraftforge.energy.IEnergyStorage;
 
 import javax.annotation.Nullable;
 import java.util.Map;
 
-public class ItemCableBlock extends SixWayMachineBlock implements IWrenchable {
+public class FluidCableBlock extends SixWayMachineBlock implements IWrenchable {
 
     public static final EnumProperty<ConnectionType> NORTH = EnumProperty.create("north", ConnectionType.class);
     public static final EnumProperty<ConnectionType> EAST = EnumProperty.create("east", ConnectionType.class);
@@ -44,7 +44,7 @@ public class ItemCableBlock extends SixWayMachineBlock implements IWrenchable {
                 map.put(Direction.DOWN, DOWN);
             });
 
-    public ItemCableBlock(Properties properties) {
+    public FluidCableBlock(Properties properties) {
         super(properties);
         this.registerDefaultState(this.stateDefinition.any()
                 .setValue(NORTH, ConnectionType.NONE)
@@ -75,15 +75,15 @@ public class ItemCableBlock extends SixWayMachineBlock implements IWrenchable {
     private static ConnectionType createConnection(IBlockReader worldIn, BlockPos pos, Direction side,
                                                    ConnectionType current) {
         TileEntity tileEntity = worldIn.getBlockEntity(pos.relative(side));
-        if (tileEntity instanceof ItemCableTileEntity) {
+        if (tileEntity instanceof FluidCableTileEntity) {
             return ConnectionType.BOTH;
         } else if (tileEntity != null) {
             // uncomment later
-//            IEnergyStorage energy = EnergyUtils.getEnergyFromSideOrNull(tileEntity, side.getOpposite());
-//            if (energy != null) {
-//                if (energy.canExtract()) {
+//            IFluidStorage fluid = FluidUtils.getFluidFromSideOrNull(tileEntity, side.getOpposite());
+//            if (fluid != null) {
+//                if (fluid.canExtract()) {
 //                    return current == ConnectionType.NONE ? ConnectionType.IN : current;
-//                } else if (energy.canReceive()) {
+//                } else if (fluid.canReceive()) {
 //                    return current == ConnectionType.NONE ? ConnectionType.OUT : current;
 //                }
 //            }
@@ -115,7 +115,7 @@ public class ItemCableBlock extends SixWayMachineBlock implements IWrenchable {
     @Nullable
     @Override
     public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-        return new ItemCableTileEntity();
+        return new FluidCableTileEntity();
     }
 
     @Override
@@ -141,8 +141,8 @@ public class ItemCableBlock extends SixWayMachineBlock implements IWrenchable {
     @Override
     public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn,
                                   BlockPos currentPos, BlockPos facingPos) {
-        if (worldIn.getBlockEntity(facingPos) instanceof ItemCableTileEntity)
-            ItemCableNetworkManager.invalidateNetwork(worldIn, currentPos);
+        if (worldIn.getBlockEntity(facingPos) instanceof FluidCableTileEntity)
+            FluidCableNetworkManager.invalidateNetwork(worldIn, currentPos);
 
         EnumProperty<ConnectionType> property = FACING_TO_PROPERTY_MAP.get(facing);
         ConnectionType current = stateIn.getValue(property);
@@ -172,10 +172,10 @@ public class ItemCableBlock extends SixWayMachineBlock implements IWrenchable {
         Direction side = getClickedConnection(relative);
         if (side != null) {
             TileEntity other = world.getBlockEntity(pos.relative(side));
-            if (!(other instanceof ItemCableTileEntity)) {
+            if (!(other instanceof FluidCableTileEntity)) {
                 BlockState state1 = cycleProperty(state, FACING_TO_PROPERTY_MAP.get(side));
                 world.setBlock(pos, state1, 18);
-                ItemCableNetworkManager.invalidateNetwork(world, pos);
+                FluidCableNetworkManager.invalidateNetwork(world, pos);
                 return ActionResultType.SUCCESS;
             }
         }

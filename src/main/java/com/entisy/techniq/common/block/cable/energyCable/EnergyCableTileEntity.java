@@ -1,4 +1,4 @@
-package com.entisy.techniq.common.block.cable;
+package com.entisy.techniq.common.block.cable.energyCable;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -13,18 +13,18 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 
-public class CableTileEntity extends TileEntity {
+public class EnergyCableTileEntity extends TileEntity {
 	
 	int energyStored;
 
-    public CableTileEntity() {
+    public EnergyCableTileEntity() {
         super(ModTileEntityTypes.CABLE_TILE_ENTITY.get());
     }
 
     public String getCableNetworkData() {
         if (level == null) return "world is null";
 
-        CableNetwork net = CableNetworkManager.get(level, worldPosition);
+        EnergyCableNetwork net = EnergyCableNetworkManager.get(level, worldPosition);
         return net != null ? net.toString() : "null";
     }
 
@@ -43,7 +43,7 @@ public class CableTileEntity extends TileEntity {
     @Override
     public void setRemoved() {
         if (level != null) {
-            CableNetworkManager.invalidateNetwork(level, worldPosition);
+            EnergyCableNetworkManager.invalidateNetwork(level, worldPosition);
         }
         super.setRemoved();
     }
@@ -52,7 +52,7 @@ public class CableTileEntity extends TileEntity {
     @Override
     public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
         if (level != null && !remove && cap == CapabilityEnergy.ENERGY && side != null) {
-            LazyOptional<CableNetwork> networkOptional = CableNetworkManager.getLazy(level, worldPosition);
+            LazyOptional<EnergyCableNetwork> networkOptional = EnergyCableNetworkManager.getLazy(level, worldPosition);
             if (networkOptional.isPresent()) {
                 return networkOptional.orElseThrow(IllegalStateException::new).getConnection(worldPosition, side).getLazyOptional().cast();
             }

@@ -1,4 +1,4 @@
-package com.entisy.techniq.common.block.itemCable;
+package com.entisy.techniq.common.block.cable.itemCable;
 
 import com.entisy.techniq.Techniq;
 import net.minecraft.util.math.BlockPos;
@@ -63,11 +63,11 @@ public class ItemCableNetworkManager {
 
     @SubscribeEvent
     public static void onServerTick(TickEvent.ServerTickEvent event) {
-        // Send energy from wire networks to connected blocks
+        // Send item from wire networks to connected blocks
         synchronized (NETWORK_LIST) {
             NETWORK_LIST.stream()
                     .filter(n -> n != null && n.isPresent())
-                    .forEach(n -> n.ifPresent(ItemCableNetwork::sendEnergy));
+                    .forEach(n -> n.ifPresent(ItemCableNetwork::sendItem));
         }
     }
 }

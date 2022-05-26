@@ -1,88 +1,90 @@
 package com.entisy.techniq.core.util;
 
-import com.entisy.techniq.core.capabilities.energy.IEnergyHandler;
+import com.entisy.techniq.core.capabilities.item.CapabilityItem;
+import com.entisy.techniq.core.capabilities.item.IItemHandler;
+import com.entisy.techniq.core.capabilities.item.IItemStorage;
+import com.entisy.techniq.core.capabilities.item.ItemStorage;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorldReader;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
-import net.minecraftforge.energy.CapabilityEnergy;
-import net.minecraftforge.energy.EnergyStorage;
-import net.minecraftforge.energy.IEnergyStorage;
 
 import javax.annotation.Nullable;
 
 public class ItemUtils {
-    private ItemUtils() {throw new IllegalAccessError("Utility class");}
+    private ItemUtils() {
+        throw new IllegalAccessError("Utility class");
+    }
 
-    public static void trySendToNeighbors(IBlockReader world, BlockPos pos, IEnergyHandler energyHandler, int maxSend) {
+    public static void trySendToNeighbors(IBlockReader world, BlockPos pos, IItemHandler itemHandler, int maxSend) {
         for (Direction side : Direction.values()) {
-            if (energyHandler.getEnergyStored() == 0) {
+            if (itemHandler.getItemStored() == 0) {
                 return;
             }
-            trySendTo(world, pos, energyHandler, maxSend, side);
+            trySendTo(world, pos, itemHandler, maxSend, side);
         }
     }
 
-    public static void trySendTo(IBlockReader world, BlockPos pos, IEnergyHandler energyHandler, int maxSend, Direction side) {
+    public static void trySendTo(IBlockReader world, BlockPos pos, IItemHandler itemHandler, int maxSend, Direction side) {
         TileEntity tileEntity = world.getBlockEntity(pos.relative(side));
         if (tileEntity != null) {
-            IEnergyStorage energy = energyHandler.getEnergy(side).orElse(new EnergyStorage(0));
-            tileEntity.getCapability(CapabilityEnergy.ENERGY, side.getOpposite()).ifPresent(other -> trySendEnergy(maxSend, energy, other));
+            IItemStorage item = itemHandler.getItem(side).orElse(new ItemStorage(0));
+            tileEntity.getCapability(CapabilityItem.ITEM, side.getOpposite()).ifPresent(other -> trySendItem(maxSend, item, other));
         }
     }
 
-    private static void trySendEnergy(int maxSend, IEnergyStorage energy, IEnergyStorage other) {
+    private static void trySendItem(int maxSend, IItemStorage item, IItemStorage other) {
         if (other.canReceive()) {
-            int toSend = energy.extractEnergy(maxSend, true);
-            int sent = other.receiveEnergy(toSend, false);
+            int toSend = item.extractItem(maxSend, true);
+            int sent = other.receiveItem(toSend, false);
             if (sent > 0) {
-                energy.extractEnergy(sent, false);
+                item.extractItem(sent, false);
             }
         }
     }
 
     /**
-     * Gets the energy capability for the block at the given position. If it does not have an energy
+     * Gets the item capability for the block at the given position. If it does not have an item
      * capability, or the block is not a tile entity, this returns null.
      *
      * @param world The world
      * @param pos   The position to check
-     * @return The energy capability, or null if not present
+     * @return The item capability, or null if not present
      */
     @SuppressWarnings("ConstantConditions")
     @Nullable
-    public static IEnergyStorage getEnergy(IWorldReader world, BlockPos pos) {
+    public static IItemStorage getItem(IWorldReader world, BlockPos pos) {
         if (!world.isAreaLoaded(pos, 1)) return null;
         TileEntity tileEntity = world.getBlockEntity(pos);
-        return tileEntity != null ? tileEntity.getCapability(CapabilityEnergy.ENERGY).orElse(null) : null;
+        return tileEntity != null ? tileEntity.getCapability(CapabilityItem.ITEM).orElse(null) : null;
     }
 
     /**
-     * Gets the energy capability of the object (item, etc), or null if it does not have one.
+     * Gets the item capability of the object (item, etc), or null if it does not have one.
      *
      * @param provider The capability provider
-     * @return The energy capability, or null if not present
+     * @return The item capability, or null if not present
      */
     @SuppressWarnings("ConstantConditions")
     @Nullable
-    public static IEnergyStorage getEnergy(ICapabilityProvider provider) {
-        return provider.getCapability(CapabilityEnergy.ENERGY).orElse(null);
+    public static IItemStorage getItem(ICapabilityProvider provider) {
+        return provider.getCapability(CapabilityItem.ITEM).orElse(null);
     }
 
     /**
-     * Gets the energy capability of the object (item, etc), or null if it does not have one. Tries
+     * Gets the item capability of the object (item, etc), or null if it does not have one. Tries
      * to get the capability for the given side first, then null side.
      *
      * @param provider The capability provider
      * @param side     The side being accessed
-     * @return The energy capability, or null if not present
+     * @return The item capability, or null if not present
      */
     @SuppressWarnings("ConstantConditions")
     @Nullable
-    public static IEnergyStorage getEnergyFromSideOrNull(ICapabilityProvider provider, Direction side) {
-        return provider.getCapability(CapabilityEnergy.ENERGY, side).orElse(provider.getCapability(CapabilityEnergy.ENERGY).orElse(null));
+    public static IItemStorage getItemFromSideOrNull(ICapabilityProvider provider, Direction side) {
+        return provider.getCapability(CapabilityItem.ITEM, side).orElse(provider.getCapability(CapabilityItem.ITEM).orElse(null));
     }
 
 }

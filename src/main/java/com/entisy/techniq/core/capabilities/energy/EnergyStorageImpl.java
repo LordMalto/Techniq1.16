@@ -1,5 +1,7 @@
 package com.entisy.techniq.core.capabilities.energy;
 
+import com.entisy.techniq.common.item.EnergyItem;
+import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.world.World;

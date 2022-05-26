@@ -4,6 +4,8 @@ import com.entisy.techniq.Techniq;
 import com.entisy.techniq.common.block.alloySmelter.AlloySmelterScreen;
 import com.entisy.techniq.common.block.battery.BatteryScreen;
 //import com.entisy.techniq.common.block.displayCase.DisplayCaseScreen;
+import com.entisy.techniq.common.block.blockBreaker.BlockBreakerScreen;
+import com.entisy.techniq.common.block.blockPlacer.BlockPlacerScreen;
 import com.entisy.techniq.common.block.electricalFurnace.ElectricalFurnaceScreen;
 import com.entisy.techniq.common.block.furnaceGenerator.FurnaceGeneratorScreen;
 import com.entisy.techniq.common.block.metalPress.MetalPressScreen;
@@ -31,7 +33,6 @@ public class ClientEventBusSubscriber {
 
 	@SubscribeEvent
 	public static void clientSetup(FMLClientSetupEvent event) {
-//		ScreenManager.register(ModContainerTypes.DISPLAY_CASE_CONTAINER_TYPE.get(), DisplayCaseScreen::new);
 		ScreenManager.register(ModContainerTypes.METAL_PRESS_CONTAINER_TYPE.get(), MetalPressScreen::new);
 		ScreenManager.register(ModContainerTypes.ELECTRICAL_FURNACE_CONTAINER_TYPE.get(), ElectricalFurnaceScreen::new);
 		ScreenManager.register(ModContainerTypes.ALLOY_SMELTER_CONTAINER_TYPE.get(), AlloySmelterScreen::new);
@@ -40,6 +41,8 @@ public class ClientEventBusSubscriber {
 		ScreenManager.register(ModContainerTypes.SIMPLE_ORE_MINER_CONTAINER_TYPE.get(), SimpleOreMinerScreen::new);
 		ScreenManager.register(ModContainerTypes.ADVANCED_ORE_MINER_CONTAINER_TYPE.get(), AdvancedOreMinerScreen::new);
 		ScreenManager.register(ModContainerTypes.REFINERY_CONTAINER_TYPE.get(), RefineryScreen::new);
+		ScreenManager.register(ModContainerTypes.BLOCK_BREAKER_CONTAINER_TYPE.get(), BlockBreakerScreen::new);
+		ScreenManager.register(ModContainerTypes.BLOCK_PLACER_CONTAINER_TYPE.get(), BlockPlacerScreen::new);
 
 //		ClientRegistry.bindTileEntityRenderer(ModTileEntityTypes.DISPLAY_CASE_TILE_ENTITY_TYPE.get(),
 //				DisplayCaseTileEntityRenderer::new);

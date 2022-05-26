@@ -63,8 +63,8 @@ public class ElectricalFurnaceRecipeCategory implements IRecipeCategory<Electric
 
 	@Override
 	public void setRecipe(IRecipeLayout recipeLayout, ElectricalFurnaceRecipe recipe, IIngredients ingredients) {
-		recipeLayout.getItemStacks().init(0, true, 11, 15);
-		recipeLayout.getItemStacks().init(1, false, 71, 15);
+		recipeLayout.getItemStacks().init(0, true, 11, 28);
+		recipeLayout.getItemStacks().init(1, false, 71, 28);
 		recipeLayout.getItemStacks().set(ingredients);
 	}
 

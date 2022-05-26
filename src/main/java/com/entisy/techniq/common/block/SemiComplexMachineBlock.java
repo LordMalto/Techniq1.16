@@ -1,6 +1,6 @@
 package com.entisy.techniq.common.block;
 
-import com.entisy.techniq.common.block.cable.CableBlock;
+import com.entisy.techniq.common.block.cable.energyCable.EnergyCableBlock;
 import com.entisy.techniq.core.init.ModTags;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -24,7 +24,6 @@ public class SemiComplexMachineBlock extends SemiComplexBlock {
     public static final BooleanProperty LIT = BooleanProperty.create("lit");
 
     public SemiComplexMachineBlock() {
-        super(Properties.copy(Blocks.IRON_BLOCK));
         registerDefaultState(stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(LIT, false));
     }
 
@@ -32,7 +31,7 @@ public class SemiComplexMachineBlock extends SemiComplexBlock {
         Block block = state.getBlock();
         boolean flag = this.isSameBlock(block);
         boolean flag1 = block instanceof SemiComplexMachineBlock;
-        boolean flag2 = block instanceof CableBlock; // instanceof SixWayMachineBlock
+        boolean flag2 = block instanceof EnergyCableBlock; // instanceof SixWayMachineBlock
         return !isExceptionForConnection(block) && p_220111_2_ || flag /*|| flag1 || flag2*/ ;
     }
 

@@ -1,39 +1,39 @@
-package com.entisy.techniq.common.block.fluidCable;
+package com.entisy.techniq.common.block.cable.itemCable;
 
 import com.entisy.techniq.api.ConnectionType;
+import com.entisy.techniq.core.capabilities.item.CapabilityItem;
+import com.entisy.techniq.core.capabilities.item.IItemStorage;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorldReader;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.energy.CapabilityEnergy;
-import net.minecraftforge.energy.IEnergyStorage;
 
 import java.util.*;
 
-public class FluidCableNetwork implements IEnergyStorage {
+public class ItemCableNetwork implements IItemStorage {
 
     public static final int TRANSFER_PER_CONNECTION = 1000;
 
     private final IWorldReader world;
     private final Map<BlockPos, Set<Connection>> connections = new HashMap<>();
     private boolean connectionsBuilt;
-    private int energyStored;
+    private int itemStored;
 
-    private FluidCableNetwork(IWorldReader world, Set<BlockPos> wires, int energyStored) {
+    private ItemCableNetwork(IWorldReader world, Set<BlockPos> wires, int itemStored) {
         this.world = world;
         wires.forEach(pos -> connections.put(pos, Collections.emptySet()));
-        this.energyStored = energyStored;
+        this.itemStored = itemStored;
     }
 
-    static FluidCableNetwork buildNetwork(IWorldReader world, BlockPos pos) {
+    static ItemCableNetwork buildNetwork(IWorldReader world, BlockPos pos) {
         Set<BlockPos> wires = buildWireSet(world, pos);
-        int energyStored = wires.stream().mapToInt(p -> {
+        int itemStored = wires.stream().mapToInt(p -> {
             TileEntity tileEntity = world.getBlockEntity(p);
-            return tileEntity instanceof FluidCableTileEntity ? ((FluidCableTileEntity) tileEntity).energyStored : 0;
+            return tileEntity instanceof ItemCableTileEntity ? ((ItemCableTileEntity) tileEntity).itemStored : 0;
         }).sum();
-        return new FluidCableNetwork(world, wires, energyStored);
+        return new ItemCableNetwork(world, wires, itemStored);
     }
 
     private static Set<BlockPos> buildWireSet(IWorldReader world, BlockPos pos) {
@@ -45,7 +45,7 @@ public class FluidCableNetwork implements IEnergyStorage {
         set.add(pos);
         for (Direction side : Direction.values()) {
             BlockPos pos1 = pos.relative(side);
-            if (!set.contains(pos1) && world.getBlockEntity(pos1) instanceof FluidCableTileEntity) {
+            if (!set.contains(pos1) && world.getBlockEntity(pos1) instanceof ItemCableTileEntity) {
                 set.add(pos1);
                 set.addAll(buildWireSet(world, pos1, set));
             }
@@ -72,12 +72,12 @@ public class FluidCableNetwork implements IEnergyStorage {
         return new Connection(this, side, ConnectionType.NONE);
     }
 
-    private void updateWireEnergy() {
-        int energyPerWire = energyStored / getWireCount();
+    private void updateWireItem() {
+        int itemPerWire = itemStored / getWireCount();
         connections.keySet().forEach(p -> {
             TileEntity tileEntity = world.getBlockEntity(p);
-            if (tileEntity instanceof FluidCableTileEntity) {
-                ((FluidCableTileEntity) tileEntity).energyStored = energyPerWire;
+            if (tileEntity instanceof ItemCableTileEntity) {
+                ((ItemCableTileEntity) tileEntity).itemStored = itemPerWire;
             }
         });
     }
@@ -87,47 +87,47 @@ public class FluidCableNetwork implements IEnergyStorage {
     }
 
     @Override
-    public int receiveEnergy(int maxReceive, boolean simulate) {
+    public int receiveItem(int maxReceive, boolean simulate) {
         buildConnections();
-        int received = Math.min(getMaxEnergyStored() - energyStored, Math.min(maxReceive, TRANSFER_PER_CONNECTION));
+        int received = Math.min(getMaxItemStored() - itemStored, Math.min(maxReceive, TRANSFER_PER_CONNECTION));
         if (received > 0) {
-//            SilentMechanisms.LOGGER.debug("receive ({}): {}, {} -> {}", simulate, received, energyStored, energyStored + received);
+//            SilentMechanisms.LOGGER.debug("receive ({}): {}, {} -> {}", simulate, received, itemStored, itemStored + received);
             if (!simulate) {
-                energyStored += received;
-                updateWireEnergy();
+                itemStored += received;
+                updateWireItem();
             }
         }
         return received;
     }
 
     @Override
-    public int extractEnergy(int maxExtract, boolean simulate) {
+    public int extractItem(int maxExtract, boolean simulate) {
         buildConnections();
-        int extracted = Math.min(energyStored, Math.min(maxExtract, TRANSFER_PER_CONNECTION));
+        int extracted = Math.min(itemStored, Math.min(maxExtract, TRANSFER_PER_CONNECTION));
         if (extracted > 0) {
-//            SilentMechanisms.LOGGER.debug("extract ({}): {}, {} -> {}", simulate, extracted, energyStored, energyStored - extracted);
+//            SilentMechanisms.LOGGER.debug("extract ({}): {}, {} -> {}", simulate, extracted, itemStored, itemStored - extracted);
             if (!simulate) {
-                energyStored -= extracted;
-                updateWireEnergy();
+                itemStored -= extracted;
+                updateWireItem();
             }
         }
         return extracted;
     }
 
-    void sendEnergy() {
+    void sendItem() {
         buildConnections();
 
-        // Send stored energy to connected blocks
+        // Send stored item to connected blocks
 //        for (Map.Entry<BlockPos, Set<Connection>> entry : connections.entrySet()) {
 //            BlockPos pos = entry.getKey();
 //            Set<Connection> connections = entry.getValue();
 //            for (Connection con : connections) {
 //                if (con.type.canExtract()) {
-//                    IEnergyStorage energy = EnergyUtils.getEnergy(world, pos.relative(con.side));
-//                    if (energy != null && energy.canReceive()) {
-//                        int toSend = extractEnergy(TRANSFER_PER_CONNECTION, true);
-//                        int accepted = energy.receiveEnergy(toSend, false);
-//                        extractEnergy(accepted, false);
+//                    IItemStorage item = ItemUtils.getItem(world, pos.relative(con.side));
+//                    if (item != null && item.canReceive()) {
+//                        int toSend = extractItem(TRANSFER_PER_CONNECTION, true);
+//                        int accepted = item.receiveItem(toSend, false);
+//                        extractItem(accepted, false);
 //                  }
 //                }
 //            }
@@ -135,12 +135,12 @@ public class FluidCableNetwork implements IEnergyStorage {
     }
 
     @Override
-    public int getEnergyStored() {
-        return energyStored;
+    public int getItemStored() {
+        return itemStored;
     }
 
     @Override
-    public int getMaxEnergyStored() {
+    public int getMaxItemStored() {
         return 1000 * connections.size();
     }
 
@@ -167,8 +167,8 @@ public class FluidCableNetwork implements IEnergyStorage {
         Set<Connection> connections = new HashSet<>();
         for (Direction direction : Direction.values()) {
             TileEntity te = world.getBlockEntity(pos.relative(direction));
-            if (te != null && !(te instanceof FluidCableTileEntity) && te.getCapability(CapabilityEnergy.ENERGY).isPresent()) {
-                ConnectionType type = FluidCableBlock.getConnection(world.getBlockState(pos), direction);
+            if (te != null && !(te instanceof ItemCableTileEntity) && te.getCapability(CapabilityItem.ITEM).isPresent()) {
+                ConnectionType type = ItemCableBlock.getConnection(world.getBlockState(pos), direction);
                 connections.add(new Connection(this, direction, type));
             }
         }
@@ -177,16 +177,16 @@ public class FluidCableNetwork implements IEnergyStorage {
 
     @Override
     public String toString() {
-        return String.format("WireNetwork %s, %d wires, %,d FE", Integer.toHexString(hashCode()), connections.size(), energyStored);
+        return String.format("WireNetwork %s, %d wires, %,d FE", Integer.toHexString(hashCode()), connections.size(), itemStored);
     }
 
-    public static class Connection implements IEnergyStorage {
-        private final FluidCableNetwork network;
+    public static class Connection implements IItemStorage {
+        private final ItemCableNetwork network;
         private final Direction side;
         private final ConnectionType type;
         private final LazyOptional<Connection> lazyOptional;
 
-        Connection(FluidCableNetwork network, Direction side, ConnectionType type) {
+        Connection(ItemCableNetwork network, Direction side, ConnectionType type) {
             this.network = network;
             this.side = side;
             this.type = type;
@@ -198,29 +198,29 @@ public class FluidCableNetwork implements IEnergyStorage {
         }
 
         @Override
-        public int receiveEnergy(int maxReceive, boolean simulate) {
+        public int receiveItem(int maxReceive, boolean simulate) {
             if (!canReceive()) {
                 return 0;
             }
-            return network.receiveEnergy(maxReceive, simulate);
+            return network.receiveItem(maxReceive, simulate);
         }
 
         @Override
-        public int extractEnergy(int maxExtract, boolean simulate) {
+        public int extractItem(int maxExtract, boolean simulate) {
             if (!canExtract()) {
                 return 0;
             }
-            return network.extractEnergy(maxExtract, simulate);
+            return network.extractItem(maxExtract, simulate);
         }
 
         @Override
-        public int getEnergyStored() {
-            return network.energyStored;
+        public int getItemStored() {
+            return network.itemStored;
         }
 
         @Override
-        public int getMaxEnergyStored() {
-            return network.getMaxEnergyStored();
+        public int getMaxItemStored() {
+            return network.getMaxItemStored();
         }
 
         @Override

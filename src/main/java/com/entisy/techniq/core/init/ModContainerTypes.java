@@ -4,6 +4,8 @@ import com.entisy.techniq.Techniq;
 import com.entisy.techniq.common.block.alloySmelter.AlloySmelterContainer;
 import com.entisy.techniq.common.block.battery.BatteryContainer;
 //import com.entisy.techniq.common.block.displayCase.DisplayCaseContainer;
+import com.entisy.techniq.common.block.blockBreaker.BlockBreakerContainer;
+import com.entisy.techniq.common.block.blockPlacer.BlockPlacerContainer;
 import com.entisy.techniq.common.block.electricalFurnace.ElectricalFurnaceContainer;
 import com.entisy.techniq.common.block.furnaceGenerator.FurnaceGeneratorContainer;
 import com.entisy.techniq.common.block.metalPress.MetalPressContainer;
@@ -47,5 +49,11 @@ public class ModContainerTypes {
 			.register("simple_ore_miner", () -> IForgeContainerType.create(SimpleOreMinerContainer::new));
 
 	public static final RegistryObject<ContainerType<AdvancedOreMinerContainer>> ADVANCED_ORE_MINER_CONTAINER_TYPE = CONTAINER_TYPES
-			.register("furnace_container", () -> IForgeContainerType.create(AdvancedOreMinerContainer::new));
+			.register("advanced_ore_miner", () -> IForgeContainerType.create(AdvancedOreMinerContainer::new));
+
+	public static final RegistryObject<ContainerType<BlockBreakerContainer>> BLOCK_BREAKER_CONTAINER_TYPE = CONTAINER_TYPES
+			.register("block_breaker", () -> IForgeContainerType.create(BlockBreakerContainer::new));
+
+	public static final RegistryObject<ContainerType<BlockPlacerContainer>> BLOCK_PLACER_CONTAINER_TYPE = CONTAINER_TYPES
+			.register("block_placer", () -> IForgeContainerType.create(BlockPlacerContainer::new));
 }

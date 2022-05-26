@@ -4,11 +4,13 @@ import com.entisy.techniq.Techniq;
 import com.entisy.techniq.common.block.*;
 import com.entisy.techniq.common.block.alloySmelter.AlloySmelterBlock;
 import com.entisy.techniq.common.block.battery.BatteryBlock;
-import com.entisy.techniq.common.block.cable.CableBlock;
+import com.entisy.techniq.common.block.blockBreaker.BlockBreakerBlock;
+import com.entisy.techniq.common.block.blockPlacer.BlockPlacerBlock;
+import com.entisy.techniq.common.block.cable.energyCable.EnergyCableBlock;
+import com.entisy.techniq.common.block.cable.fluidCable.FluidCableBlock;
+import com.entisy.techniq.common.block.cable.itemCable.ItemCableBlock;
 import com.entisy.techniq.common.block.electricalFurnace.ElectricalFurnaceBlock;
-import com.entisy.techniq.common.block.fluidCable.FluidCableBlock;
 import com.entisy.techniq.common.block.furnaceGenerator.FurnaceGeneratorBlock;
-import com.entisy.techniq.common.block.itemCable.ItemCableBlock;
 import com.entisy.techniq.common.block.metalPress.MetalPressBlock;
 import com.entisy.techniq.common.block.oreMiner.advancedOreMiner.AdvancedOreMinerBlock;
 import com.entisy.techniq.common.block.oreMiner.simpleOreMiner.SimpleOreMinerBlock;
@@ -27,7 +29,6 @@ import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
-import java.util.function.Function;
 import java.util.function.Supplier;
 
 public class ModBlocks {
@@ -39,115 +40,62 @@ public class ModBlocks {
      * METAL
      */
     public static final RegistryObject<SimpleBlock> COPPER_BLOCK = register("copper_block",
-            () -> new SimpleBlock(AbstractBlock.Properties.copy(Blocks.IRON_BLOCK)),
-            o -> () -> new BlockItem(o.get(),
-                    new Item.Properties().tab(TechniqTab.TECHNIQ_TAB)));
+            () -> new SimpleBlock(AbstractBlock.Properties.copy(Blocks.IRON_BLOCK)));
     public static final RegistryObject<SimpleBlock> STEEL_BLOCK = register("steel_block",
-            () -> new SimpleBlock(AbstractBlock.Properties.copy(Blocks.IRON_BLOCK)),
-            o -> () -> new BlockItem(o.get(),
-                    new Item.Properties().tab(TechniqTab.TECHNIQ_TAB)));
+            () -> new SimpleBlock(AbstractBlock.Properties.copy(Blocks.IRON_BLOCK)));
 
     /**
      * ORE
      */
     public static final RegistryObject<SimpleBlock> COPPER_ORE = register("copper_ore",
-            () -> new SimpleBlock(AbstractBlock.Properties.copy(Blocks.IRON_ORE)),
-            o -> () -> new BlockItem(o.get(),
-                    new Item.Properties().tab(TechniqTab.TECHNIQ_TAB)));
-
+            () -> new SimpleBlock(AbstractBlock.Properties.copy(Blocks.IRON_ORE)));
+    public static final RegistryObject<SimpleBlock> END_COPPER_ORE = register("end_copper_ore",
+            () -> new SimpleBlock(AbstractBlock.Properties.copy(ModBlocks.COPPER_ORE.get())));
+    public static final RegistryObject<SimpleBlock> NETHER_COPPER_ORE = register("nether_copper_ore",
+            () -> new SimpleBlock(AbstractBlock.Properties.copy(ModBlocks.COPPER_ORE.get())));
     public static final RegistryObject<SimpleBlock> QUARTZ_ORE = register("quartz_ore",
-            () -> new SimpleBlock(AbstractBlock.Properties.copy(Blocks.IRON_ORE)),
-            o -> () -> new BlockItem(o.get(),
-                    new Item.Properties().tab(TechniqTab.TECHNIQ_TAB)));
+            () -> new SimpleBlock(AbstractBlock.Properties.copy(Blocks.IRON_ORE)));
     /**
      * END
      */
     public static final RegistryObject<SimpleBlock> END_COAL_ORE = register("end_coal_ore",
-            () -> new SimpleBlock(AbstractBlock.Properties.copy(Blocks.COAL_ORE)),
-            o -> () -> new BlockItem(o.get(),
-                    new Item.Properties().tab(TechniqTab.TECHNIQ_TAB)));
-
-    public static final RegistryObject<SimpleBlock> END_COPPER_ORE = register("end_copper_ore",
-            () -> new SimpleBlock(AbstractBlock.Properties.copy(ModBlocks.COPPER_ORE.get())),
-            o -> () -> new BlockItem(o.get(),
-                    new Item.Properties().tab(TechniqTab.TECHNIQ_TAB)));
-
+            () -> new SimpleBlock(AbstractBlock.Properties.copy(Blocks.COAL_ORE)));
     public static final RegistryObject<SimpleBlock> END_DIAMOND_ORE = register("end_diamond_ore",
-            () -> new SimpleBlock(AbstractBlock.Properties.copy(Blocks.DIAMOND_ORE)),
-            o -> () -> new BlockItem(o.get(),
-                    new Item.Properties().tab(TechniqTab.TECHNIQ_TAB)));
-
+            () -> new SimpleBlock(AbstractBlock.Properties.copy(Blocks.DIAMOND_ORE)));
     public static final RegistryObject<SimpleBlock> END_EMERALD_ORE = register("end_emerald_ore",
-            () -> new SimpleBlock(AbstractBlock.Properties.copy(Blocks.EMERALD_ORE)),
-            o -> () -> new BlockItem(o.get(),
-                    new Item.Properties().tab(TechniqTab.TECHNIQ_TAB)));
-
+            () -> new SimpleBlock(AbstractBlock.Properties.copy(Blocks.EMERALD_ORE)));
     public static final RegistryObject<SimpleBlock> END_GOLD_ORE = register("end_gold_ore",
-            () -> new SimpleBlock(AbstractBlock.Properties.copy(Blocks.GOLD_ORE)),
-            o -> () -> new BlockItem(o.get(),
-                    new Item.Properties().tab(TechniqTab.TECHNIQ_TAB)));
-
+            () -> new SimpleBlock(AbstractBlock.Properties.copy(Blocks.GOLD_ORE)));
     public static final RegistryObject<SimpleBlock> END_IRON_ORE = register("end_iron_ore",
-            () -> new SimpleBlock(AbstractBlock.Properties.copy(Blocks.IRON_ORE)),
-            o -> () -> new BlockItem(o.get(),
-                    new Item.Properties().tab(TechniqTab.TECHNIQ_TAB)));
-
+            () -> new SimpleBlock(AbstractBlock.Properties.copy(Blocks.IRON_ORE)));
     public static final RegistryObject<SimpleBlock> END_LAPIS_ORE = register("end_lapis_ore",
-            () -> new SimpleBlock(AbstractBlock.Properties.copy(Blocks.LAPIS_ORE)),
-            o -> () -> new BlockItem(o.get(),
-                    new Item.Properties().tab(TechniqTab.TECHNIQ_TAB)));
-
+            () -> new SimpleBlock(AbstractBlock.Properties.copy(Blocks.LAPIS_ORE)));
     public static final RegistryObject<SimpleBlock> END_QUARTZ_ORE = register("end_quartz_ore",
-            () -> new SimpleBlock(AbstractBlock.Properties.copy(Blocks.IRON_ORE)),
-            o -> () -> new BlockItem(o.get(),
-                    new Item.Properties().tab(TechniqTab.TECHNIQ_TAB)));
-
+            () -> new SimpleBlock(AbstractBlock.Properties.copy(Blocks.IRON_ORE)));
     public static final RegistryObject<SimpleBlock> END_REDSTONE_ORE = register("end_redstone_ore",
-            () -> new SimpleBlock(AbstractBlock.Properties.copy(Blocks.LAPIS_ORE)),
-            o -> () -> new BlockItem(o.get(),
-                    new Item.Properties().tab(TechniqTab.TECHNIQ_TAB)));
+            () -> new SimpleBlock(AbstractBlock.Properties.copy(Blocks.LAPIS_ORE)));
     /**
      * NETHER
      */
     public static final RegistryObject<SimpleBlock> NETHER_COAL_ORE = register("nether_coal_ore",
-            () -> new SimpleBlock(AbstractBlock.Properties.copy(Blocks.COAL_ORE)),
-            o -> () -> new BlockItem(o.get(),
-                    new Item.Properties().tab(TechniqTab.TECHNIQ_TAB)));
-
-    public static final RegistryObject<SimpleBlock> NETHER_COPPER_ORE = register("nether_copper_ore",
-            () -> new SimpleBlock(AbstractBlock.Properties.copy(ModBlocks.COPPER_ORE.get())),
-            o -> () -> new BlockItem(o.get(),
-                    new Item.Properties().tab(TechniqTab.TECHNIQ_TAB)));
-
+            () -> new SimpleBlock(AbstractBlock.Properties.copy(Blocks.COAL_ORE)));
     public static final RegistryObject<SimpleBlock> NETHER_DIAMOND_ORE = register("nether_diamond_ore",
-            () -> new SimpleBlock(AbstractBlock.Properties.copy(Blocks.DIAMOND_ORE)),
-            o -> () -> new BlockItem(o.get(),
-                    new Item.Properties().tab(TechniqTab.TECHNIQ_TAB)));
+            () -> new SimpleBlock(AbstractBlock.Properties.copy(Blocks.DIAMOND_ORE)));
 
     public static final RegistryObject<SimpleBlock> NETHER_EMERALD_ORE = register("nether_emerald_ore",
-            () -> new SimpleBlock(AbstractBlock.Properties.copy(Blocks.EMERALD_ORE)),
-            o -> () -> new BlockItem(o.get(),
-                    new Item.Properties().tab(TechniqTab.TECHNIQ_TAB)));
+            () -> new SimpleBlock(AbstractBlock.Properties.copy(Blocks.EMERALD_ORE)));
 
     public static final RegistryObject<SimpleBlock> NETHER_GOLD_ORE = register("nether_gold_ore",
-            () -> new SimpleBlock(AbstractBlock.Properties.copy(Blocks.GOLD_ORE)),
-            o -> () -> new BlockItem(o.get(),
-                    new Item.Properties().tab(TechniqTab.TECHNIQ_TAB)));
+            () -> new SimpleBlock(AbstractBlock.Properties.copy(Blocks.GOLD_ORE)));
 
     public static final RegistryObject<SimpleBlock> NETHER_IRON_ORE = register("nether_iron_ore",
-            () -> new SimpleBlock(AbstractBlock.Properties.copy(Blocks.IRON_ORE)),
-            o -> () -> new BlockItem(o.get(),
-                    new Item.Properties().tab(TechniqTab.TECHNIQ_TAB)));
+            () -> new SimpleBlock(AbstractBlock.Properties.copy(Blocks.IRON_ORE)));
 
     public static final RegistryObject<SimpleBlock> NETHER_LAPIS_ORE = register("nether_lapis_ore",
-            () -> new SimpleBlock(AbstractBlock.Properties.copy(Blocks.LAPIS_ORE)),
-            o -> () -> new BlockItem(o.get(),
-                    new Item.Properties().tab(TechniqTab.TECHNIQ_TAB)));
+            () -> new SimpleBlock(AbstractBlock.Properties.copy(Blocks.LAPIS_ORE)));
 
     public static final RegistryObject<SimpleBlock> NETHER_REDSTONE_ORE = register("nether_redstone_ore",
-            () -> new SimpleBlock(AbstractBlock.Properties.copy(Blocks.LAPIS_ORE)),
-            o -> () -> new BlockItem(o.get(),
-                    new Item.Properties().tab(TechniqTab.TECHNIQ_TAB)));
+            () -> new SimpleBlock(AbstractBlock.Properties.copy(Blocks.LAPIS_ORE)));
 
     /*
      * FLUIDS
@@ -158,68 +106,53 @@ public class ModBlocks {
     /*
      * MACHINE
      */
-//    public static final RegistryObject<Block> BLOCK_BREAKER = BLOCKS.register("block_breaker",
-//            () -> new BlockBreakerBlock());
-//    public static final RegistryObject<Block> DISPLAY_CASE = BLOCKS.register("display_case",
-//            () -> new DisplayCaseBlock());
+    public static final RegistryObject<ComplexMachineBlock> BLOCK_BREAKER = register("block_breaker",
+            () -> new BlockBreakerBlock());
+
+    public static final RegistryObject<ComplexMachineBlock> BLOCK_PLACER = register("block_placer",
+            () -> new BlockPlacerBlock());
+
     public static final RegistryObject<ComplexMachineBlock> METAL_PRESS = register("metal_press",
-            () -> new MetalPressBlock(),
-            o -> () -> new BlockItem(o.get(),
-                    new Item.Properties().tab(TechniqTab.TECHNIQ_TAB)));
+            () -> new MetalPressBlock());
 
     public static final RegistryObject<ComplexMachineBlock> REFINERY = register("refinery",
-            () -> new RefineryBlock(),
-            o -> () -> new BlockItem(o.get(),
-                    new Item.Properties().tab(TechniqTab.TECHNIQ_TAB)));
+            () -> new RefineryBlock());
 
     public static final RegistryObject<ComplexMachineBlock> ELECTRICAL_FURNACE = register("electrical_furnace",
-            () -> new ElectricalFurnaceBlock(),
-            o -> () -> new BlockItem(o.get(),
-                    new Item.Properties().tab(TechniqTab.TECHNIQ_TAB)));
+            () -> new ElectricalFurnaceBlock());
 
     public static final RegistryObject<ComplexMachineBlock> ALLOY_SMELTER = register("alloy_smelter",
-            () -> new AlloySmelterBlock(),
-            o -> () -> new BlockItem(o.get(),
-                    new Item.Properties().tab(TechniqTab.TECHNIQ_TAB)));
+            () -> new AlloySmelterBlock());
 
     public static final RegistryObject<SemiComplexMachineBlock> BATTERY = register("battery",
-            () -> new BatteryBlock(),
-            o -> () -> new BlockItem(o.get(),
-                    new Item.Properties().tab(TechniqTab.TECHNIQ_TAB)));
+            () -> new BatteryBlock());
 
     public static final RegistryObject<ComplexMachineBlock> FURNACE_GENERATOR = register("furnace_generator",
-            () -> new FurnaceGeneratorBlock(),
-            o -> () -> new BlockItem(o.get(),
-                    new Item.Properties().tab(TechniqTab.TECHNIQ_TAB)));
+            () -> new FurnaceGeneratorBlock());
 
     public static final RegistryObject<SemiComplexMachineBlock> SIMPLE_ORE_MINER = register("simple_ore_miner",
-            () -> new SimpleOreMinerBlock(),
-            o -> () -> new BlockItem(o.get(),
-                    new Item.Properties().tab(TechniqTab.TECHNIQ_TAB)));
+            () -> new SimpleOreMinerBlock());
 
     public static final RegistryObject<SemiComplexMachineBlock> ADVANCED_ORE_MINER = register("advanced_ore_miner",
-            () -> new AdvancedOreMinerBlock(),
-            o -> () -> new BlockItem(o.get(),
-                    new Item.Properties().tab(TechniqTab.TECHNIQ_TAB)));
+            () -> new AdvancedOreMinerBlock());
+
+
+
+    public static final RegistryObject<SimpleBlock> RAINBOW_WOOL = register("rainbow_wool",
+            () -> new SimpleBlock(AbstractBlock.Properties.copy(Blocks.WHITE_WOOL)));
 
     /*
      * CABLES
      */
     public static final RegistryObject<SixWayMachineBlock> CABLE = register("energy_cable",
-            () -> new CableBlock(AbstractBlock.Properties.of(Material.DECORATION)
-                    .strength(1, 5)),
-            o -> () -> new BlockItem(o.get(),
-                    new Item.Properties().tab(TechniqTab.TECHNIQ_TAB)));
+            () -> new EnergyCableBlock(AbstractBlock.Properties.of(Material.DECORATION)
+                    .strength(1, 5)));
     public static final RegistryObject<SixWayMachineBlock> ITEM_CABLE = register("item_cable",
             () -> new ItemCableBlock(AbstractBlock.Properties.of(Material.DECORATION)
-                    .strength(1, 5)),
-            o -> () -> new BlockItem(o.get(),
-                    new Item.Properties().tab(TechniqTab.TECHNIQ_TAB)));
+                    .strength(1, 5)));
     public static final RegistryObject<SixWayMachineBlock> FLUID_CABLE = register("fluid_cable",
             () -> new FluidCableBlock(AbstractBlock.Properties.of(Material.DECORATION)
-                    .strength(1, 5)),
-            o -> () -> new BlockItem(o.get(),
-                    new Item.Properties().tab(TechniqTab.TECHNIQ_TAB)));
+                    .strength(1, 5)));
 
     private static RegistryObject<FlowingFluidBlock> registerFluid(String name, Supplier<FlowingFluid> fluid) {
         return registerNoItem(name, () ->
@@ -230,7 +163,7 @@ public class ModBlocks {
         return BLOCKS.register(name, block);
     }
 
-    public static final SimpleList<SimpleBlock> getSimpleBlocks() {
+    public static SimpleList<SimpleBlock> getSimpleBlocks() {
         SimpleList<SimpleBlock> ret = new SimpleList<>();
         BLOCKS.getEntries().forEach(b -> {
             if (b.get() instanceof SimpleBlock) {
@@ -240,7 +173,7 @@ public class ModBlocks {
         return ret;
     }
 
-    public static final SimpleList<ComplexMachineBlock> getComplexBlocks() {
+    public static SimpleList<ComplexMachineBlock> getComplexBlocks() {
         SimpleList<ComplexMachineBlock> ret = new SimpleList<>();
         BLOCKS.getEntries().forEach(b -> {
             if (b.get() instanceof ComplexMachineBlock) {
@@ -250,7 +183,7 @@ public class ModBlocks {
         return ret;
     }
 
-    public static final SimpleList<SemiComplexMachineBlock> getSemiComplexBlocks() {
+    public static SimpleList<SemiComplexMachineBlock> getSemiComplexBlocks() {
         SimpleList<SemiComplexMachineBlock> ret = new SimpleList<>();
         BLOCKS.getEntries().forEach(b -> {
             if (b.get() instanceof SemiComplexMachineBlock) {
@@ -260,21 +193,21 @@ public class ModBlocks {
         return ret;
     }
 
-    public static final SimpleList<Block> getBlocks() {
+    public static SimpleList<Block> getBlocks() {
         SimpleList<Block> ret = new SimpleList<>();
         BLOCKS.getEntries().forEach(b -> {
-            if (b.get() instanceof FlowingFluidBlock) {}
-            else {
+            if (!(b.get() instanceof FlowingFluidBlock)) {
                 ret.append(b.get());
             }
         });
         return ret;
     }
 
-    private static <T extends Block> RegistryObject<T> register(final String name, final Supplier<? extends T> block,
-                                                                Function<RegistryObject<T>, Supplier<? extends Item>> item) {
+    private static <T extends Block> RegistryObject<T> register(final String name, final Supplier<? extends T> block) {
         RegistryObject<T> obj = BLOCKS.register(name, block);
-        ModItems.ITEMS.register(name, item.apply(obj));
+        ModItems.ITEMS.register(name, () -> new BlockItem(
+                obj.get(),
+                new Item.Properties().tab(TechniqTab.TECHNIQ_TAB)));
         return obj;
     }
 }
