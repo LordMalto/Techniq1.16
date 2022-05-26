@@ -3,6 +3,7 @@ package com.entisy.techniq;
 import com.entisy.techniq.core.init.*;
 import com.entisy.techniq.core.tab.TechniqTab;
 
+import net.minecraft.fluid.Fluid;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraftforge.common.MinecraftForge;
@@ -25,21 +26,14 @@ public class Techniq {
 	public Techniq() {
 		IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
 
-		ModItems.ITEMS.register(bus);
 		ModBlocks.BLOCKS.register(bus);
-		ModFluids.FLUIDS.register(bus);
+		ModItems.ITEMS.register(bus);
 		ModTileEntityTypes.TILE_ENTITY_TYPES.register(bus);
 		ModContainerTypes.CONTAINER_TYPES.register(bus);
 		ModRecipes.RECIPE_SERIALIZERS.register(bus);
 
-		MinecraftForge.EVENT_BUS.register(this);
-	}
+		bus.addGenericListener(Fluid.class, ModFluids::registerFluids);
 
-	@SubscribeEvent
-	public static void onRegisterItems(final RegistryEvent.Register<Item> event) {
-		ModBlocks.BLOCKS.getEntries().stream().map(RegistryObject::get).forEach(block -> {
-			event.getRegistry().register(new BlockItem(block, new Item.Properties().tab(TechniqTab.TECHNIQ_TAB))
-					.setRegistryName(block.getRegistryName()));
-		});
+		MinecraftForge.EVENT_BUS.register(this);
 	}
 }

@@ -1,11 +1,11 @@
 package com.entisy.techniq.core.util;
 
-public class Duo<K, V> {
+public class Pair<K, V> {
 
     private final K k;
     private final V v;
 
-    public Duo(K key, V value) {
+    public Pair(K key, V value) {
         this.k = key;
         this.v = value;
     }

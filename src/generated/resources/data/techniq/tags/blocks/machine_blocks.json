@@ -4,10 +4,11 @@
     "techniq:alloy_smelter",
     "techniq:electrical_furnace",
     "techniq:metal_press",
-    "techniq:cable",
+    "techniq:energy_cable",
     "techniq:battery",
     "techniq:furnace_generator",
     "techniq:simple_ore_miner",
-    "techniq:advanced_ore_miner"
+    "techniq:advanced_ore_miner",
+    "techniq:refinery"
   ]
 }

@@ -1,4 +1,4 @@
-package com.entisy.techniq.core.energy;
+package com.entisy.techniq.core.capabilities.energy;
 
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.Direction;

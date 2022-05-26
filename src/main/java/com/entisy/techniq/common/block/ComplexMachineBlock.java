@@ -19,12 +19,12 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
-public class MachineBlock extends Block {
+public class ComplexMachineBlock extends ComplexBlock {
 
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
     public static final BooleanProperty LIT = BooleanProperty.create("lit");
 
-    public MachineBlock() {
+    public ComplexMachineBlock() {
         super(AbstractBlock.Properties.copy(Blocks.IRON_BLOCK));
         registerDefaultState(stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(LIT, false));
     }
@@ -32,7 +32,7 @@ public class MachineBlock extends Block {
     public boolean connectsTo(BlockState state, boolean p_220111_2_, Direction side) {
         Block block = state.getBlock();
         boolean flag = this.isSameBlock(block);
-        boolean flag1 = block instanceof MachineBlock;
+        boolean flag1 = block instanceof ComplexMachineBlock;
         boolean flag2 = block instanceof CableBlock; // instanceof SixWayMachineBlock
         return !isExceptionForConnection(block) && p_220111_2_ || flag /*|| flag1 || flag2*/ ;
     }

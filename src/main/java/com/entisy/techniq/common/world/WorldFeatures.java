@@ -80,7 +80,7 @@ public class WorldFeatures {
     private static ConfiguredFeature<?, ?> createOilLakeFeature(float multi) {
 
         return OilLakesFeature.INSTANCE
-                .configured(new BlockStateFeatureConfig(ModFluids.OIL_BLOCK.get().defaultBlockState()))
+                .configured(new BlockStateFeatureConfig(ModBlocks.OIL.get().defaultBlockState()))
                 .decorated(Placement.WATER_LAKE.configured(new ChanceConfig((int) (multi * 1))));
     }
 

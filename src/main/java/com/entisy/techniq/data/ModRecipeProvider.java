@@ -295,11 +295,21 @@ public class ModRecipeProvider extends RecipeProvider {
                 .pattern("R R")
                 .pattern("PRP").unlockedBy("has_item", has(ModItems.DIAMOND_ROD.get())).save(consumer);
 
+        ShapedRecipeBuilder.shaped(ModItems.PLASTIC.get()).define('P', ModItems.PLASTIC_PIECE.get())
+                .pattern("PPP")
+                .pattern("PPP")
+                .pattern("PPP").unlockedBy("has_item", has(ModItems.PLASTIC_PIECE.get())).save(consumer);
+
         // MACHINES
         ShapedRecipeBuilder.shaped(ModBlocks.ALLOY_SMELTER.get()).define('B', Blocks.IRON_BLOCK).define('I', Items.IRON_INGOT).define('M', ModItems.MACHINE_FRAME.get())
                 .pattern("BIB")
                 .pattern("IMI")
                 .pattern("BIB").unlockedBy("has_item", has(ModItems.MACHINE_FRAME.get())).save(consumer);
+
+        ShapedRecipeBuilder.shaped(ModBlocks.REFINERY.get()).define('B', Items.BUCKET).define('I', Items.IRON_INGOT).define('C', Blocks.COBBLESTONE)
+                .pattern("III")
+                .pattern("IBI")
+                .pattern("CCC").unlockedBy("has_item", has(Items.BUCKET)).save(consumer);
 
         ShapedRecipeBuilder.shaped(ModBlocks.ELECTRICAL_FURNACE.get()).define('B', Blocks.IRON_BLOCK).define('I', ModItems.STEEL_INGOT.get()).define('M', ModItems.MACHINE_FRAME.get()).define('F', Blocks.FURNACE)
                 .pattern("BIB")

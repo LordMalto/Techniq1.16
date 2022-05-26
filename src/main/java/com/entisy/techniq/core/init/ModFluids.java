@@ -1,59 +1,44 @@
 package com.entisy.techniq.core.init;
 
 import com.entisy.techniq.Techniq;
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.FlowingFluidBlock;
-import net.minecraft.block.material.Material;
+import com.entisy.techniq.core.util.SimpleList;
 import net.minecraft.fluid.FlowingFluid;
 import net.minecraft.fluid.Fluid;
-import net.minecraft.fluid.FluidState;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundEvents;
+import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.ForgeFlowingFluid;
-import net.minecraftforge.fml.RegistryObject;
-import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
+import java.util.function.Supplier;
+
 public class ModFluids {
+    public static FlowingFluid FLOWING_OIL;
+    public static FlowingFluid OIL;
 
-    public static final ResourceLocation WATER_STILL = new ResourceLocation("block/water_still");
-    public static final ResourceLocation WATER_FLOWING = new ResourceLocation("block/water_flow");
-    public static final ResourceLocation WATER_OVERLAY = new ResourceLocation("block/water_overlay");
+    public static void registerFluids(RegistryEvent.Register<Fluid> event) {
+        ForgeFlowingFluid.Properties oilProps = properties("oil", () -> OIL, () -> FLOWING_OIL)
+                .block(() -> ModBlocks.OIL.get())
+                .bucket(() -> ModItems.OIL_BUCKET.get());
+        FLOWING_OIL = register("flowing_oil", new ForgeFlowingFluid.Flowing(oilProps));
+        OIL = register("oil", new ForgeFlowingFluid.Source(oilProps));
+    }
 
-    public static final DeferredRegister<Fluid> FLUIDS = DeferredRegister.create(ForgeRegistries.FLUIDS,
-            Techniq.MOD_ID);
+    private static <T extends Fluid> T register(String name, T fluid) {
+        ResourceLocation id = new ResourceLocation(Techniq.MOD_ID, name);
+        fluid.setRegistryName(id);
+        ForgeRegistries.FLUIDS.register(fluid);
+        return fluid;
+    }
 
-    // OIL
-    public static final RegistryObject<FlowingFluid> OIL_FLUID = FLUIDS.register(
-            "oil_fluid",
-            () -> new ForgeFlowingFluid.Source(ModFluids.OIL_PROPERTIES));
-    public static final RegistryObject<FlowingFluid> OIL_FLOWING = FLUIDS.register(
-            "oil_flowing",
-            () -> new ForgeFlowingFluid.Flowing(ModFluids.OIL_PROPERTIES));
-    public static final ForgeFlowingFluid.Properties OIL_PROPERTIES = new ForgeFlowingFluid.Properties(
-            () -> OIL_FLUID.get(),
-            () -> OIL_FLOWING.get(),
-            FluidAttributes.builder(WATER_STILL, WATER_FLOWING)
-                    .density(15)
-                    .luminosity(2)
-                    .viscosity(5)
-                    .sound(SoundEvents.WATER_AMBIENT)
-                    .overlay(WATER_OVERLAY)
-                    .color(0xbf542400))
-            .slopeFindDistance(2)
-            .levelDecreasePerBlock(2)
-            .block(() -> ModFluids.OIL_BLOCK.get())
-            .bucket(() -> ModItems.OIL_BUCKET.get()
-    );
-    public static final RegistryObject<FlowingFluidBlock> OIL_BLOCK = ModBlocks.BLOCKS.register(
-            "oil",
-            () -> new FlowingFluidBlock(
-                    () -> ModFluids.OIL_FLUID.get(),
-                    AbstractBlock.Properties.of(Material.WATER)
-                            .noCollission()
-                            .strength(100f)
-                            .noDrops()
-            )
-    );
+    private static ForgeFlowingFluid.Properties properties(String name, Supplier<Fluid> still, Supplier<Fluid> flowing) {
+        String tex = "block/" + name;
+        return new ForgeFlowingFluid.Properties(still, flowing, FluidAttributes.builder(new ResourceLocation(Techniq.MOD_ID, tex + "_still"), new ResourceLocation(Techniq.MOD_ID, tex + "_flowing")));
+    }
+
+    public static final SimpleList<FlowingFluid> getFluids() {
+        SimpleList<FlowingFluid> ret = new SimpleList<>();
+        ret.append(OIL);
+        return ret;
+    }
 }

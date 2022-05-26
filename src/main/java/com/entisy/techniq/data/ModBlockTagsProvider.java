@@ -68,5 +68,6 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
         tag(ModTags.Blocks.MACHINE_BLOCKS).add(ModBlocks.FURNACE_GENERATOR.get());
         tag(ModTags.Blocks.MACHINE_BLOCKS).add(ModBlocks.SIMPLE_ORE_MINER.get());
         tag(ModTags.Blocks.MACHINE_BLOCKS).add(ModBlocks.ADVANCED_ORE_MINER.get());
+        tag(ModTags.Blocks.MACHINE_BLOCKS).add(ModBlocks.REFINERY.get());
     }
 }

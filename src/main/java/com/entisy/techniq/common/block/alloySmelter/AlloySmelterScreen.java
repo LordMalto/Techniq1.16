@@ -1,6 +1,7 @@
 package com.entisy.techniq.common.block.alloySmelter;
 
 import com.entisy.techniq.Techniq;
+import com.entisy.techniq.common.block.MachineTileEntity;
 import com.entisy.techniq.common.block.metalPress.MetalPressTileEntity;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -42,7 +43,7 @@ public class AlloySmelterScreen extends ContainerScreen<AlloySmelterContainer> {
 
 		// draw energy bar
 		int currentEnergy = getMenu().currentEnergy.get();
-		int pixel = currentEnergy != 0 ? currentEnergy * 50 / 25000 : 0;
+		int pixel = currentEnergy != 0 ? currentEnergy * 50 / MachineTileEntity.maxEnergy : 0;
 		blit(stack, getGuiLeft() + 154, getGuiTop() + (50 - pixel) + 18, 176, (50 - pixel), 12, 50);
 
 		// draw progress bar/arrow

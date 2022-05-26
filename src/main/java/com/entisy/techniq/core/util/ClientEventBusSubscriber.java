@@ -10,6 +10,8 @@ import com.entisy.techniq.common.block.metalPress.MetalPressScreen;
 //import com.entisy.techniq.common.block.displayCase.DisplayCaseTileEntityRenderer;
 import com.entisy.techniq.common.block.oreMiner.advancedOreMiner.AdvancedOreMinerScreen;
 import com.entisy.techniq.common.block.oreMiner.simpleOreMiner.SimpleOreMinerScreen;
+import com.entisy.techniq.common.block.refinery.RefineryScreen;
+import com.entisy.techniq.core.init.ModBlocks;
 import com.entisy.techniq.core.init.ModContainerTypes;
 import com.entisy.techniq.core.init.ModFluids;
 import com.entisy.techniq.core.init.ModTileEntityTypes;
@@ -37,12 +39,13 @@ public class ClientEventBusSubscriber {
 		ScreenManager.register(ModContainerTypes.FURNACE_GENERATOR_CONTAINER_TYPE.get(), FurnaceGeneratorScreen::new);
 		ScreenManager.register(ModContainerTypes.SIMPLE_ORE_MINER_CONTAINER_TYPE.get(), SimpleOreMinerScreen::new);
 		ScreenManager.register(ModContainerTypes.ADVANCED_ORE_MINER_CONTAINER_TYPE.get(), AdvancedOreMinerScreen::new);
+		ScreenManager.register(ModContainerTypes.REFINERY_CONTAINER_TYPE.get(), RefineryScreen::new);
 
 //		ClientRegistry.bindTileEntityRenderer(ModTileEntityTypes.DISPLAY_CASE_TILE_ENTITY_TYPE.get(),
 //				DisplayCaseTileEntityRenderer::new);
 
-		RenderTypeLookup.setRenderLayer(ModFluids.OIL_FLUID.get(), RenderType.translucent());
-		RenderTypeLookup.setRenderLayer(ModFluids.OIL_BLOCK.get(), RenderType.translucent());
-		RenderTypeLookup.setRenderLayer(ModFluids.OIL_FLOWING.get(), RenderType.translucent());
+		RenderTypeLookup.setRenderLayer(ModFluids.OIL, RenderType.translucent());
+		RenderTypeLookup.setRenderLayer(ModFluids.FLOWING_OIL, RenderType.translucent());
+		RenderTypeLookup.setRenderLayer(ModBlocks.OIL.get(), RenderType.translucent());
 	}
 }

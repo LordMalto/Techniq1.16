@@ -2,8 +2,8 @@ package com.entisy.techniq.common.block.battery;
 
 import com.entisy.techniq.Techniq;
 import com.entisy.techniq.common.block.MachineTileEntity;
-import com.entisy.techniq.core.energy.EnergyStorageImpl;
-import com.entisy.techniq.core.energy.IEnergyHandler;
+import com.entisy.techniq.core.capabilities.energy.EnergyStorageImpl;
+import com.entisy.techniq.core.capabilities.energy.IEnergyHandler;
 import com.entisy.techniq.core.init.ModTileEntityTypes;
 import com.entisy.techniq.core.util.EnergyUtils;
 import net.minecraft.entity.player.PlayerEntity;

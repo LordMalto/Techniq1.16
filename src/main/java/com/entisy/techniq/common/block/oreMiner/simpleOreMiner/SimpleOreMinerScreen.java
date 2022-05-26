@@ -1,6 +1,7 @@
 package com.entisy.techniq.common.block.oreMiner.simpleOreMiner;
 
 import com.entisy.techniq.Techniq;
+import com.entisy.techniq.common.block.MachineTileEntity;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
@@ -45,7 +46,7 @@ public class SimpleOreMinerScreen extends ContainerScreen<SimpleOreMinerContaine
             current.set(iEnergyStorage.getEnergyStored());
         });
 
-        int pixel = current.get() != 0 ? current.get() * 50 / 25000 : 0;
+        int pixel = current.get() != 0 ? current.get() * 50 / MachineTileEntity.maxEnergy : 0;
         blit(stack, getGuiLeft() + 154, getGuiTop() + (50 - pixel) + 18, 176, (50 - pixel), 12, 50);
 
         // draw progress bar/arrow

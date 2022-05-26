@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "PPP",
+    "PPP",
+    "PPP"
+  ],
+  "key": {
+    "P": {
+      "item": "techniq:plastic_piece"
+    }
+  },
+  "result": {
+    "item": "techniq:plastic"
+  }
+}

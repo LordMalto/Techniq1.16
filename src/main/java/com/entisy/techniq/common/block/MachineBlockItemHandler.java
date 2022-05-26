@@ -43,6 +43,7 @@ public class MachineBlockItemHandler extends ItemStackHandler {
         ItemStack stack1 = stack.copy();
         stack1.shrink(count);
         onContentsChanged(index);
+        setStackInSlot(index, stack1);
         return stack1;
     }
 

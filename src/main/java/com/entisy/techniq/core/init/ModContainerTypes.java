@@ -10,6 +10,7 @@ import com.entisy.techniq.common.block.metalPress.MetalPressContainer;
 
 import com.entisy.techniq.common.block.oreMiner.advancedOreMiner.AdvancedOreMinerContainer;
 import com.entisy.techniq.common.block.oreMiner.simpleOreMiner.SimpleOreMinerContainer;
+import com.entisy.techniq.common.block.refinery.RefineryContainer;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraftforge.common.extensions.IForgeContainerType;
 import net.minecraftforge.fml.RegistryObject;
@@ -26,6 +27,9 @@ public class ModContainerTypes {
 
 	public static final RegistryObject<ContainerType<MetalPressContainer>> METAL_PRESS_CONTAINER_TYPE = CONTAINER_TYPES
 			.register("metal_press", () -> IForgeContainerType.create(MetalPressContainer::new));
+
+	public static final RegistryObject<ContainerType<RefineryContainer>> REFINERY_CONTAINER_TYPE = CONTAINER_TYPES
+			.register("refinery", () -> IForgeContainerType.create(RefineryContainer::new));
 
 	public static final RegistryObject<ContainerType<ElectricalFurnaceContainer>> ELECTRICAL_FURNACE_CONTAINER_TYPE = CONTAINER_TYPES
 			.register("electrical_furnace", () -> IForgeContainerType.create(ElectricalFurnaceContainer::new));

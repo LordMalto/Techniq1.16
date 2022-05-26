@@ -15,6 +15,6 @@ public class ModFluidTagsProvider extends FluidTagsProvider {
 
     @Override
     protected void addTags() {
-        tag(ModTags.Fluids.FLUIDS_OIL).add(ModFluids.OIL_FLUID.get());
+        tag(ModTags.Fluids.FLUIDS_OIL).add(ModFluids.OIL);
     }
 }

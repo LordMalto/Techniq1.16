@@ -1,4 +1,4 @@
-package com.entisy.techniq.core.energy;
+package com.entisy.techniq.core.capabilities.energy;
 
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;

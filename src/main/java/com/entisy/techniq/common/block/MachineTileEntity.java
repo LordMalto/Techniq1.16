@@ -1,10 +1,9 @@
 package com.entisy.techniq.common.block;
 
-import com.entisy.techniq.core.energy.EnergyStorageImpl;
+import com.entisy.techniq.core.capabilities.energy.EnergyStorageImpl;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.world.ClientWorld;
-import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
@@ -35,16 +34,16 @@ import java.util.stream.Collectors;
 
 public class MachineTileEntity extends TileEntity {
 
-    public static final int maxEnergy = 25000;
-    public final int maxEnergyReceive;
-    public final int maxEnergyExtract;
-    public static int slots;
+    public static final int maxEnergy = 10000;
+    public int maxEnergyReceive = 0;
+    public int maxEnergyExtract = 0;
+    public static int slots = 0;
     public final EnergyStorageImpl energyStorage;
     public final LazyOptional<IEnergyStorage> energy;
     public ITextComponent name;
-    public int currentSmeltTime;
+    public int currentSmeltTime = 0;
     public MachineBlockItemHandler inventory;
-    public int currentEnergy;
+    public int currentEnergy = 0;
 
     public MachineTileEntity(int slots, int maxReceive, int maxExtract, TileEntityType<?> type) {
         super(type);

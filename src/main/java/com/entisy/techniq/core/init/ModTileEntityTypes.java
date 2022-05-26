@@ -11,6 +11,7 @@ import com.entisy.techniq.common.block.itemCable.ItemCableTileEntity;
 import com.entisy.techniq.common.block.metalPress.MetalPressTileEntity;
 import com.entisy.techniq.common.block.oreMiner.advancedOreMiner.AdvancedOreMinerTileEntity;
 import com.entisy.techniq.common.block.oreMiner.simpleOreMiner.SimpleOreMinerTileEntity;
+import com.entisy.techniq.common.block.refinery.RefineryTileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
@@ -31,6 +32,10 @@ public class ModTileEntityTypes {
     public static final RegistryObject<TileEntityType<MetalPressTileEntity>> METAL_PRESS_TILE_ENTITY = TILE_ENTITY_TYPES
             .register("metal_press", () -> TileEntityType.Builder
                     .of(MetalPressTileEntity::new, ModBlocks.METAL_PRESS.get()).build(null));
+
+    public static final RegistryObject<TileEntityType<RefineryTileEntity>> REFINERY_TILE_ENTITY = TILE_ENTITY_TYPES
+            .register("refinery", () -> TileEntityType.Builder
+                    .of(RefineryTileEntity::new, ModBlocks.REFINERY.get()).build(null));
 
     public static final RegistryObject<TileEntityType<ElectricalFurnaceTileEntity>> ELECTRICAL_FURNACE_TILE_ENTITY = TILE_ENTITY_TYPES
             .register("electrical_furnace", () -> TileEntityType.Builder

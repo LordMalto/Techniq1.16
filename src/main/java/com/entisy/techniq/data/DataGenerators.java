@@ -4,6 +4,7 @@ import com.entisy.techniq.Techniq;
 import com.entisy.techniq.data.client.ModBlockStateProvider;
 import com.entisy.techniq.data.client.ModItemModelProvider;
 
+import com.entisy.techniq.data.client.ModLanguageProvider;
 import net.minecraft.data.DataGenerator;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -29,5 +30,6 @@ public class DataGenerators {
 		
 		gen.addProvider(new ModLootTableProvider(gen));
 		gen.addProvider(new ModRecipeProvider(gen));
+		gen.addProvider(new ModLanguageProvider(gen));
 	}
 }

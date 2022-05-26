@@ -2,10 +2,10 @@ package com.entisy.techniq.common.block.oreMiner.simpleOreMiner;
 
 import com.entisy.techniq.Techniq;
 import com.entisy.techniq.common.block.MachineTileEntity;
-import com.entisy.techniq.core.energy.EnergyStorageImpl;
-import com.entisy.techniq.core.energy.IEnergyHandler;
+import com.entisy.techniq.core.capabilities.energy.EnergyStorageImpl;
+import com.entisy.techniq.core.capabilities.energy.IEnergyHandler;
 import com.entisy.techniq.core.init.ModTileEntityTypes;
-import com.entisy.techniq.core.util.Duo;
+import com.entisy.techniq.core.util.Pair;
 import com.entisy.techniq.core.util.SimpleList;
 import com.entisy.techniq.core.util.SimpleMap;
 import com.entisy.techniq.core.util.Triple;
@@ -32,7 +32,7 @@ public class SimpleOreMinerTileEntity extends MachineTileEntity implements ITick
     //             block, Uses, MiningTime
     private Triple<Block, Integer, Integer> triple = new Triple<>();
     private SimpleList<Block> minableBlocks = new SimpleList<>();
-    private SimpleMap<Block, Duo<Item, Integer>> outputs = new SimpleMap<>();
+    private SimpleMap<Block, Pair<Item, Integer>> outputs = new SimpleMap<>();
     private int uses = 0;
 
     public SimpleOreMinerTileEntity() {
@@ -64,7 +64,7 @@ public class SimpleOreMinerTileEntity extends MachineTileEntity implements ITick
                                 dirty = true;
                             }
                         } else {
-                            Duo<Boolean, Integer> duo = tryMoveStack(2);
+                            Pair<Boolean, Integer> duo = tryMoveStack(2);
                             if (duo.getKey()) {
                                 inventory.insertItem(duo.getValue(), getResultItem(getBlock()).copy(), false);
                                 energy.ifPresent(iEnergyStorage -> {
@@ -172,20 +172,20 @@ public class SimpleOreMinerTileEntity extends MachineTileEntity implements ITick
     }
 
     private void registerOutputs() {
-        outputs.append(Blocks.COAL_ORE, new Duo<>(Items.COAL, 3));
-        outputs.append(Blocks.IRON_ORE, new Duo<>(Items.IRON_INGOT, 1));
-        outputs.append(Blocks.DIAMOND_ORE, new Duo<>(Items.DIAMOND, 1));
-        outputs.append(Blocks.LAPIS_ORE, new Duo<>(Items.LAPIS_LAZULI, 3));
-        outputs.append(Blocks.EMERALD_ORE, new Duo<>(Items.EMERALD, 1));
-        outputs.append(Blocks.GOLD_ORE, new Duo<>(Items.GOLD_INGOT, 1));
-        outputs.append(Blocks.NETHER_QUARTZ_ORE, new Duo<>(Items.QUARTZ, 3));
-        outputs.append(Blocks.REDSTONE_ORE, new Duo<>(Items.REDSTONE, 3));
+        outputs.append(Blocks.COAL_ORE, new Pair<>(Items.COAL, 3));
+        outputs.append(Blocks.IRON_ORE, new Pair<>(Items.IRON_INGOT, 1));
+        outputs.append(Blocks.DIAMOND_ORE, new Pair<>(Items.DIAMOND, 1));
+        outputs.append(Blocks.LAPIS_ORE, new Pair<>(Items.LAPIS_LAZULI, 3));
+        outputs.append(Blocks.EMERALD_ORE, new Pair<>(Items.EMERALD, 1));
+        outputs.append(Blocks.GOLD_ORE, new Pair<>(Items.GOLD_INGOT, 1));
+        outputs.append(Blocks.NETHER_QUARTZ_ORE, new Pair<>(Items.QUARTZ, 3));
+        outputs.append(Blocks.REDSTONE_ORE, new Pair<>(Items.REDSTONE, 3));
     }
 
-    public Duo<Item, Integer> getOutput(Block minableBlock) {
+    public Pair<Item, Integer> getOutput(Block minableBlock) {
         Random random = new Random();
         int value = random.nextInt(outputs.getValue(minableBlock).getValue()) + 1;
-        return new Duo<>(outputs.getValue(minableBlock).getKey(), value);
+        return new Pair<>(outputs.getValue(minableBlock).getKey(), value);
     }
 
     private void registerTriple() {
@@ -207,13 +207,13 @@ public class SimpleOreMinerTileEntity extends MachineTileEntity implements ITick
         return number * 60 * 20;
     }
 
-    private Duo<Boolean, Integer> tryMoveStack(int slots) {
+    private Pair<Boolean, Integer> tryMoveStack(int slots) {
         for (int i = 0; i < slots; i++) {
             if ((inventory.getItem(i).sameItem(getResultItem(getBlock())) && inventory.getItem(i).getCount() < 64) || (inventory.getItem(i).getItem() == Items.AIR) || inventory.getItem(i).getStack() == ItemStack.EMPTY) {
-                return new Duo<>(true, i);
+                return new Pair<>(true, i);
             }
         }
-        return new Duo<>(false, 0);
+        return new Pair<>(false, 0);
     }
 
     @Override

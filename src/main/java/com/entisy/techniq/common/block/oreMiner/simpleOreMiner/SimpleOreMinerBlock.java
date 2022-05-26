@@ -1,7 +1,7 @@
 package com.entisy.techniq.common.block.oreMiner.simpleOreMiner;
 
-import com.entisy.techniq.common.block.MachineBlock;
-import com.entisy.techniq.common.block.metalPress.MetalPressTileEntity;
+import com.entisy.techniq.common.block.ComplexMachineBlock;
+import com.entisy.techniq.common.block.SemiComplexMachineBlock;
 import com.entisy.techniq.core.init.ModTileEntityTypes;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.LivingEntity;
@@ -19,7 +19,7 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 
-public class SimpleOreMinerBlock extends MachineBlock {
+public class SimpleOreMinerBlock extends SemiComplexMachineBlock {
 
     @Override
     public boolean hasTileEntity(BlockState state) {

@@ -118,7 +118,7 @@ public class AdvancedOreMinerContainer extends Container {
 
     @OnlyIn(Dist.CLIENT)
     public int getMiningProgressionScaled() {
-        return currentSmeltTime.get() != 0 && tileEntity.getMiningTime() != 0 ? currentSmeltTime.get() * 16 / tileEntity.getMiningTime() : 0;
+        return currentSmeltTime.get() != 0 && tileEntity.getMiningTime() != 0 ? (int) (currentSmeltTime.get() * 16 / tileEntity.getMiningTime()) : 0;
     }
 
     public LazyOptional<IEnergyStorage> getCapabilityFromTE() {

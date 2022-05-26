@@ -2,11 +2,11 @@ package com.entisy.techniq.common.block.oreMiner.advancedOreMiner;
 
 import com.entisy.techniq.Techniq;
 import com.entisy.techniq.common.block.MachineTileEntity;
-import com.entisy.techniq.core.energy.EnergyStorageImpl;
-import com.entisy.techniq.core.energy.IEnergyHandler;
+import com.entisy.techniq.core.capabilities.energy.EnergyStorageImpl;
+import com.entisy.techniq.core.capabilities.energy.IEnergyHandler;
 import com.entisy.techniq.core.init.ModItems;
 import com.entisy.techniq.core.init.ModTileEntityTypes;
-import com.entisy.techniq.core.util.Duo;
+import com.entisy.techniq.core.util.Pair;
 import com.entisy.techniq.core.util.SimpleList;
 import com.entisy.techniq.core.util.SimpleMap;
 import com.entisy.techniq.core.util.Triple;
@@ -31,9 +31,9 @@ import java.util.Random;
 public class AdvancedOreMinerTileEntity extends MachineTileEntity implements ITickableTileEntity, INamedContainerProvider, IEnergyHandler {
 
     //             block, Uses, MiningTime
-    private Triple<Block, Integer, Integer> triple = new Triple<>();
+    private Triple<Block, Integer, Float> triple = new Triple<>();
     private SimpleList<Block> minableBlocks = new SimpleList<>();
-    private Triple<Block, Duo<Item, Integer>, Duo<Item, Integer>> outputs = new Triple<>();
+    private Triple<Block, Pair<Item, Integer>, Pair<Item, Integer>> outputs = new Triple<>();
     private int uses = 0;
 
     public AdvancedOreMinerTileEntity() {
@@ -65,7 +65,7 @@ public class AdvancedOreMinerTileEntity extends MachineTileEntity implements ITi
                                 dirty = true;
                             }
                         } else {
-                            Duo<Boolean, Integer> duo = tryMoveStack(2);
+                            Pair<Boolean, Integer> duo = tryMoveStack(2);
                             if (duo.getKey()) {
                                 inventory.insertItem(0, getResultItem(getBlock()).getKey(), false);
                                 inventory.insertItem(1, getResultItem(getBlock()).getValue(), false);
@@ -106,19 +106,19 @@ public class AdvancedOreMinerTileEntity extends MachineTileEntity implements ITi
         }
     }
 
-    private Duo<ItemStack, ItemStack> getResultItem(Block block) {
+    private Pair<ItemStack, ItemStack> getResultItem(Block block) {
         ItemStack first = getOutput(block).getKeys().get(0).getKey().getDefaultInstance();
         ItemStack second = getOutput(block).getValues().get(0).getKey().getDefaultInstance();
         first.setCount(getOutput(block).getKeys().get(0).getValue());
         second.setCount(getOutput(block).getValues().get(0).getValue());
-        return new Duo<>(first, second);
+        return new Pair<>(first, second);
     }
 
     private int getUses(Block block) {
         return triple.getBFromA(block);
     }
 
-    public int getMiningTime() {
+    public float getMiningTime() {
         return triple.getCFromB(getUses());
     }
 
@@ -186,22 +186,22 @@ public class AdvancedOreMinerTileEntity extends MachineTileEntity implements ITi
     }
 
     private void registerOutputs() {
-        outputs.append(Blocks.COAL_ORE, new Duo<>(Items.COAL, 6), new Duo<>(ModItems.COAL_POWDER.get(), 3));
-        outputs.append(Blocks.IRON_ORE, new Duo<>(Items.IRON_INGOT, 3), new Duo<>(ModItems.IRON_POWDER.get(), 1));
-        outputs.append(Blocks.DIAMOND_ORE, new Duo<>(Items.DIAMOND, 3), new Duo<>(ModItems.DIAMOND_POWDER.get(), 1));
-        outputs.append(Blocks.LAPIS_ORE, new Duo<>(Items.LAPIS_LAZULI, 6), new Duo<>(ModItems.LAPIS_POWDER.get(), 3));
-        outputs.append(Blocks.EMERALD_ORE, new Duo<>(Items.EMERALD, 3), new Duo<>(ModItems.EMERALD_POWDER.get(), 1));
-        outputs.append(Blocks.GOLD_ORE, new Duo<>(Items.GOLD_INGOT, 3), new Duo<>(ModItems.GOLD_POWDER.get(), 1));
-        outputs.append(Blocks.NETHER_QUARTZ_ORE, new Duo<>(Items.QUARTZ, 6), new Duo<>(ModItems.QUARTZ_POWDER.get(), 3));
-        outputs.append(Blocks.REDSTONE_ORE, new Duo<>(Items.REDSTONE, 6), new Duo<>(Items.REDSTONE, 3));
+        outputs.append(Blocks.COAL_ORE, new Pair<>(Items.COAL, 6), new Pair<>(ModItems.COAL_POWDER.get(), 3));
+        outputs.append(Blocks.IRON_ORE, new Pair<>(Items.IRON_INGOT, 3), new Pair<>(ModItems.IRON_POWDER.get(), 1));
+        outputs.append(Blocks.DIAMOND_ORE, new Pair<>(Items.DIAMOND, 3), new Pair<>(ModItems.DIAMOND_POWDER.get(), 1));
+        outputs.append(Blocks.LAPIS_ORE, new Pair<>(Items.LAPIS_LAZULI, 6), new Pair<>(ModItems.LAPIS_POWDER.get(), 3));
+        outputs.append(Blocks.EMERALD_ORE, new Pair<>(Items.EMERALD, 3), new Pair<>(ModItems.EMERALD_POWDER.get(), 1));
+        outputs.append(Blocks.GOLD_ORE, new Pair<>(Items.GOLD_INGOT, 3), new Pair<>(ModItems.GOLD_POWDER.get(), 1));
+        outputs.append(Blocks.NETHER_QUARTZ_ORE, new Pair<>(Items.QUARTZ, 6), new Pair<>(ModItems.QUARTZ_POWDER.get(), 3));
+        outputs.append(Blocks.REDSTONE_ORE, new Pair<>(Items.REDSTONE, 6), new Pair<>(Items.REDSTONE, 3));
     }
 
-    public SimpleMap<Duo<Item, Integer>, Duo<Item, Integer>> getOutput(Block minableBlock) {
+    public SimpleMap<Pair<Item, Integer>, Pair<Item, Integer>> getOutput(Block minableBlock) {
         Random random = new Random();
         int firstValue = random.nextInt(outputs.getBFromA(minableBlock).getValue()) + 1;
         int secondValue = random.nextInt(outputs.getCFromA(minableBlock).getValue()) + 1;
-        SimpleMap<Duo<Item, Integer>, Duo<Item, Integer>> ret = new SimpleMap<>();
-        ret.append(new Duo<>(outputs.getBFromA(minableBlock).getKey(), firstValue), new Duo<>(outputs.getCFromA(minableBlock).getKey(), secondValue));
+        SimpleMap<Pair<Item, Integer>, Pair<Item, Integer>> ret = new SimpleMap<>();
+        ret.append(new Pair<>(outputs.getBFromA(minableBlock).getKey(), firstValue), new Pair<>(outputs.getCFromA(minableBlock).getKey(), secondValue));
         return ret;
     }
 
@@ -209,30 +209,30 @@ public class AdvancedOreMinerTileEntity extends MachineTileEntity implements ITi
         triple.append(Blocks.COAL_ORE, 50, seconds(30));
         triple.append(Blocks.IRON_ORE, 40, seconds(45));
         triple.append(Blocks.DIAMOND_ORE, 10, seconds(145));
-        triple.append(Blocks.LAPIS_ORE, 14, minutes(1));
+        triple.append(Blocks.LAPIS_ORE, 14, minutes(1.0f));
         triple.append(Blocks.EMERALD_ORE, 6, seconds(135));
-        triple.append(Blocks.GOLD_ORE, 20, minutes(1));
-        triple.append(Blocks.NETHER_QUARTZ_ORE, 20, minutes(1));
-        triple.append(Blocks.REDSTONE_ORE, 14, minutes(1));
+        triple.append(Blocks.GOLD_ORE, 20, minutes(1.0f));
+        triple.append(Blocks.NETHER_QUARTZ_ORE, 20, minutes(1.0f));
+        triple.append(Blocks.REDSTONE_ORE, 14, minutes(1.0f));
     }
 
-    private int seconds(int number) {
+    private float seconds(float number) {
         return number * 20;
     }
 
-    private int minutes(int number) {
+    private float minutes(float number) {
         return number * 60 * 20;
     }
 
-    private Duo<Boolean, Integer> tryMoveStack(int slots) {
+    private Pair<Boolean, Integer> tryMoveStack(int slots) {
         for (int i = 0; i < slots; i++) {
             if ((inventory.getItem(i).sameItem(getResultItem(getBlock()).getKey()) && inventory.getItem(i).getCount() < 64) || (inventory.getItem(i).getItem() == Items.AIR) || inventory.getItem(i).getStack() == ItemStack.EMPTY) {
-                return new Duo<>(true, i);
+                return new Pair<>(true, i);
             } else if ((inventory.getItem(i).sameItem(getResultItem(getBlock()).getValue()) && inventory.getItem(i).getCount() < 64) || (inventory.getItem(i).getItem() == Items.AIR) || inventory.getItem(i).getStack() == ItemStack.EMPTY) {
-                return new Duo<>(true, i);
+                return new Pair<>(true, i);
             }
         }
-        return new Duo<>(false, 0);
+        return new Pair<>(false, 0);
     }
 
     @Override
