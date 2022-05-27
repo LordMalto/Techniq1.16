@@ -1,6 +1,8 @@
 package com.entisy.techniq.core.util.jei;
 
 import com.entisy.techniq.Techniq;
+import com.entisy.techniq.common.block.alloySmelter.AlloySmelterContainer;
+import com.entisy.techniq.common.block.alloySmelter.AlloySmelterScreen;
 import com.entisy.techniq.common.block.refinery.RefineryTileEntity;
 import com.entisy.techniq.core.init.ModBlocks;
 import com.entisy.techniq.core.init.ModItems;
@@ -10,9 +12,7 @@ import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.constants.VanillaRecipeCategoryUid;
 import mezz.jei.api.ingredients.IIngredientType;
-import mezz.jei.api.registration.IRecipeCatalystRegistration;
-import mezz.jei.api.registration.IRecipeCategoryRegistration;
-import mezz.jei.api.registration.IRecipeRegistration;
+import mezz.jei.api.registration.*;
 import mezz.jei.api.runtime.IIngredientManager;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
@@ -102,13 +102,13 @@ public class JEIPlugin implements IModPlugin {
     }
 
     //TODO
-//    @Override
-//    public void registerGuiHandlers(IGuiHandlerRegistration registration) {
-//        registration.addRecipeClickArea(AlloySmelterScreen.class,50,50,28,23,AlloySmelterRecipeCategory.UID);
-//    }
-//
-//    @Override
-//    public void registerRecipeTransferHandlers(IRecipeTransferRegistration registration) {
-//        registration.addRecipeTransferHandler(AlloySmelterContainer.class, AlloySmelterRecipeCategory.UID, 0, 3, 4, 36);
-//    }
+    @Override
+    public void registerGuiHandlers(IGuiHandlerRegistration registration) {
+        registration.addRecipeClickArea(AlloySmelterScreen.class,0,0,28,23,AlloySmelterRecipeCategory.UID);
+    }
+
+    @Override
+    public void registerRecipeTransferHandlers(IRecipeTransferRegistration registration) {
+        registration.addRecipeTransferHandler(AlloySmelterContainer.class, AlloySmelterRecipeCategory.UID, 0, 3, 3, 36);
+    }
 }

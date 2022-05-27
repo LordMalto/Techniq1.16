@@ -8,6 +8,8 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.gui.drawable.IDrawable;
+import mezz.jei.api.gui.drawable.IDrawableAnimated;
+import mezz.jei.api.gui.drawable.IDrawableStatic;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.category.IRecipeCategory;
@@ -22,10 +24,15 @@ public class AlloySmelterRecipeCategory extends DrawHelper implements IRecipeCat
 
     private final IDrawable background;
     private final IDrawable icon;
+    private final IDrawableStatic arrow;
+    private final IGuiHelper helper;
+    private IDrawableAnimated arrowAnimated;
 
     public AlloySmelterRecipeCategory(IGuiHelper helper) {
-        this.background = helper.createDrawable(TEXTURE, 0, 0, 146, 74);
-        this.icon = helper.createDrawableIngredient(new ItemStack(ModBlocks.ALLOY_SMELTER.get()));
+        this.helper = helper;
+        background = helper.createDrawable(TEXTURE, 0, 0, 146, 74);
+        icon = helper.createDrawableIngredient(new ItemStack(ModBlocks.ALLOY_SMELTER.get()));
+        arrow = helper.createDrawable(TEXTURE, 0, 74, 22, 16);
     }
 
     @Override
@@ -69,6 +76,8 @@ public class AlloySmelterRecipeCategory extends DrawHelper implements IRecipeCat
 
     @Override
     public void draw(AlloySmelterRecipe recipe, MatrixStack matrixStack, double mouseX, double mouseY) {
+        // Arrow
+        arrowAnimated = helper.createAnimatedDrawable(arrow, 10, IDrawableAnimated.StartDirection.LEFT, false);
         // Energy bar
         int pixel = recipe.getRequiredEnergy() * 50 / 10000;
         blit(matrixStack, 121, (50 - pixel) + 12, 146, (50 - pixel), 12, 50);

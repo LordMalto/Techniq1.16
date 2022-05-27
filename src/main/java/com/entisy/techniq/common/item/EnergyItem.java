@@ -1,89 +1,95 @@
 package com.entisy.techniq.common.item;
 
 import com.entisy.techniq.core.tab.TechniqTab;
-import net.minecraft.client.renderer.texture.ITickable;
-import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.energy.IEnergyStorage;
 
-public class EnergyItem extends Item implements ITickable {
-    private final int capacity, maxReceive;
-    private int currentEnergy = 0;
+public class EnergyItem extends Item implements IEnergyItemHandler {
 
-    private EnergyItem(Item.Properties properties, int capacity) {
-        super(properties);
-        this.capacity = capacity;
-        this.maxReceive = 1;
-    }
+    private ItemStack self;
+    private int currentEnergy, capacity;
+    private LazyOptional<IEnergyStorage> energy;
+    private EnergyItemBase energyStorage;
 
     public EnergyItem(int capacity) {
-        this(
-                new Item.Properties()
-                        .defaultDurability(capacity)
-                        .setNoRepair()
-                        .tab(TechniqTab.TECHNIQ_TAB),
-                capacity);
+        super(new Item.Properties().tab(TechniqTab.TECHNIQ_TAB));
+        this.capacity = capacity;
+        energyStorage = new EnergyItemBase(100, 1, 1);
+        energy = LazyOptional.of(() -> energyStorage);
+        energy.ifPresent(iEnergyStorage -> {
+            currentEnergy = energyStorage.getEnergyStored();
+        });
     }
 
     @Override
-    public boolean hasContainerItem(ItemStack stack) {
+    public double getDurabilityForDisplay(ItemStack stack) {
+        if (stack.hasTag()) {
+            CompoundNBT nbt = stack.getTag();
+            return ((capacity - nbt.getInt("EnergyStored")) / (double) capacity) / 2;
+        } else {
+            CompoundNBT nbt = new CompoundNBT();
+            nbt.putInt("EnergyStored", currentEnergy);
+            stack.setTag(nbt);
+            return ((capacity - currentEnergy) / (double) capacity) / 2;
+        }
+    }
+
+    public void receiveEnergy(ItemStack stack, int amount) {
+        EnergyItem item = (EnergyItem) stack.getItem();
+        item.energy.ifPresent(iEnergyStorage -> {
+            energyStorage.setEnergy(currentEnergy + amount);
+            currentEnergy = energyStorage.getEnergyStored();
+        });
+        stack.setDamageValue(getDamage(stack) - amount);
+
+        if (stack.hasTag()) {
+            CompoundNBT nbt = stack.getTag();
+            if (nbt.contains("EnergyStored")) {
+                nbt.putInt("EnergyStored", currentEnergy);
+            } else {
+                nbt.putInt("EnergyStored", currentEnergy);
+            }
+        } else {
+            CompoundNBT nbt = new CompoundNBT();
+            nbt.putInt("EnergyStored", currentEnergy);
+            stack.setTag(nbt);
+        }
+        getDurabilityForDisplay(stack);
+    }
+
+    public void extractEnergy(ItemStack stack, int amount) {
+        EnergyItem item = (EnergyItem) stack.getItem();
+        item.energy.ifPresent(iEnergyStorage -> {
+            energyStorage.setEnergy(currentEnergy - amount);
+            currentEnergy = energyStorage.getEnergyStored();
+        });
+        stack.setDamageValue(stack.getDamageValue() + amount);
+
+        if (stack.hasTag()) {
+            CompoundNBT nbt = stack.getTag();
+            if (nbt.contains("EnergyStored")) {
+                nbt.putInt("EnergyStored", currentEnergy);
+            } else {
+                nbt.putInt("EnergyStored", currentEnergy);
+            }
+        } else {
+            CompoundNBT nbt = new CompoundNBT();
+            nbt.putInt("EnergyStored", currentEnergy);
+            stack.setTag(nbt);
+        }
+        getDurabilityForDisplay(stack);
+    }
+
+    @Override
+    public boolean showDurabilityBar(ItemStack stack) {
         return true;
     }
 
     @Override
-    public ItemStack getContainerItem(ItemStack itemStack) {
-        ItemStack item = itemStack.copy();
-        if (item.getDamageValue() > capacity) item.hurt(1, null, null);
-        return item;
-    }
-
-    @Override
-    public boolean isDamageable(ItemStack stack) {
-        return true;
-    }
-
-    @Override
-    public boolean onEntityItemUpdate(ItemStack stack, ItemEntity entity) {
-        return super.onEntityItemUpdate(stack, entity);
-    }
-
-    private int getDurability() {
-        return capacity - getDamage(getDefaultInstance());
-    }
-
-    private void setDurability(int amount) {
-        setDamage(getDefaultInstance(), capacity - currentEnergy - amount);
-    }
-
-    public int getCapacity() {
-        return capacity;
-    }
-
-    public int getMaxReceive() {
-        return maxReceive;
-    }
-
-    public int getCurrentEnergy() {
-        return currentEnergy;
-    }
-
-    public void extractEnergy(int amount) {
-        if (currentEnergy + amount >= 0) {
-            currentEnergy = currentEnergy - amount;
-            setDurability(currentEnergy);
-        }
-    }
-
-    public void receiveEnergy(int amount) {
-        if (currentEnergy + amount <= capacity) {
-            currentEnergy = currentEnergy + amount;
-            setDurability(currentEnergy);
-        }
-    }
-
-    @Override
-    public void tick() {
-        extractEnergy(1);
-        System.out.println(currentEnergy);
+    public EnergyItemBase getEnergyImpl() {
+        return energyStorage;
     }
 }

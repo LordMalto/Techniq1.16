@@ -8,6 +8,7 @@ import com.entisy.techniq.common.block.blockBreaker.BlockBreakerContainer;
 import com.entisy.techniq.common.block.blockPlacer.BlockPlacerContainer;
 import com.entisy.techniq.common.block.electricalFurnace.ElectricalFurnaceContainer;
 import com.entisy.techniq.common.block.furnaceGenerator.FurnaceGeneratorContainer;
+import com.entisy.techniq.common.block.harvester.HarvesterContainer;
 import com.entisy.techniq.common.block.metalPress.MetalPressContainer;
 
 import com.entisy.techniq.common.block.oreMiner.advancedOreMiner.AdvancedOreMinerContainer;
@@ -56,4 +57,7 @@ public class ModContainerTypes {
 
 	public static final RegistryObject<ContainerType<BlockPlacerContainer>> BLOCK_PLACER_CONTAINER_TYPE = CONTAINER_TYPES
 			.register("block_placer", () -> IForgeContainerType.create(BlockPlacerContainer::new));
+
+	public static final RegistryObject<ContainerType<HarvesterContainer>> HARVESTER_CONTAINER_TYPE = CONTAINER_TYPES
+			.register("harvester", () -> IForgeContainerType.create(HarvesterContainer::new));
 }

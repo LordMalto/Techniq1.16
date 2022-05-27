@@ -1,10 +1,7 @@
 package com.entisy.techniq.core.init;
 
 import com.entisy.techniq.Techniq;
-import com.entisy.techniq.common.item.HammerItem;
-import com.entisy.techniq.common.item.MachineFrameItem;
-import com.entisy.techniq.common.item.TestItem;
-import com.entisy.techniq.common.item.WrenchItem;
+import com.entisy.techniq.common.item.*;
 import com.entisy.techniq.core.tab.TechniqTab;
 
 import com.entisy.techniq.core.util.SimpleList;
@@ -19,8 +16,8 @@ import net.minecraftforge.registries.ForgeRegistries;
 public class ModItems {
 	public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, Techniq.MOD_ID);
 
-//	public static final RegistryObject<Item> TEST_ITEM = ITEMS.register("test_item",
-//			() -> new TestItem());
+	public static final RegistryObject<Item> TEST_ITEM = ITEMS.register("test_item",
+			() -> new TestItem());
 
 	// INGOTS
 	public static final RegistryObject<Item> COPPER_INGOT = ITEMS.register("copper_ingot",

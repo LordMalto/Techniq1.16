@@ -10,6 +10,7 @@ import com.entisy.techniq.common.block.electricalFurnace.ElectricalFurnaceTileEn
 import com.entisy.techniq.common.block.cable.fluidCable.FluidCableTileEntity;
 import com.entisy.techniq.common.block.furnaceGenerator.FurnaceGeneratorTileEntity;
 import com.entisy.techniq.common.block.cable.itemCable.ItemCableTileEntity;
+import com.entisy.techniq.common.block.harvester.HarvesterTileEntity;
 import com.entisy.techniq.common.block.metalPress.MetalPressTileEntity;
 import com.entisy.techniq.common.block.oreMiner.advancedOreMiner.AdvancedOreMinerTileEntity;
 import com.entisy.techniq.common.block.oreMiner.simpleOreMiner.SimpleOreMinerTileEntity;
@@ -32,10 +33,11 @@ public class ModTileEntityTypes {
     public static final RegistryObject<TileEntityType<BlockPlacerTileEntity>> BLOCK_PLACER_TILE_ENTITY_TYPE = TILE_ENTITY_TYPES
             .register("block_placer", () -> TileEntityType.Builder
                     .of(BlockPlacerTileEntity::new, ModBlocks.BLOCK_PLACER.get()).build(null));
-//
-//	public static final RegistryObject<TileEntityType<DisplayCaseTileEntity>> DISPLAY_CASE_TILE_ENTITY_TYPE = TILE_ENTITY_TYPES
-//			.register("display_case", () -> TileEntityType.Builder
-//					.of(DisplayCaseTileEntity::new, ModBlocks.DISPLAY_CASE.get()).build(null));
+
+    public static final RegistryObject<TileEntityType<HarvesterTileEntity>> HARVESTER_TILE_ENTITY_TYPE = TILE_ENTITY_TYPES
+            .register("harvester", () -> TileEntityType.Builder
+                    .of(HarvesterTileEntity::new, ModBlocks.HARVESTER.get()).build(null));
+
     public static final RegistryObject<TileEntityType<MetalPressTileEntity>> METAL_PRESS_TILE_ENTITY = TILE_ENTITY_TYPES
             .register("metal_press", () -> TileEntityType.Builder
                     .of(MetalPressTileEntity::new, ModBlocks.METAL_PRESS.get()).build(null));

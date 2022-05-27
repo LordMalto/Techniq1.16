@@ -19,6 +19,7 @@
   "block.techniq.energy_cable": "Energy Cable",
   "block.techniq.fluid_cable": "Fluid Cable",
   "block.techniq.furnace_generator": "Furnace Generator",
+  "block.techniq.harvester": "Harvester",
   "block.techniq.item_cable": "Item Cable",
   "block.techniq.metal_press": "Metal Press",
   "block.techniq.nether_coal_ore": "Nether Coal Ore",
@@ -65,6 +66,7 @@
   "item.techniq.steel_ingot": "Steel Ingot",
   "item.techniq.steel_plate": "Steel Plate",
   "item.techniq.steel_rod": "Steel Rod",
+  "item.techniq.test_item": "Test Item",
   "item.techniq.wrench": "Wrench",
   "itemGroup.techniq_tab": "Techniq"
 }

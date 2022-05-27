@@ -2,8 +2,8 @@
 	"parent": "block/block",
 	"ambientocclusion": false,
 	"textures": {
-		"0": "techniq:block/cable",
-		"particle": "techniq:block/cable"
+		"0": "techniq:block/energy_cable",
+		"particle": "techniq:block/energy_cable"
 	},
 	"elements": [
 		{

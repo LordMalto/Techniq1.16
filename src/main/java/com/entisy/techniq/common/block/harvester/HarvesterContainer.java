@@ -1,4 +1,4 @@
-package com.entisy.techniq.common.block.blockBreaker;
+package com.entisy.techniq.common.block.harvester;
 
 import com.entisy.techniq.common.slots.OutputSlot;
 import com.entisy.techniq.core.init.ModBlocks;
@@ -12,23 +12,21 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IWorldPosCallable;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 
 import java.util.Objects;
 
-public class BlockBreakerContainer extends Container {
+public class HarvesterContainer extends Container {
 
-    public final BlockBreakerTileEntity tileEntity;
+    public final HarvesterTileEntity tileEntity;
     private final IWorldPosCallable canInteractWithCallable;
     public FunctionalIntReferenceHolder currentSmeltTime;
     public FunctionalIntReferenceHolder currentEnergy;
 
-    public BlockBreakerContainer(final int id, final PlayerInventory inv, final BlockBreakerTileEntity tileEntity) {
-        super(ModContainerTypes.BLOCK_BREAKER_CONTAINER_TYPE.get(), id);
+    public HarvesterContainer(final int id, final PlayerInventory inv, final HarvesterTileEntity tileEntity) {
+        super(ModContainerTypes.HARVESTER_CONTAINER_TYPE.get(), id);
         this.tileEntity = tileEntity;
         canInteractWithCallable = IWorldPosCallable.create(tileEntity.getLevel(), tileEntity.getBlockPos());
 
@@ -36,15 +34,12 @@ public class BlockBreakerContainer extends Container {
         final int startX = 8;
 
         // furnace
-        addSlot(new OutputSlot(tileEntity.getInventory(), 0, 62, 17));
-        addSlot(new OutputSlot(tileEntity.getInventory(), 1, 80, 17));
-        addSlot(new OutputSlot(tileEntity.getInventory(), 2, 98, 17));
-        addSlot(new OutputSlot(tileEntity.getInventory(), 3, 62, 35));
-        addSlot(new OutputSlot(tileEntity.getInventory(), 4, 80, 35));
-        addSlot(new OutputSlot(tileEntity.getInventory(), 5, 98, 35));
-        addSlot(new OutputSlot(tileEntity.getInventory(), 6, 62, 53));
-        addSlot(new OutputSlot(tileEntity.getInventory(), 7, 80, 53));
-        addSlot(new OutputSlot(tileEntity.getInventory(), 8, 98, 53));
+        addSlot(new OutputSlot(tileEntity.getInventory(), 0, 62, 27));
+        addSlot(new OutputSlot(tileEntity.getInventory(), 1, 80, 27));
+        addSlot(new OutputSlot(tileEntity.getInventory(), 2, 98, 27));
+        addSlot(new OutputSlot(tileEntity.getInventory(), 3, 62, 45));
+        addSlot(new OutputSlot(tileEntity.getInventory(), 4, 80, 45));
+        addSlot(new OutputSlot(tileEntity.getInventory(), 5, 98, 45));
 
         // inventory
         for (int row = 0; row < 3; row++) {
@@ -63,23 +58,23 @@ public class BlockBreakerContainer extends Container {
         addDataSlot(currentEnergy = new FunctionalIntReferenceHolder(() -> tileEntity.currentEnergy, value -> tileEntity.currentEnergy = value));
     }
 
-    public BlockBreakerContainer(final int id, final PlayerInventory inv, final PacketBuffer buffer) {
+    public HarvesterContainer(final int id, final PlayerInventory inv, final PacketBuffer buffer) {
         this(id, inv, getTileEntity(inv, buffer));
     }
 
-    private static BlockBreakerTileEntity getTileEntity(PlayerInventory inv, PacketBuffer buffer) {
+    private static HarvesterTileEntity getTileEntity(PlayerInventory inv, PacketBuffer buffer) {
         Objects.requireNonNull(inv, "Inventory cannot be null");
         Objects.requireNonNull(buffer, "PacketBuffer cannot be null");
         final TileEntity tileEntity = inv.player.level.getBlockEntity(buffer.readBlockPos());
-        if (tileEntity instanceof BlockBreakerTileEntity) {
-            return (BlockBreakerTileEntity) tileEntity;
+        if (tileEntity instanceof HarvesterTileEntity) {
+            return (HarvesterTileEntity) tileEntity;
         }
         throw new IllegalStateException("TileEntity is not correct!");
     }
 
     @Override
     public boolean stillValid(PlayerEntity player) {
-        return stillValid(canInteractWithCallable, player, ModBlocks.BLOCK_BREAKER.get());
+        return stillValid(canInteractWithCallable, player, ModBlocks.HARVESTER.get());
     }
 
     @Override
@@ -89,22 +84,22 @@ public class BlockBreakerContainer extends Container {
         if (slot != null && slot.hasItem()) {
             ItemStack itemstack1 = slot.getItem();
 
-            int slots = 9;
+            int slots = 6;
             int invSize = slots + 27;
             int hotbar = invSize + 9;
 
             itemstack = itemstack1.copy();
-            if (index == 0 || index == 1 || index == 2 || index == 3 || index == 4 || index == 5 || index == 6 || index == 7 || index == 8) {
+            if (index == 0 || index == 1 || index == 2 || index == 3 || index == 4 || index == 5) {
                 if (!this.moveItemStackTo(itemstack1, slots, hotbar, true)) {
                     return ItemStack.EMPTY;
                 }
                 slot.onQuickCraft(itemstack1, itemstack);
-            } else if (index != 0 && index != 1 && index != 2 && index != 3 && index != 4 && index != 5 && index != 6 && index != 7 && index != 8) {
+            } else if (index != 0 && index != 1 && index != 2 && index != 3 && index != 4 && index != 5) {
                 if (index >= slots && index < invSize) {
-                    if (!this.moveItemStackTo(itemstack1, invSize, hotbar, false)) {
+                    if (!this.moveItemStackTo(itemstack1, 0, 6, false)) {
                         return ItemStack.EMPTY;
                     }
-                } else if (index >= invSize && index < hotbar && !this.moveItemStackTo(itemstack1, slots, invSize, false)) {
+                } else if (index >= invSize && index < hotbar && !this.moveItemStackTo(itemstack1, 0, 6, false)) {
                     return ItemStack.EMPTY;
                 }
             } else if (!this.moveItemStackTo(itemstack1, slots, hotbar, false)) {
