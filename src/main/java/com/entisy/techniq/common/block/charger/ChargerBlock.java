@@ -19,7 +19,7 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 
-public class ChargerBlock extends SimpleMachineBlock {
+public class ChargerBlock extends SemiComplexMachineBlock {
 
     public ChargerBlock() {
         registerDefaultState(stateDefinition.any().setValue(FACING, Direction.NORTH));

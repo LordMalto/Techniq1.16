@@ -111,7 +111,7 @@ public class ModBlocks {
     public static final RegistryObject<ComplexMachineBlock> BLOCK_BREAKER = register("block_breaker",
             () -> new BlockBreakerBlock());
 
-    public static final RegistryObject<SimpleMachineBlock> CHARGER = register("charger",
+    public static final RegistryObject<SemiComplexMachineBlock> CHARGER = register("charger",
             () -> new ChargerBlock());
 
     public static final RegistryObject<ComplexMachineBlock> BLOCK_PLACER = register("block_placer",
@@ -132,7 +132,7 @@ public class ModBlocks {
     public static final RegistryObject<ComplexMachineBlock> ALLOY_SMELTER = register("alloy_smelter",
             () -> new AlloySmelterBlock());
 
-    public static final RegistryObject<SemiComplexMachineBlock> BATTERY = register("battery",
+    public static final RegistryObject<SemiComplexMachineBlock> BATTERY = register("battery_block",
             () -> new BatteryBlock());
 
     public static final RegistryObject<ComplexMachineBlock> FURNACE_GENERATOR = register("furnace_generator",

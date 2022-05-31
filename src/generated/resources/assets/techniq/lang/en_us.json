@@ -1,7 +1,7 @@
 {
   "block.techniq.advanced_ore_miner": "Advanced Ore Miner",
   "block.techniq.alloy_smelter": "Alloy Smelter",
-  "block.techniq.battery": "Battery",
+  "block.techniq.battery_block": "Battery Block",
   "block.techniq.block_breaker": "Block Breaker",
   "block.techniq.block_placer": "Block Placer",
   "block.techniq.charger": "Charger",
@@ -38,7 +38,7 @@
   "block.techniq.steel_block": "Steel Block",
   "fluid.techniq.oil": "Oil",
   "item.techniq.basic_machine_frame": "Basic Machine Frame",
-  "item.techniq.battery_item": "Battery Item",
+  "item.techniq.battery": "Battery",
   "item.techniq.coal_powder": "Coal Powder",
   "item.techniq.copper_ingot": "Copper Ingot",
   "item.techniq.copper_plate": "Copper Plate",
