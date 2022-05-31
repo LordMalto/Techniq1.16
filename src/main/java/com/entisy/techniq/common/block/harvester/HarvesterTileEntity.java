@@ -9,7 +9,6 @@ import com.entisy.techniq.core.util.Pair;
 import com.entisy.techniq.core.util.SimpleList;
 import com.entisy.techniq.core.util.SimpleMap;
 import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
 import net.minecraft.block.CropsBlock;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -27,8 +26,8 @@ import net.minecraftforge.common.util.Constants;
 
 public class HarvesterTileEntity extends MachineTileEntity implements ITickableTileEntity, INamedContainerProvider, IEnergyHandler {
 
-    private int cooldown = 0;
     private int workTime = 20;
+    private int radius = 6;
     private Direction direction;
 
     public HarvesterTileEntity() {
@@ -48,11 +47,10 @@ public class HarvesterTileEntity extends MachineTileEntity implements ITickableT
                 currentEnergy = iEnergyStorage.getEnergyStored();
             });
             if (currentEnergy >= getRequiredEnergy()) {
-                if (cooldown != workTime) {
-                    cooldown++;
+                if (currentSmeltTime != workTime) {
+                    currentSmeltTime++;
                     dirty = true;
                 } else {
-                    cooldown = 0;
                     dirty = harvest();
                 }
             }
@@ -65,25 +63,23 @@ public class HarvesterTileEntity extends MachineTileEntity implements ITickableT
 
     private boolean harvest() {
         for (int i = 0; i < getHarvestableBlocks().size(); i++) {
-            for (BlockPos pos : getHarvestableBlocks().getKeys()) {
-                if (getHarvestableBlocks().getValue(pos)) {
-                    System.out.println("yoooo");
-                    CropsBlock crop = (CropsBlock) level.getBlockState(pos).getBlock();
-                    SimpleMap<Pair<Boolean, Integer>, ItemStack> map = tryMoveStack(6);
-                    for (int j = 0; j < map.size(); j++) {
-                        if (map.getKeys().get(i).getKey()) {
-                            inventory.insertItem(map.getKeys().get(i).getValue(), map.getValues().get(i).copy(), false);
-                        }
+            for (BlockPos pos : getHarvestableBlocks().list()) {
+                CropsBlock crop = (CropsBlock) level.getBlockState(pos).getBlock();
+                SimpleMap<Pair<Boolean, Integer>, ItemStack> map = tryMoveStack(6);
+                for (int j = 0; j < map.size(); j++) {
+                    if (map.getKeys().get(i).getKey()) {
+                        inventory.insertItem(map.getKeys().get(i).getValue(), map.getValues().get(i).copy(), false);
                     }
-                    energy.ifPresent(iEnergyStorage -> {
-                        energyStorage.setEnergyDirectly(currentEnergy - getRequiredEnergy());
-                        currentEnergy = energyStorage.getEnergyStored();
-                    });
-                    cooldown = 0;
-                    level.destroyBlock(pos, false);
-                    level.setBlock(pos, crop.defaultBlockState().setValue(CropsBlock.AGE, 0), 0);
-                    return true;
                 }
+                energy.ifPresent(iEnergyStorage -> {
+                    energyStorage.setEnergyDirectly(currentEnergy - getRequiredEnergy());
+                    currentEnergy = energyStorage.getEnergyStored();
+                });
+                currentSmeltTime = 0;
+                level.destroyBlock(pos, false);
+                level.setBlock(pos, crop.defaultBlockState().setValue(CropsBlock.AGE, 0), 0);
+                return true;
+
             }
         }
         return false;
@@ -118,19 +114,20 @@ public class HarvesterTileEntity extends MachineTileEntity implements ITickableT
         return 100;
     }
 
-    private SimpleMap<BlockPos, Boolean> getHarvestableBlocks() {
-        SimpleMap<BlockPos, Boolean> ret = new SimpleMap<>();
-        for (BlockPos pos : getBlocksInRange().get()) {
-            boolean isGrown = false;
-            Block block = level.getBlockState(pos).getBlock();
+    private SimpleList<BlockPos> getHarvestableBlocks() {
+        SimpleList<BlockPos> ret = new SimpleList<>();
+        for (BlockPos pos : getBlocksInRange().list()) {
+            System.out.println(1);
+            Block block = getLevel().getBlockState(pos).getBlock();
             if (block instanceof CropsBlock) {
+                System.out.println(2);
                 if (((CropsBlock) block).isMaxAge(block.defaultBlockState())) {
-                    isGrown = true;
+                    System.out.println(3);
+                    ret.append(pos);
+
                 }
-                ret.append(pos, isGrown);
-            } else if (block == Blocks.AIR) {
-                System.out.println("AIR");
             }
+
         }
         return ret;
     }
@@ -138,9 +135,10 @@ public class HarvesterTileEntity extends MachineTileEntity implements ITickableT
     private SimpleList<BlockPos> getBlocksInRange() {
         SimpleList<BlockPos> ret = new SimpleList<>();
         BlockPos harvester = getBlockPos();
-        for (int x = 0; x < 13; x++) {
-            for (int y = 0; y < 13; y++) {
-                ret.append(harvester.offset(x, y, 0));
+        System.out.println(radius);
+        for (int x = -radius; x < radius+1; x++) {
+            for (int z = -radius; z < radius+1; z++) {
+                ret.append(harvester.offset(x, 0, z));
             }
         }
         return ret;
@@ -149,18 +147,17 @@ public class HarvesterTileEntity extends MachineTileEntity implements ITickableT
     //TODO: getResultItem(Block block)
 
     private SimpleMap<Pair<Boolean, Integer>, ItemStack> tryMoveStack(int slots) {
-        SimpleMap<BlockPos, Boolean> map = getHarvestableBlocks();
+        SimpleList<BlockPos> map = getHarvestableBlocks();
         SimpleMap<Pair<Boolean, Integer>, ItemStack> ret = new SimpleMap<>();
         for (int i = 0; i < slots; i++) {
             for (int j = 0; j < map.size(); j++) {
-                if (map.valueFromInt(i)) {
-                    SimpleList<ItemStack> list = getResultItems(map.keyFromInt(i));
-                    for (ItemStack stack : list.get()) {
-                        if ((inventory.getItem(i).sameItem(stack) && inventory.getItem(i).getCount() < 64) || (inventory.getItem(i).getItem() == Items.AIR) || inventory.getItem(i).getStack() == ItemStack.EMPTY) {
-                            ret.append(new Pair<>(true, i), list.get(i));
-                        }
+                SimpleList<ItemStack> list = getResultItems(map.get(i));
+                for (ItemStack stack : list.get()) {
+                    if ((inventory.getItem(i).sameItem(stack) && inventory.getItem(i).getCount() < 64) || (inventory.getItem(i).getItem() == Items.AIR) || inventory.getItem(i).getStack() == ItemStack.EMPTY) {
+                        ret.append(new Pair<>(true, i), list.get(i));
                     }
                 }
+
             }
         }
         return ret;
