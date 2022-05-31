@@ -81,7 +81,7 @@ public class EnergyItem extends Item {
 
     @Override
     public int getRGBDurabilityForDisplay(ItemStack stack) {
-        return MathHelper.hsvToRgb((1 + getChargeRatio(stack)) / 3.0F, 1.0F, 1.0F);
+        return MathHelper.hsvToRgb(Math.max(0,getChargeRatio(stack) / 2.0F), 1.0F, 1.0F);
     }
 
     public boolean isChargable(){
