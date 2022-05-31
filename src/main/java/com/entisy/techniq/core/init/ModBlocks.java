@@ -180,21 +180,21 @@ public class ModBlocks {
         return ret;
     }
 
-    public static SimpleList<ComplexMachineBlock> getComplexBlocks() {
-        SimpleList<ComplexMachineBlock> ret = new SimpleList<>();
+    public static SimpleList<ComplexBlock> getComplexBlocks() {
+        SimpleList<ComplexBlock> ret = new SimpleList<>();
         BLOCKS.getEntries().forEach(b -> {
-            if (b.get() instanceof ComplexMachineBlock) {
-                ret.append((ComplexMachineBlock) b.get());
+            if (b.get() instanceof ComplexBlock) {
+                ret.append((ComplexBlock) b.get());
             }
         });
         return ret;
     }
 
-    public static SimpleList<SemiComplexMachineBlock> getSemiComplexBlocks() {
-        SimpleList<SemiComplexMachineBlock> ret = new SimpleList<>();
+    public static SimpleList<SemiComplexBlock> getSemiComplexBlocks() {
+        SimpleList<SemiComplexBlock> ret = new SimpleList<>();
         BLOCKS.getEntries().forEach(b -> {
-            if (b.get() instanceof SemiComplexMachineBlock) {
-                ret.append((SemiComplexMachineBlock) b.get());
+            if (b.get() instanceof SemiComplexBlock) {
+                ret.append((SemiComplexBlock) b.get());
             }
         });
         return ret;
