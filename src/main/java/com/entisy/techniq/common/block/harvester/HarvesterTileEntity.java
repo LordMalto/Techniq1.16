@@ -117,14 +117,11 @@ public class HarvesterTileEntity extends MachineTileEntity implements ITickableT
     private SimpleList<BlockPos> getHarvestableBlocks() {
         SimpleList<BlockPos> ret = new SimpleList<>();
         for (BlockPos pos : getBlocksInRange().list()) {
-            System.out.println(1);
             Block block = getLevel().getBlockState(pos).getBlock();
+            System.out.println(block instanceof CropsBlock);
             if (block instanceof CropsBlock) {
-                System.out.println(2);
                 if (((CropsBlock) block).isMaxAge(block.defaultBlockState())) {
-                    System.out.println(3);
                     ret.append(pos);
-
                 }
             }
 
@@ -135,7 +132,6 @@ public class HarvesterTileEntity extends MachineTileEntity implements ITickableT
     private SimpleList<BlockPos> getBlocksInRange() {
         SimpleList<BlockPos> ret = new SimpleList<>();
         BlockPos harvester = getBlockPos();
-        System.out.println(radius);
         for (int x = -radius; x < radius+1; x++) {
             for (int z = -radius; z < radius+1; z++) {
                 ret.append(harvester.offset(x, 0, z));
@@ -143,8 +139,6 @@ public class HarvesterTileEntity extends MachineTileEntity implements ITickableT
         }
         return ret;
     }
-
-    //TODO: getResultItem(Block block)
 
     private SimpleMap<Pair<Boolean, Integer>, ItemStack> tryMoveStack(int slots) {
         SimpleList<BlockPos> map = getHarvestableBlocks();
