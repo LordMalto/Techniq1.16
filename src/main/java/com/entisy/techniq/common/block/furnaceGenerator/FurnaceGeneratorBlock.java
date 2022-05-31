@@ -1,6 +1,6 @@
 package com.entisy.techniq.common.block.furnaceGenerator;
 
-import com.entisy.techniq.common.block.MachineBlock;
+import com.entisy.techniq.common.block.ComplexMachineBlock;
 import com.entisy.techniq.core.init.ModTileEntityTypes;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.LivingEntity;
@@ -17,7 +17,7 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 
-public class FurnaceGeneratorBlock extends MachineBlock
+public class FurnaceGeneratorBlock extends ComplexMachineBlock
 {
 
     public FurnaceGeneratorBlock() {

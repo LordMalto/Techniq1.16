@@ -112,45 +112,6 @@ public class AlloySmelterContainer extends Container {
         return itemstack;
     }
 
-//    @Override
-//    public ItemStack quickMoveStack(PlayerEntity player, int index) {
-//        ItemStack itemstack = ItemStack.EMPTY;
-//        Slot slot = this.slots.get(index);
-//        if (slot != null && slot.hasItem()) {
-//            ItemStack itemstack1 = slot.getItem();
-//            itemstack = itemstack1.copy();
-//            if (index == 2) {
-//                if (!this.moveItemStackTo(itemstack1, 3, 39, true)) {
-//                    return ItemStack.EMPTY;
-//                }
-//                slot.onQuickCraft(itemstack1, itemstack);
-//            } else if (index != 1 && index != 0) {
-//                if (!this.moveItemStackTo(itemstack1, 0, 1, false)) {
-//                    return ItemStack.EMPTY;
-//                }
-//                else if (index < 30) {
-//                    if (!this.moveItemStackTo(itemstack1, 30, 39, false)) {
-//                        return ItemStack.EMPTY;
-//                    }
-//                } else if (index < 39 && !this.moveItemStackTo(itemstack1, 3, 30, false)) {
-//                    return ItemStack.EMPTY;
-//                }
-//            } else if (!this.moveItemStackTo(itemstack1, 3, 39, false)) {
-//                return ItemStack.EMPTY;
-//            }
-//            if (itemstack1.isEmpty()) {
-//                slot.set(ItemStack.EMPTY);
-//            } else {
-//                slot.setChanged();
-//            }
-//            if (itemstack1.getCount() == itemstack.getCount()) {
-//                return ItemStack.EMPTY;
-//            }
-//            slot.onTake(player, itemstack1);
-//        }
-//        return itemstack;
-//    }
-
     @OnlyIn(Dist.CLIENT)
     public int getSmeltProgressionScaled() {
         return currentSmeltTime.get() != 0 && tileEntity.getMaxSmeltTime() != 0 ? currentSmeltTime.get() * 24 / tileEntity.getMaxSmeltTime() : 0;

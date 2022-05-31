@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:block/orientable_with_bottom",
+  "textures": {
+    "side": "techniq:block/refinery/side",
+    "front": "techniq:block/refinery/front",
+    "bottom": "techniq:block/refinery/bottom",
+    "top": "techniq:block/refinery/top"
+  }
+}

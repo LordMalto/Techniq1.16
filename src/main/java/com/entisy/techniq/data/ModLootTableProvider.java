@@ -46,40 +46,7 @@ public class ModLootTableProvider extends LootTableProvider
         @Override
         protected void addTables()
         {
-            dropSelf(ModBlocks.COPPER_BLOCK.get());
-            dropSelf(ModBlocks.COPPER_ORE.get());
-            dropSelf(ModBlocks.NETHER_COPPER_ORE.get());
-            dropSelf(ModBlocks.END_COPPER_ORE.get());
-            dropSelf(ModBlocks.NETHER_IRON_ORE.get());
-            dropSelf(ModBlocks.END_IRON_ORE.get());
-            dropSelf(ModBlocks.NETHER_COAL_ORE.get());
-            dropSelf(ModBlocks.END_COAL_ORE.get());
-            dropSelf(ModBlocks.QUARTZ_ORE.get());
-            dropSelf(ModBlocks.END_QUARTZ_ORE.get());
-            dropSelf(ModBlocks.NETHER_GOLD_ORE.get());
-            dropSelf(ModBlocks.END_GOLD_ORE.get());
-            dropSelf(ModBlocks.NETHER_REDSTONE_ORE.get());
-            dropSelf(ModBlocks.END_REDSTONE_ORE.get());
-            dropSelf(ModBlocks.NETHER_EMERALD_ORE.get());
-            dropSelf(ModBlocks.END_EMERALD_ORE.get());
-            dropSelf(ModBlocks.NETHER_DIAMOND_ORE.get());
-            dropSelf(ModBlocks.END_DIAMOND_ORE.get());
-            dropSelf(ModBlocks.NETHER_LAPIS_ORE.get());
-            dropSelf(ModBlocks.END_LAPIS_ORE.get());
-            dropSelf(ModBlocks.ELECTRICAL_FURNACE.get());
-            dropSelf(ModBlocks.METAL_PRESS.get());
-            dropSelf(ModBlocks.ALLOY_SMELTER.get());
-//            dropSelf(ModBlocks.BLOCK_BREAKER.get());
-//            dropSelf(ModBlocks.DISPLAY_CASE.get());
-            dropSelf(ModBlocks.CABLE.get());
-            dropSelf(ModBlocks.ITEM_CABLE.get());
-            dropSelf(ModBlocks.FLUID_CABLE.get());
-            dropSelf(ModBlocks.STEEL_BLOCK.get());
-            dropSelf(ModBlocks.BATTERY.get());
-            dropSelf(ModBlocks.FURNACE_GENERATOR.get());
-
-            //dropOther(ModBlocks.MACHINE_BLOCK.get(), ModItems.RUBY.get());
-
+            ModBlocks.getBlocks().forEach(b -> dropSelf(b));
         }
 
         @Override

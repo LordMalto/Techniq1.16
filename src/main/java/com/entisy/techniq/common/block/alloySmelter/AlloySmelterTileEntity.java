@@ -3,8 +3,9 @@ package com.entisy.techniq.common.block.alloySmelter;
 import com.entisy.techniq.Techniq;
 import com.entisy.techniq.common.block.alloySmelter.recipe.AlloySmelterRecipe;
 import com.entisy.techniq.common.block.MachineTileEntity;
-import com.entisy.techniq.core.energy.EnergyStorageImpl;
-import com.entisy.techniq.core.init.ModRecipe;
+import com.entisy.techniq.core.capabilities.energy.EnergyStorageImpl;
+import com.entisy.techniq.core.capabilities.energy.IEnergyHandler;
+import com.entisy.techniq.core.init.ModRecipes;
 import com.entisy.techniq.core.init.ModTileEntityTypes;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -23,7 +24,7 @@ import net.minecraftforge.items.wrapper.RecipeWrapper;
 import javax.annotation.Nullable;
 import java.util.Set;
 
-public class AlloySmelterTileEntity extends MachineTileEntity implements ITickableTileEntity, INamedContainerProvider {
+public class AlloySmelterTileEntity extends MachineTileEntity implements ITickableTileEntity, INamedContainerProvider, IEnergyHandler {
 
     public AlloySmelterTileEntity(TileEntityType<?> type) {
         super(3, 200, 0, type);
@@ -103,7 +104,7 @@ public class AlloySmelterTileEntity extends MachineTileEntity implements ITickab
             return null;
         }
 
-        Set<IRecipe<?>> recipes = findRecipesByType(ModRecipe.ALLOY_SMELTER_TYPE, level);
+        Set<IRecipe<?>> recipes = findRecipesByType(ModRecipes.ALLOY_SMELTER_TYPE, level);
         for (IRecipe<?> iRecipe : recipes) {
             AlloySmelterRecipe recipe = (AlloySmelterRecipe) iRecipe;
             if (recipe.matches(new RecipeWrapper(inventory), level)) {
@@ -120,5 +121,10 @@ public class AlloySmelterTileEntity extends MachineTileEntity implements ITickab
 
     public AlloySmelterRecipe getRecipe() {
         return getRecipe(getInventory().getItem(0)) != null ? getRecipe(getInventory().getItem(0)) : getRecipe(getInventory().getItem(1));
+    }
+
+    @Override
+    public EnergyStorageImpl getEnergyImpl() {
+        return energyStorage;
     }
 }

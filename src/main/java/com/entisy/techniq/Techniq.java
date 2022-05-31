@@ -1,21 +1,9 @@
 package com.entisy.techniq;
 
-import com.entisy.techniq.core.init.ModBlocks;
-import com.entisy.techniq.core.init.ModContainerTypes;
-import com.entisy.techniq.core.init.ModFeatures;
-import com.entisy.techniq.core.init.ModItems;
-import com.entisy.techniq.core.init.ModRecipe;
-import com.entisy.techniq.core.init.ModTileEntityTypes;
-import com.entisy.techniq.core.tab.TechniqTab;
-
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item;
+import com.entisy.techniq.core.init.*;
+import net.minecraft.fluid.Fluid;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -24,26 +12,19 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 @Mod.EventBusSubscriber(modid = Techniq.MOD_ID, bus = Bus.MOD)
 public class Techniq {
 
-	public static final String MOD_ID = "techniq";
+    public static final String MOD_ID = "techniq";
 
-	public Techniq() {
-		IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
+    public Techniq() {
+        IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
 
-		ModItems.ITEMS.register(bus);
-		ModBlocks.BLOCKS.register(bus);
-		ModTileEntityTypes.TILE_ENTITY_TYPES.register(bus);
-		ModContainerTypes.CONTAINER_TYPES.register(bus);
-		ModRecipe.RECIPE_SERIALIZERS.register(bus);
-		
-		MinecraftForge.EVENT_BUS.addListener(EventPriority.HIGH, ModFeatures::addOres);
-		MinecraftForge.EVENT_BUS.register(this);
-	}
+        ModBlocks.BLOCKS.register(bus);
+        ModItems.ITEMS.register(bus);
+        ModTileEntityTypes.TILE_ENTITY_TYPES.register(bus);
+        ModContainerTypes.CONTAINER_TYPES.register(bus);
+        ModRecipes.RECIPE_SERIALIZERS.register(bus);
 
-	@SubscribeEvent
-	public static void onRegisterItems(final RegistryEvent.Register<Item> event) {
-		ModBlocks.BLOCKS.getEntries().stream().map(RegistryObject::get).forEach(block -> {
-			event.getRegistry().register(new BlockItem(block, new Item.Properties().tab(TechniqTab.TECHNIQ_TAB))
-					.setRegistryName(block.getRegistryName()));
-		});
-	}
+        bus.addGenericListener(Fluid.class, ModFluids::registerFluids);
+
+        MinecraftForge.EVENT_BUS.register(this);
+    }
 }

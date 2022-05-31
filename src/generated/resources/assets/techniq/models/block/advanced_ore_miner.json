@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:block/orientable_with_bottom",
+  "textures": {
+    "side": "techniq:block/advanced_ore_miner/side",
+    "front": "techniq:block/advanced_ore_miner/side",
+    "bottom": "techniq:block/advanced_ore_miner/bottom",
+    "top": "techniq:block/advanced_ore_miner/top"
+  }
+}

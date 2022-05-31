@@ -1,6 +1,7 @@
 package com.entisy.techniq.common.block.battery;
 
-import com.entisy.techniq.common.block.MachineBlock;
+import com.entisy.techniq.common.block.ComplexMachineBlock;
+import com.entisy.techniq.common.block.SemiComplexMachineBlock;
 import com.entisy.techniq.core.init.ModTileEntityTypes;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.LivingEntity;
@@ -16,7 +17,7 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 
-public class BatteryBlock extends MachineBlock {
+public class BatteryBlock extends SemiComplexMachineBlock {
 
     public BatteryBlock() {
         registerDefaultState(stateDefinition.any().setValue(FACING, Direction.NORTH));

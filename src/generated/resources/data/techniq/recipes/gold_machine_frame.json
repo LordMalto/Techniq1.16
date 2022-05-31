@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "PRP",
+    "R R",
+    "PRP"
+  ],
+  "key": {
+    "R": {
+      "item": "techniq:gold_rod"
+    },
+    "P": {
+      "item": "techniq:gold_plate"
+    }
+  },
+  "result": {
+    "item": "techniq:gold_machine_frame"
+  }
+}

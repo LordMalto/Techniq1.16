@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "  P",
+    " R ",
+    "H  "
+  ],
+  "key": {
+    "P": {
+      "item": "techniq:plastic"
+    },
+    "R": {
+      "item": "minecraft:redstone"
+    },
+    "H": {
+      "item": "techniq:drill_head"
+    }
+  },
+  "result": {
+    "item": "techniq:drill"
+  }
+}

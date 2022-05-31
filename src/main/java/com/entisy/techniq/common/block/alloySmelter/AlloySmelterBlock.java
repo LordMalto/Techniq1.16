@@ -1,6 +1,6 @@
 package com.entisy.techniq.common.block.alloySmelter;
 
-import com.entisy.techniq.common.block.MachineBlock;
+import com.entisy.techniq.common.block.ComplexMachineBlock;
 import com.entisy.techniq.core.init.ModTileEntityTypes;
 
 import net.minecraft.block.BlockState;
@@ -20,7 +20,7 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 
-public class AlloySmelterBlock extends MachineBlock {
+public class AlloySmelterBlock extends ComplexMachineBlock {
 
 	public AlloySmelterBlock() {
 		registerDefaultState(stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(LIT, false));

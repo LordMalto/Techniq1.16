@@ -13,7 +13,7 @@
       "item": "minecraft:iron_ingot"
     },
     "M": {
-      "item": "techniq:machine_frame"
+      "item": "techniq:basic_machine_frame"
     }
   },
   "result": {

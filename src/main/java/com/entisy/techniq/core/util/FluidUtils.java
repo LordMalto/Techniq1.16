@@ -1,88 +1,90 @@
 package com.entisy.techniq.core.util;
 
-import com.entisy.techniq.core.energy.IEnergyHandler;
+import com.entisy.techniq.core.capabilities.fluid.CapabilityFluid;
+import com.entisy.techniq.core.capabilities.fluid.FluidStorage;
+import com.entisy.techniq.core.capabilities.fluid.IFluidHandler;
+import com.entisy.techniq.core.capabilities.fluid.IFluidStorage;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorldReader;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
-import net.minecraftforge.energy.CapabilityEnergy;
-import net.minecraftforge.energy.EnergyStorage;
-import net.minecraftforge.energy.IEnergyStorage;
 
 import javax.annotation.Nullable;
 
 public class FluidUtils {
-    private FluidUtils() {throw new IllegalAccessError("Utility class");}
+    private FluidUtils() {
+        throw new IllegalAccessError("Utility class");
+    }
 
-    public static void trySendToNeighbors(IBlockReader world, BlockPos pos, IEnergyHandler energyHandler, int maxSend) {
+    public static void trySendToNeighbors(IBlockReader world, BlockPos pos, IFluidHandler fluidHandler, int maxSend) {
         for (Direction side : Direction.values()) {
-            if (energyHandler.getEnergyStored() == 0) {
+            if (fluidHandler.getFluidStored() == 0) {
                 return;
             }
-            trySendTo(world, pos, energyHandler, maxSend, side);
+            trySendTo(world, pos, fluidHandler, maxSend, side);
         }
     }
 
-    public static void trySendTo(IBlockReader world, BlockPos pos, IEnergyHandler energyHandler, int maxSend, Direction side) {
+    public static void trySendTo(IBlockReader world, BlockPos pos, IFluidHandler fluidHandler, int maxSend, Direction side) {
         TileEntity tileEntity = world.getBlockEntity(pos.relative(side));
         if (tileEntity != null) {
-            IEnergyStorage energy = energyHandler.getEnergy(side).orElse(new EnergyStorage(0));
-            tileEntity.getCapability(CapabilityEnergy.ENERGY, side.getOpposite()).ifPresent(other -> trySendEnergy(maxSend, energy, other));
+            IFluidStorage fluid = fluidHandler.getFluid(side).orElse(new FluidStorage(0));
+            tileEntity.getCapability(CapabilityFluid.FLUID, side.getOpposite()).ifPresent(other -> trySendFluid(maxSend, fluid, other));
         }
     }
 
-    private static void trySendEnergy(int maxSend, IEnergyStorage energy, IEnergyStorage other) {
+    private static void trySendFluid(int maxSend, IFluidStorage fluid, IFluidStorage other) {
         if (other.canReceive()) {
-            int toSend = energy.extractEnergy(maxSend, true);
-            int sent = other.receiveEnergy(toSend, false);
+            int toSend = fluid.extractFluid(maxSend, true);
+            int sent = other.receiveFluid(toSend, false);
             if (sent > 0) {
-                energy.extractEnergy(sent, false);
+                fluid.extractFluid(sent, false);
             }
         }
     }
 
     /**
-     * Gets the energy capability for the block at the given position. If it does not have an energy
+     * Gets the fluid capability for the block at the given position. If it does not have an fluid
      * capability, or the block is not a tile entity, this returns null.
      *
      * @param world The world
      * @param pos   The position to check
-     * @return The energy capability, or null if not present
+     * @return The fluid capability, or null if not present
      */
     @SuppressWarnings("ConstantConditions")
     @Nullable
-    public static IEnergyStorage getEnergy(IWorldReader world, BlockPos pos) {
+    public static IFluidStorage getFluid(IWorldReader world, BlockPos pos) {
         if (!world.isAreaLoaded(pos, 1)) return null;
         TileEntity tileEntity = world.getBlockEntity(pos);
-        return tileEntity != null ? tileEntity.getCapability(CapabilityEnergy.ENERGY).orElse(null) : null;
+        return tileEntity != null ? tileEntity.getCapability(CapabilityFluid.FLUID).orElse(null) : null;
     }
 
     /**
-     * Gets the energy capability of the object (item, etc), or null if it does not have one.
+     * Gets the fluid capability of the object (item, etc), or null if it does not have one.
      *
      * @param provider The capability provider
-     * @return The energy capability, or null if not present
+     * @return The fluid capability, or null if not present
      */
     @SuppressWarnings("ConstantConditions")
     @Nullable
-    public static IEnergyStorage getEnergy(ICapabilityProvider provider) {
-        return provider.getCapability(CapabilityEnergy.ENERGY).orElse(null);
+    public static IFluidStorage getFluid(ICapabilityProvider provider) {
+        return provider.getCapability(CapabilityFluid.FLUID).orElse(null);
     }
 
     /**
-     * Gets the energy capability of the object (item, etc), or null if it does not have one. Tries
+     * Gets the fluid capability of the object (item, etc), or null if it does not have one. Tries
      * to get the capability for the given side first, then null side.
      *
      * @param provider The capability provider
      * @param side     The side being accessed
-     * @return The energy capability, or null if not present
+     * @return The fluid capability, or null if not present
      */
     @SuppressWarnings("ConstantConditions")
     @Nullable
-    public static IEnergyStorage getEnergyFromSideOrNull(ICapabilityProvider provider, Direction side) {
-        return provider.getCapability(CapabilityEnergy.ENERGY, side).orElse(provider.getCapability(CapabilityEnergy.ENERGY).orElse(null));
+    public static IFluidStorage getFluidFromSideOrNull(ICapabilityProvider provider, Direction side) {
+        return provider.getCapability(CapabilityFluid.FLUID, side).orElse(provider.getCapability(CapabilityFluid.FLUID).orElse(null));
     }
 
 }

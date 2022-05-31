@@ -48,7 +48,18 @@ public class ModItemTagsProvider extends ItemTagsProvider
         tag(ModTags.Items.RODS_COPPER).add(ModItems.COPPER_ROD.get());
         tag(ModTags.Items.RODS_IRON).add(ModItems.IRON_ROD.get());
         tag(ModTags.Items.RODS_STEEL).add(ModItems.STEEL_ROD.get());
+        tag(ModTags.Items.RODS_GOLD).add(ModItems.GOLD_ROD.get());
+        tag(ModTags.Items.RODS_DIAMOND).add(ModItems.DIAMOND_ROD.get());
         tag(ModTags.Items.PLATES_STEEL).add(ModItems.STEEL_PLATE.get());
         tag(ModTags.Items.INGOTS_STEEL).add(ModItems.STEEL_INGOT.get());
+        tag(ModTags.Items.BUCKETS_OIL).add(ModItems.OIL_BUCKET.get());
+
+        tag(ModTags.Items.POWDER).add(ModItems.COAL_POWDER.get());
+        tag(ModTags.Items.POWDER).add(ModItems.QUARTZ_POWDER.get());
+        tag(ModTags.Items.POWDER).add(ModItems.GOLD_POWDER.get());
+        tag(ModTags.Items.POWDER).add(ModItems.EMERALD_POWDER.get());
+        tag(ModTags.Items.POWDER).add(ModItems.LAPIS_POWDER.get());
+        tag(ModTags.Items.POWDER).add(ModItems.DIAMOND_POWDER.get());
+        tag(ModTags.Items.POWDER).add(ModItems.IRON_POWDER.get());
     }
 }

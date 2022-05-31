@@ -6,7 +6,7 @@ import java.util.function.Consumer;
 import javax.annotation.Nullable;
 
 import com.entisy.techniq.Techniq;
-import com.entisy.techniq.core.init.ModRecipe;
+import com.entisy.techniq.core.init.ModRecipes;
 import com.google.common.collect.Lists;
 import com.google.gson.JsonObject;
 
@@ -167,7 +167,7 @@ public class ElectricalFurnaceRecipeBuilder {
 		}
 
 		public IRecipeSerializer<?> getType() {
-			return ModRecipe.ELECTRICAL_FURNACE_RECIPE_SERIALIZER;
+			return ModRecipes.ELECTRICAL_FURNACE_RECIPE_SERIALIZER;
 		}
 
 		public ResourceLocation getId() {

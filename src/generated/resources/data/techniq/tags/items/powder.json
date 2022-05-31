@@ -1,0 +1,12 @@
+{
+  "replace": false,
+  "values": [
+    "techniq:coal_powder",
+    "techniq:quartz_powder",
+    "techniq:gold_powder",
+    "techniq:emerald_powder",
+    "techniq:lapis_powder",
+    "techniq:diamond_powder",
+    "techniq:iron_powder"
+  ]
+}

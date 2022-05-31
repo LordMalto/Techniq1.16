@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "techniq:copper_block"
+    }
+  ],
+  "result": {
+    "item": "techniq:test_item"
+  }
+}

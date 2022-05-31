@@ -1,6 +1,6 @@
 package com.entisy.techniq.common.block.metalPress.recipe;
 
-import com.entisy.techniq.core.init.ModRecipe;
+import com.entisy.techniq.core.init.ModRecipes;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipeSerializer;
@@ -24,6 +24,10 @@ public class MetalPressRecipe implements IMetalPressRecipe {
 		this.output = output;
 		this.requiredEnergy = requiredEnergy;
 		this.smeltTime = smeltTime;
+	}
+
+	public double getSmeltTimeInSeconds() {
+		return (float) getSmeltTime() / 20;
 	}
 
 	public int getRequiredEnergy() {
@@ -54,7 +58,7 @@ public class MetalPressRecipe implements IMetalPressRecipe {
 
 	@Override
 	public IRecipeSerializer<?> getSerializer() {
-		return ModRecipe.METAL_PRESS_SERIALIZER.get();
+		return ModRecipes.METAL_PRESS_SERIALIZER.get();
 	}
 
 	@Override

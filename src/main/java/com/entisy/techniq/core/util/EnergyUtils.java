@@ -1,6 +1,6 @@
 package com.entisy.techniq.core.util;
 
-import com.entisy.techniq.core.energy.IEnergyHandler;
+import com.entisy.techniq.core.capabilities.energy.IEnergyHandler;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;

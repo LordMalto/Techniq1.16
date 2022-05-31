@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:block/orientable_with_bottom",
+  "textures": {
+    "side": "techniq:block/block_placer/side",
+    "front": "techniq:block/block_placer/front",
+    "bottom": "techniq:block/block_placer/bottom",
+    "top": "techniq:block/block_placer/top"
+  }
+}

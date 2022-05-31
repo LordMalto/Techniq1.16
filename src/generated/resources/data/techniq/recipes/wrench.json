@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "I I",
+    " R ",
+    " R "
+  ],
+  "key": {
+    "I": {
+      "item": "techniq:copper_ingot"
+    },
+    "R": {
+      "item": "techniq:copper_rod"
+    }
+  },
+  "result": {
+    "item": "techniq:wrench"
+  }
+}

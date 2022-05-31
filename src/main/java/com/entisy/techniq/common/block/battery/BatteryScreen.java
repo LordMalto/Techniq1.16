@@ -1,6 +1,7 @@
 package com.entisy.techniq.common.block.battery;
 
 import com.entisy.techniq.Techniq;
+import com.entisy.techniq.common.block.MachineTileEntity;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
@@ -15,7 +16,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class BatteryScreen extends ContainerScreen<BatteryContainer> {
 
     private static final ResourceLocation TEXTURE = new ResourceLocation(Techniq.MOD_ID,
-            "textures/gui/battery.png");
+            "textures/block/battery/gui.png");
 
     private final BatteryContainer container;
 
@@ -40,13 +41,13 @@ public class BatteryScreen extends ContainerScreen<BatteryContainer> {
 
         // draw energy bar
         int currentEnergy = getMenu().currentEnergy.get();
-        int pixel = currentEnergy != 0 ? currentEnergy * 50 / 25000 : 0;
+        int pixel = currentEnergy != 0 ? currentEnergy * 50 / MachineTileEntity.maxEnergy : 0;
         blit(stack, getGuiLeft() + 82, getGuiTop() + (50 - pixel) + 18, 176, (50 - pixel), 12, 50);
     }
 
     @Override
     protected void renderLabels(MatrixStack stack, int mouseX, int mouseY) {
-        font.draw(stack, title.getContents(), 8.0f, 8.0f, 4210752); // hover text
+        font.draw(stack, getMenu().tileEntity.getDisplayName().getString().replace("[", "").replace("]", ""), 8.0f, 8.0f, 4210752); // hover text
         font.draw(stack, inventory.getDisplayName().getContents(), 8.0f, 69.0f, 4210752);
     }
 

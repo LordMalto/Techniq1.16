@@ -1,6 +1,6 @@
 package com.entisy.techniq.common.block.metalPress;
 
-import com.entisy.techniq.common.block.MachineBlock;
+import com.entisy.techniq.common.block.ComplexMachineBlock;
 import com.entisy.techniq.core.init.ModTileEntityTypes;
 
 import net.minecraft.block.BlockState;
@@ -8,11 +8,11 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
@@ -20,11 +20,7 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 
-public class MetalPressBlock extends MachineBlock {
-
-	public MetalPressBlock() {
-		registerDefaultState(stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(LIT, false));
-	}
+public class MetalPressBlock extends ComplexMachineBlock {
 
 	@Override
 	public boolean hasTileEntity(BlockState state) {
