@@ -16,9 +16,6 @@ import net.minecraftforge.registries.ForgeRegistries;
 public class ModItems {
 	public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, Techniq.MOD_ID);
 
-	public static final RegistryObject<Item> TEST_ITEM = ITEMS.register("test_item",
-			() -> new TestItem());
-
 	// INGOTS
 	public static final RegistryObject<Item> COPPER_INGOT = ITEMS.register("copper_ingot",
 			() -> new Item(new Item.Properties().tab(TechniqTab.TECHNIQ_TAB)));
@@ -72,6 +69,7 @@ public class ModItems {
 			() -> new HammerItem(new Item.Properties().tab(TechniqTab.TECHNIQ_TAB)));
 	public static final RegistryObject<Item> WRENCH = ITEMS.register("wrench",
 			WrenchItem::new);
+	public static final RegistryObject<Item> TESTITEM = ITEMS.register("energy_test_item",()-> new EnergyTestItem(2000));
 
 	// OTHER
 	public static final RegistryObject<Item> DRILL = ITEMS.register("drill",

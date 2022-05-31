@@ -32,11 +32,6 @@ public class ModRecipeProvider extends RecipeProvider {
                 .unlockedBy("has_item", has(ModBlocks.COPPER_BLOCK.get()))
                 .save(consumer);
 
-        ShapelessRecipeBuilder
-                .shapeless(ModItems.TEST_ITEM.get())
-                .requires(ModBlocks.COPPER_BLOCK.get())
-                .unlockedBy("has_item", has(ModBlocks.COPPER_BLOCK.get()))
-                .save(consumer, "test_item_test");
 
         ShapelessRecipeBuilder
                 .shapeless(ModItems.STEEL_INGOT.get(), 9)

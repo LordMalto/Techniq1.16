@@ -2,11 +2,9 @@ package com.entisy.techniq.common.block.charger;
 
 import com.entisy.techniq.Techniq;
 import com.entisy.techniq.common.block.MachineTileEntity;
-import com.entisy.techniq.common.item.energy.EnergyItem;
 import com.entisy.techniq.core.capabilities.energy.EnergyStorageImpl;
 import com.entisy.techniq.core.capabilities.energy.IEnergyHandler;
 import com.entisy.techniq.core.init.ModTileEntityTypes;
-import com.entisy.techniq.core.util.EnergyUtils;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
@@ -46,16 +44,16 @@ public class ChargerTileEntity extends MachineTileEntity implements ITickableTil
                     currentEnergy = energyStorage.getEnergyStored();
                 });
                 if (currentEnergy > 0) {
-                    if (((EnergyItem) inventory.getItem(0).getItem()).isChargable()) {
-                        EnergyItem chargableItem = (EnergyItem) inventory.getItem(0).getItem();
-                        chargableItem.receiveEnergy(5, inventory.getItem(0));
-                        energy.ifPresent(iEnergyStorage -> {
-                            energyStorage.setEnergyDirectly(energyStorage.getEnergyStored() - 5);
-                            currentEnergy = energyStorage.getEnergyStored();
-                        });
-                        level.setBlockAndUpdate(getBlockPos(), getBlockState());
-                        dirty = true;
-                    }
+//                    if (((EnergyItem) inventory.getItem(0).getItem()).isChargable()) {
+//                        EnergyItem chargableItem = (EnergyItem) inventory.getItem(0).getItem();
+//                        chargableItem.receiveEnergy(5, inventory.getItem(0));
+//                        energy.ifPresent(iEnergyStorage -> {
+//                            energyStorage.setEnergyDirectly(energyStorage.getEnergyStored() - 5);
+//                            currentEnergy = energyStorage.getEnergyStored();
+//                        });
+//                        level.setBlockAndUpdate(getBlockPos(), getBlockState());
+//                        dirty = true;
+//                    }
                 } else {
                     level.setBlockAndUpdate(getBlockPos(), getBlockState());
                     dirty = true;

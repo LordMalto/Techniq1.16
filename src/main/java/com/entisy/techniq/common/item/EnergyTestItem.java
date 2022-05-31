@@ -6,20 +6,21 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.world.World;
+import net.minecraftforge.energy.CapabilityEnergy;
 
-public class TestItem extends EnergyItem {
+public class EnergyTestItem extends EnergyItem {
 
-    public TestItem() {
-        super(100);
+    public EnergyTestItem(int maxEnergy) {
+        super(maxEnergy, 10, 0);
     }
 
     @Override
     public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
-        ItemStack stack = player.getItemInHand(hand).copy();
 
-        receiveEnergy(10, stack);
-        System.out.println(currentEnergy);
-        return ActionResult.consume(stack);
+        ItemStack item = player.getItemInHand(hand);
+        item.getCapability(CapabilityEnergy.ENERGY).ifPresent(e -> e.receiveEnergy(5,false));
+
+        return ActionResult.success(item);
     }
 
     @Override
