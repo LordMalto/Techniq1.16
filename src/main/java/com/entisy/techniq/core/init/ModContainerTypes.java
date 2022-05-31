@@ -6,6 +6,7 @@ import com.entisy.techniq.common.block.battery.BatteryContainer;
 //import com.entisy.techniq.common.block.displayCase.DisplayCaseContainer;
 import com.entisy.techniq.common.block.blockBreaker.BlockBreakerContainer;
 import com.entisy.techniq.common.block.blockPlacer.BlockPlacerContainer;
+import com.entisy.techniq.common.block.charger.ChargerContainer;
 import com.entisy.techniq.common.block.electricalFurnace.ElectricalFurnaceContainer;
 import com.entisy.techniq.common.block.furnaceGenerator.FurnaceGeneratorContainer;
 import com.entisy.techniq.common.block.harvester.HarvesterContainer;
@@ -30,6 +31,9 @@ public class ModContainerTypes {
 
 	public static final RegistryObject<ContainerType<MetalPressContainer>> METAL_PRESS_CONTAINER_TYPE = CONTAINER_TYPES
 			.register("metal_press", () -> IForgeContainerType.create(MetalPressContainer::new));
+
+	public static final RegistryObject<ContainerType<ChargerContainer>> CHARGER_CONTAINER_TYPE = CONTAINER_TYPES
+			.register("charger", () -> IForgeContainerType.create(ChargerContainer::new));
 
 	public static final RegistryObject<ContainerType<RefineryContainer>> REFINERY_CONTAINER_TYPE = CONTAINER_TYPES
 			.register("refinery", () -> IForgeContainerType.create(RefineryContainer::new));

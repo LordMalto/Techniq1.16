@@ -1,6 +1,5 @@
 package com.entisy.techniq.common.item;
 
-import com.entisy.techniq.Techniq;
 import com.entisy.techniq.api.IWrenchable;
 import com.entisy.techniq.core.tab.TechniqTab;
 import net.minecraft.block.BlockState;

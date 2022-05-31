@@ -1,5 +1,7 @@
-package com.entisy.techniq.common.item;
+package com.entisy.techniq.common.item.energy;
 
+import com.entisy.techniq.core.init.ModTileEntityTypes;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
@@ -11,8 +13,8 @@ import javax.annotation.Nullable;
 
 public class EnergyItemBase implements IEnergyStorage, ICapabilityProvider {
 
-    private final EnergyItemBase instance;
-    private final LazyOptional<IEnergyStorage> energyStorageLazyOptional;
+    private EnergyItemBase instance;
+    private LazyOptional<IEnergyStorage> energyStorageLazyOptional;
     public int energy;
     public int capacity = 0, maxReceive = 0, maxExtract = 0;
 

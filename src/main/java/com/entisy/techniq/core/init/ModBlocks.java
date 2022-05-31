@@ -9,6 +9,7 @@ import com.entisy.techniq.common.block.blockPlacer.BlockPlacerBlock;
 import com.entisy.techniq.common.block.cable.energyCable.EnergyCableBlock;
 import com.entisy.techniq.common.block.cable.fluidCable.FluidCableBlock;
 import com.entisy.techniq.common.block.cable.itemCable.ItemCableBlock;
+import com.entisy.techniq.common.block.charger.ChargerBlock;
 import com.entisy.techniq.common.block.electricalFurnace.ElectricalFurnaceBlock;
 import com.entisy.techniq.common.block.furnaceGenerator.FurnaceGeneratorBlock;
 import com.entisy.techniq.common.block.harvester.HarvesterBlock;
@@ -110,6 +111,9 @@ public class ModBlocks {
     public static final RegistryObject<ComplexMachineBlock> BLOCK_BREAKER = register("block_breaker",
             () -> new BlockBreakerBlock());
 
+    public static final RegistryObject<SimpleMachineBlock> CHARGER = register("charger",
+            () -> new ChargerBlock());
+
     public static final RegistryObject<ComplexMachineBlock> BLOCK_PLACER = register("block_placer",
             () -> new BlockPlacerBlock());
 
@@ -139,7 +143,6 @@ public class ModBlocks {
 
     public static final RegistryObject<SemiComplexMachineBlock> ADVANCED_ORE_MINER = register("advanced_ore_miner",
             () -> new AdvancedOreMinerBlock());
-
 
 
     public static final RegistryObject<SimpleBlock> RAINBOW_WOOL = register("rainbow_wool",

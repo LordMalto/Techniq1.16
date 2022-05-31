@@ -6,16 +6,16 @@ import com.entisy.techniq.common.block.battery.BatteryTileEntity;
 import com.entisy.techniq.common.block.blockBreaker.BlockBreakerTileEntity;
 import com.entisy.techniq.common.block.blockPlacer.BlockPlacerTileEntity;
 import com.entisy.techniq.common.block.cable.energyCable.EnergyCableTileEntity;
-import com.entisy.techniq.common.block.electricalFurnace.ElectricalFurnaceTileEntity;
 import com.entisy.techniq.common.block.cable.fluidCable.FluidCableTileEntity;
-import com.entisy.techniq.common.block.furnaceGenerator.FurnaceGeneratorTileEntity;
 import com.entisy.techniq.common.block.cable.itemCable.ItemCableTileEntity;
+import com.entisy.techniq.common.block.charger.ChargerTileEntity;
+import com.entisy.techniq.common.block.electricalFurnace.ElectricalFurnaceTileEntity;
+import com.entisy.techniq.common.block.furnaceGenerator.FurnaceGeneratorTileEntity;
 import com.entisy.techniq.common.block.harvester.HarvesterTileEntity;
 import com.entisy.techniq.common.block.metalPress.MetalPressTileEntity;
 import com.entisy.techniq.common.block.oreMiner.advancedOreMiner.AdvancedOreMinerTileEntity;
 import com.entisy.techniq.common.block.oreMiner.simpleOreMiner.SimpleOreMinerTileEntity;
 import com.entisy.techniq.common.block.refinery.RefineryTileEntity;
-import com.entisy.techniq.common.item.TestItem;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
@@ -26,9 +26,9 @@ public class ModTileEntityTypes {
     public static final DeferredRegister<TileEntityType<?>> TILE_ENTITY_TYPES = DeferredRegister
             .create(ForgeRegistries.TILE_ENTITIES, Techniq.MOD_ID);
 
-	public static final RegistryObject<TileEntityType<BlockBreakerTileEntity>> BLOCK_BREAKER_TILE_ENTITY_TYPE = TILE_ENTITY_TYPES
-			.register("block_breaker", () -> TileEntityType.Builder
-					.of(BlockBreakerTileEntity::new, ModBlocks.BLOCK_BREAKER.get()).build(null));
+    public static final RegistryObject<TileEntityType<BlockBreakerTileEntity>> BLOCK_BREAKER_TILE_ENTITY_TYPE = TILE_ENTITY_TYPES
+            .register("block_breaker", () -> TileEntityType.Builder
+                    .of(BlockBreakerTileEntity::new, ModBlocks.BLOCK_BREAKER.get()).build(null));
 
     public static final RegistryObject<TileEntityType<BlockPlacerTileEntity>> BLOCK_PLACER_TILE_ENTITY_TYPE = TILE_ENTITY_TYPES
             .register("block_placer", () -> TileEntityType.Builder
@@ -81,4 +81,8 @@ public class ModTileEntityTypes {
     public static final RegistryObject<TileEntityType<AdvancedOreMinerTileEntity>> ADVANCED_ORE_MINER_TILE_ENTITY = TILE_ENTITY_TYPES
             .register("advanced_ore_miner", () -> TileEntityType.Builder
                     .of(AdvancedOreMinerTileEntity::new, ModBlocks.ADVANCED_ORE_MINER.get()).build(null));
+
+    public static final RegistryObject<TileEntityType<ChargerTileEntity>> CHARGER_TILE_ENTITY = TILE_ENTITY_TYPES
+            .register("charger", () -> TileEntityType.Builder
+                    .of(ChargerTileEntity::new, ModBlocks.CHARGER.get()).build(null));
 }

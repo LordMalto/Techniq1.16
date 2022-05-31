@@ -1,6 +1,6 @@
-package com.entisy.techniq.common.item;
+package com.entisy.techniq.common.item.energy;
 
-import com.entisy.techniq.core.capabilities.energy.EnergyStorageImpl;
+import com.entisy.techniq.common.item.energy.EnergyItemBase;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.Direction;
 import net.minecraftforge.common.util.LazyOptional;

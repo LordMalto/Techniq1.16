@@ -50,7 +50,8 @@ public class RefineryScreen extends ContainerScreen<RefineryContainer> {
 
         // draw fluid bar
         int currentFluid = getMenu().currentFluid.get();
-        int pi = currentFluid != 0 ? currentFluid * 50 / getMenu().tileEntity.getMaxFluidStored() : 0;
+        int pi = 0;
+        if (currentFluid != 0) pi = currentFluid * 50 / getMenu().tileEntity.getMaxFluidStored();
         blit(stack, getGuiLeft() + 10, getGuiTop() + (50 - pi) + 18, 188, (50 - pi), 12, 50);
 
         // draw progress bar/arrow
@@ -94,14 +95,16 @@ public class RefineryScreen extends ContainerScreen<RefineryContainer> {
             if (mouseY >= getGuiTop() + 18 && mouseY < getGuiTop() + 18 + 50) {
 
                 // rendering the amount of fluid stored e.g. 5000/25000
-                int current = getMenu().tileEntity.currentFluid;
-                this.renderTooltip(matrixStack,
+                int current = 0;
+                int currentFluid = getMenu().currentFluid.get();
+                if (getMenu().tileEntity.getMaxFluidStored() != 0) current = getMenu().tileEntity.currentFluid;
+                if (currentFluid != 0) this.renderTooltip(matrixStack,
                         new StringTextComponent(current + "/" + getMenu().tileEntity.getMaxFluidStored()), mouseX, mouseY);
             }
         }
         if (mouseX >= getGuiLeft() + 73 && mouseX < getGuiLeft() + 73 + 4) {
             if (mouseY >= getGuiTop() + 35 && mouseY < getGuiTop() + 35 + 16) {
-                // rendering the mining progression e.g. 15%
+                // rendering the refining progression e.g. 15%
                 int current = 0;
                 current = getMenu().tileEntity.currentSmeltTime * 100 / getMenu().tileEntity.getMaxWorkTime();
                 this.renderTooltip(matrixStack, new StringTextComponent(current + "%"), mouseX, mouseY);

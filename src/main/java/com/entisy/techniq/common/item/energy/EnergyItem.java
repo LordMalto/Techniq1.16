@@ -1,4 +1,4 @@
-package com.entisy.techniq.common.item;
+package com.entisy.techniq.common.item.energy;
 
 import com.entisy.techniq.core.tab.TechniqTab;
 import net.minecraft.item.Item;
@@ -9,10 +9,9 @@ import net.minecraftforge.energy.IEnergyStorage;
 
 public class EnergyItem extends Item implements IEnergyItemHandler {
 
-    private ItemStack self;
-    private int currentEnergy, capacity;
-    private LazyOptional<IEnergyStorage> energy;
-    private EnergyItemBase energyStorage;
+    public int currentEnergy, capacity;
+    public LazyOptional<IEnergyStorage> energy;
+    public EnergyItemBase energyStorage;
 
     public EnergyItem(int capacity) {
         super(new Item.Properties().tab(TechniqTab.TECHNIQ_TAB));
@@ -24,27 +23,12 @@ public class EnergyItem extends Item implements IEnergyItemHandler {
         });
     }
 
-    @Override
-    public double getDurabilityForDisplay(ItemStack stack) {
-        if (stack.hasTag()) {
-            CompoundNBT nbt = stack.getTag();
-            return ((capacity - nbt.getInt("EnergyStored")) / (double) capacity) / 2;
-        } else {
-            CompoundNBT nbt = new CompoundNBT();
-            nbt.putInt("EnergyStored", currentEnergy);
-            stack.setTag(nbt);
-            return ((capacity - currentEnergy) / (double) capacity) / 2;
-        }
-    }
-
-    public void receiveEnergy(ItemStack stack, int amount) {
-        EnergyItem item = (EnergyItem) stack.getItem();
-        item.energy.ifPresent(iEnergyStorage -> {
+    public void receiveEnergy(int amount, ItemStack stack) {
+        stack.setDamageValue(getDamage(stack) - amount);
+        energy.ifPresent(iEnergyStorage -> {
             energyStorage.setEnergy(currentEnergy + amount);
             currentEnergy = energyStorage.getEnergyStored();
         });
-        stack.setDamageValue(getDamage(stack) - amount);
-
         if (stack.hasTag()) {
             CompoundNBT nbt = stack.getTag();
             if (nbt.contains("EnergyStored")) {
@@ -60,14 +44,12 @@ public class EnergyItem extends Item implements IEnergyItemHandler {
         getDurabilityForDisplay(stack);
     }
 
-    public void extractEnergy(ItemStack stack, int amount) {
-        EnergyItem item = (EnergyItem) stack.getItem();
-        item.energy.ifPresent(iEnergyStorage -> {
+    public void extractEnergy(int amount, ItemStack stack) {
+        stack.setDamageValue(stack.getDamageValue() + amount);
+        energy.ifPresent(iEnergyStorage -> {
             energyStorage.setEnergy(currentEnergy - amount);
             currentEnergy = energyStorage.getEnergyStored();
         });
-        stack.setDamageValue(stack.getDamageValue() + amount);
-
         if (stack.hasTag()) {
             CompoundNBT nbt = stack.getTag();
             if (nbt.contains("EnergyStored")) {
@@ -85,11 +67,15 @@ public class EnergyItem extends Item implements IEnergyItemHandler {
 
     @Override
     public boolean showDurabilityBar(ItemStack stack) {
-        return true;
+        return false;
     }
 
     @Override
     public EnergyItemBase getEnergyImpl() {
         return energyStorage;
+    }
+
+    public boolean isChargable() {
+        return false;
     }
 }

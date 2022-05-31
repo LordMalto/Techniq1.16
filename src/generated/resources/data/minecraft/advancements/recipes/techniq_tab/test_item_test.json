@@ -2,7 +2,7 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "techniq:metal_press/diamond_rop_from_metal_press"
+      "minecraft:test_item_test"
     ]
   },
   "criteria": {
@@ -11,7 +11,7 @@
       "conditions": {
         "items": [
           {
-            "item": "techniq:diamond_plate"
+            "item": "techniq:copper_block"
           }
         ]
       }
@@ -19,7 +19,7 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "techniq:metal_press/diamond_rop_from_metal_press"
+        "recipe": "minecraft:test_item_test"
       }
     }
   },

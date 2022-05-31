@@ -33,6 +33,12 @@ public class ModRecipeProvider extends RecipeProvider {
                 .save(consumer);
 
         ShapelessRecipeBuilder
+                .shapeless(ModItems.TEST_ITEM.get())
+                .requires(ModBlocks.COPPER_BLOCK.get())
+                .unlockedBy("has_item", has(ModBlocks.COPPER_BLOCK.get()))
+                .save(consumer, "test_item_test");
+
+        ShapelessRecipeBuilder
                 .shapeless(ModItems.STEEL_INGOT.get(), 9)
                 .requires(ModBlocks.STEEL_BLOCK.get())
                 .unlockedBy("has_item", has(ModBlocks.STEEL_BLOCK.get()))
@@ -165,7 +171,7 @@ public class ModRecipeProvider extends RecipeProvider {
                 .requires(ModTags.Items.PLATES_STEEL)
                 .requiredEnergy(300)
                 .unlockedBy("has_item", has(ModItems.STEEL_PLATE.get()))
-                .save(consumer, "steel_rop" + mp);
+                .save(consumer, "steel_rod" + mp);
 
         MetalPressRecipeBuilder
                 .metalPress(ModItems.GOLD_ROD.get())
@@ -179,7 +185,7 @@ public class ModRecipeProvider extends RecipeProvider {
                 .requires(ModTags.Items.PLATES_DIAMOND)
                 .requiredEnergy(300)
                 .unlockedBy("has_item", has(ModItems.DIAMOND_PLATE.get()))
-                .save(consumer, "diamond_rop" + mp);
+                .save(consumer, "diamond_rod" + mp);
 
         // ELECTRICAL FURNACE
         ElectricalFurnaceRecipeBuilder
