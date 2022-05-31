@@ -29,11 +29,15 @@ public class EnergyItem extends Item {
     private final int maxReceive;
     private final int maxExtract;
 
-    public EnergyItem(int capacity) {
+    public EnergyItem(int capacity,int maxReceive,int maxExtract) {
         super(new Properties().tab(TechniqTab.TECHNIQ_TAB).stacksTo(1));
         this.capacity = capacity;
-        this.maxReceive = 1;
-        this.maxExtract = 1;
+        this.maxReceive = maxReceive;
+        this.maxExtract = maxExtract;
+    }
+
+    public EnergyItem(int capacity) {
+        this(capacity,2,2);
     }
 
     @Override

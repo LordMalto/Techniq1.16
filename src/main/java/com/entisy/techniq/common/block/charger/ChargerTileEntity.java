@@ -10,18 +10,21 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.energy.CapabilityEnergy;
+import net.minecraftforge.energy.IEnergyStorage;
 
 import javax.annotation.Nullable;
 
 public class ChargerTileEntity extends MachineTileEntity implements ITickableTileEntity, INamedContainerProvider, IEnergyHandler {
 
-    private static final int MAX_ENERGY_WORKING_TICK = 200;
+    private static final int MAX_ENERGY_WORKING_TICK = 20;
 
     public ChargerTileEntity(TileEntityType<?> type) {
         super(1, 500, 500, type);
@@ -41,34 +44,39 @@ public class ChargerTileEntity extends MachineTileEntity implements ITickableTil
     public void tick() {
         boolean dirty = false;
         if (level != null && !level.isClientSide) {
-            if(currentEnergy < maxEnergy) {
-                energy.ifPresent(iEnergyStorage -> {
-                    currentEnergy = energyStorage.getEnergyStored();
-                });
-                if (currentEnergy > 0) {
+            energy.ifPresent(iEnergyStorage -> {
+                currentEnergy = energyStorage.getEnergyStored();
+            });
+            if (currentEnergy > 0) {
+                if (isValidItem(inventory.getItem(0))) {
                     if (((EnergyItem) inventory.getItem(0).getItem()).isChargable()) {
-                        inventory.getItem(0).getCapability(CapabilityEnergy.ENERGY)
-                                .ifPresent(e -> e.receiveEnergy(1, false));
-                        energy.ifPresent(iEnergyStorage -> {
-                            energyStorage.setEnergyDirectly(energyStorage.getEnergyStored() - 1);
-                            currentEnergy = energyStorage.getEnergyStored();
-                        });
-                        level.setBlockAndUpdate(getBlockPos(), getBlockState());
-                        dirty = true;
+                        IEnergyStorage itemEnergy = inventory.getItem(0).getCapability(CapabilityEnergy.ENERGY).orElseThrow(IllegalStateException::new);
+                        if (itemEnergy.getEnergyStored() < itemEnergy.getMaxEnergyStored()) {
+                            inventory.getItem(0).getCapability(CapabilityEnergy.ENERGY)
+                                    .ifPresent(e -> e.receiveEnergy(2, false));
+                            energy.ifPresent(iEnergyStorage -> {
+                                energyStorage.setEnergyDirectly(energyStorage.getEnergyStored() - 2);
+                                currentEnergy = energyStorage.getEnergyStored();
+                            });
+                            level.setBlockAndUpdate(getBlockPos(), getBlockState());
+                            dirty = true;
+                        }
                     }
-                } else {
-                    level.setBlockAndUpdate(getBlockPos(), getBlockState());
-                    dirty = true;
                 }
             } else {
                 level.setBlockAndUpdate(getBlockPos(), getBlockState());
                 dirty = true;
             }
+
         }
         if (dirty) {
             setChanged();
             level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), Constants.BlockFlags.BLOCK_UPDATE);
         }
+    }
+
+    private boolean isValidItem(ItemStack stack){
+        return stack.getItem() != Items.AIR && !inventory.isEmpty();
     }
 
     public void setCustomName(ITextComponent name) {
