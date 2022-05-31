@@ -38,6 +38,7 @@
   "block.techniq.steel_block": "Steel Block",
   "fluid.techniq.oil": "Oil",
   "item.techniq.basic_machine_frame": "Basic Machine Frame",
+  "item.techniq.battery_item": "Battery Item",
   "item.techniq.coal_powder": "Coal Powder",
   "item.techniq.copper_ingot": "Copper Ingot",
   "item.techniq.copper_plate": "Copper Plate",
@@ -67,7 +68,6 @@
   "item.techniq.steel_ingot": "Steel Ingot",
   "item.techniq.steel_plate": "Steel Plate",
   "item.techniq.steel_rod": "Steel Rod",
-  "item.techniq.test_item": "Test Item",
   "item.techniq.wrench": "Wrench",
   "itemGroup.techniq_tab": "Techniq"
 }

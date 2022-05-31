@@ -69,7 +69,7 @@ public class ModItems {
 			() -> new HammerItem(new Item.Properties().tab(TechniqTab.TECHNIQ_TAB)));
 	public static final RegistryObject<Item> WRENCH = ITEMS.register("wrench",
 			WrenchItem::new);
-	public static final RegistryObject<Item> TESTITEM = ITEMS.register("energy_test_item",()-> new EnergyTestItem(2000));
+	public static final RegistryObject<Item> BATTERY_ITEM = ITEMS.register("battery_item",() -> new BatteryItem());
 
 	// OTHER
 	public static final RegistryObject<Item> DRILL = ITEMS.register("drill",

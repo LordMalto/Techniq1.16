@@ -25,15 +25,15 @@ import java.util.List;
 
 public class EnergyItem extends Item {
 
-    private final int maxEnergy;
+    private final int capacity;
     private final int maxReceive;
     private final int maxExtract;
 
-    public EnergyItem(int maxEnergy, int maxReceive, int maxExtract) {
+    public EnergyItem(int capacity) {
         super(new Properties().tab(TechniqTab.TECHNIQ_TAB).stacksTo(1));
-        this.maxEnergy = maxEnergy;
-        this.maxReceive = maxReceive;
-        this.maxExtract = maxExtract;
+        this.capacity = capacity;
+        this.maxReceive = 1;
+        this.maxExtract = 1;
     }
 
     @Override
@@ -58,7 +58,7 @@ public class EnergyItem extends Item {
             @Override
             public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
                 if (cap == CapabilityEnergy.ENERGY)
-                    return LazyOptional.of(() -> new ItemEnergyStorageImpl(stack, maxEnergy, maxReceive, maxExtract)).cast();
+                    return LazyOptional.of(() -> new ItemEnergyStorageImpl(stack, capacity, maxReceive, maxExtract)).cast();
                 return LazyOptional.empty();
             }
         };

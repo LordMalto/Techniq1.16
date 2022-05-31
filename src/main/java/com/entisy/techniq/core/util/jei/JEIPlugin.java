@@ -101,10 +101,9 @@ public class JEIPlugin implements IModPlugin {
         registration.addIngredientInfo(stack, ingredientType, info);
     }
 
-    //TODO
     @Override
     public void registerGuiHandlers(IGuiHandlerRegistration registration) {
-        registration.addRecipeClickArea(AlloySmelterScreen.class,0,0,28,23,AlloySmelterRecipeCategory.UID);
+        registration.addRecipeClickArea(AlloySmelterScreen.class,0,0,28,23, AlloySmelterRecipeCategory.UID);
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.entisy.techniq.common.block.charger;
 
 import com.entisy.techniq.Techniq;
 import com.entisy.techniq.common.block.MachineTileEntity;
+import com.entisy.techniq.common.item.energy.EnergyItem;
 import com.entisy.techniq.core.capabilities.energy.EnergyStorageImpl;
 import com.entisy.techniq.core.capabilities.energy.IEnergyHandler;
 import com.entisy.techniq.core.init.ModTileEntityTypes;
@@ -14,6 +15,7 @@ import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.common.util.Constants;
+import net.minecraftforge.energy.CapabilityEnergy;
 
 import javax.annotation.Nullable;
 
@@ -44,16 +46,16 @@ public class ChargerTileEntity extends MachineTileEntity implements ITickableTil
                     currentEnergy = energyStorage.getEnergyStored();
                 });
                 if (currentEnergy > 0) {
-//                    if (((EnergyItem) inventory.getItem(0).getItem()).isChargable()) {
-//                        EnergyItem chargableItem = (EnergyItem) inventory.getItem(0).getItem();
-//                        chargableItem.receiveEnergy(5, inventory.getItem(0));
-//                        energy.ifPresent(iEnergyStorage -> {
-//                            energyStorage.setEnergyDirectly(energyStorage.getEnergyStored() - 5);
-//                            currentEnergy = energyStorage.getEnergyStored();
-//                        });
-//                        level.setBlockAndUpdate(getBlockPos(), getBlockState());
-//                        dirty = true;
-//                    }
+                    if (((EnergyItem) inventory.getItem(0).getItem()).isChargable()) {
+                        inventory.getItem(0).getCapability(CapabilityEnergy.ENERGY)
+                                .ifPresent(e -> e.receiveEnergy(1, false));
+                        energy.ifPresent(iEnergyStorage -> {
+                            energyStorage.setEnergyDirectly(energyStorage.getEnergyStored() - 1);
+                            currentEnergy = energyStorage.getEnergyStored();
+                        });
+                        level.setBlockAndUpdate(getBlockPos(), getBlockState());
+                        dirty = true;
+                    }
                 } else {
                     level.setBlockAndUpdate(getBlockPos(), getBlockState());
                     dirty = true;
