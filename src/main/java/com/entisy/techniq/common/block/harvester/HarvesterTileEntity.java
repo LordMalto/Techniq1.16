@@ -28,7 +28,6 @@ public class HarvesterTileEntity extends MachineTileEntity implements ITickableT
 
     private int workTime = 20;
     private int radius = 6;
-    private Direction direction;
 
     public HarvesterTileEntity() {
         super(9, 500, 0, ModTileEntityTypes.HARVESTER_TILE_ENTITY_TYPE.get());
@@ -72,12 +71,13 @@ public class HarvesterTileEntity extends MachineTileEntity implements ITickableT
                     }
                 }
                 energy.ifPresent(iEnergyStorage -> {
-                    energyStorage.setEnergyDirectly(currentEnergy - getRequiredEnergy());
+                    energyStorage.extractEnergy(getRequiredEnergy(), false);
                     currentEnergy = energyStorage.getEnergyStored();
                 });
                 currentSmeltTime = 0;
                 level.destroyBlock(pos, false);
                 level.setBlock(pos, crop.defaultBlockState().setValue(CropsBlock.AGE, 0), 0);
+                //level.setBlockAndUpdate(pos, crop.defaultBlockState().setValue(CropsBlock.AGE, 0));
                 return true;
 
             }
@@ -86,10 +86,9 @@ public class HarvesterTileEntity extends MachineTileEntity implements ITickableT
     }
 
     private SimpleList<ItemStack> getResultItems(BlockPos pos) {
-        CropsBlock block = (CropsBlock) level.getBlockState(pos).getBlock();
         SimpleList<ItemStack> ret = new SimpleList<>();
-        CropsBlock.getDrops(block.defaultBlockState(), (ServerWorld) level, pos, this)
-                .forEach(i -> ret.append(i));
+        CropsBlock.getDrops(level.getBlockState(pos), (ServerWorld) level, pos, this)
+                .forEach(ret::append);
         return ret;
     }
 
@@ -118,9 +117,8 @@ public class HarvesterTileEntity extends MachineTileEntity implements ITickableT
         SimpleList<BlockPos> ret = new SimpleList<>();
         for (BlockPos pos : getBlocksInRange().list()) {
             Block block = getLevel().getBlockState(pos).getBlock();
-            System.out.println(block instanceof CropsBlock);
             if (block instanceof CropsBlock) {
-                if (((CropsBlock) block).isMaxAge(block.defaultBlockState())) {
+                if (((CropsBlock) block).isMaxAge(level.getBlockState(pos))) {
                     ret.append(pos);
                 }
             }
@@ -132,8 +130,8 @@ public class HarvesterTileEntity extends MachineTileEntity implements ITickableT
     private SimpleList<BlockPos> getBlocksInRange() {
         SimpleList<BlockPos> ret = new SimpleList<>();
         BlockPos harvester = getBlockPos();
-        for (int x = -radius; x < radius+1; x++) {
-            for (int z = -radius; z < radius+1; z++) {
+        for (int x = -radius; x < radius + 1; x++) {
+            for (int z = -radius; z < radius + 1; z++) {
                 ret.append(harvester.offset(x, 0, z));
             }
         }
@@ -141,14 +139,15 @@ public class HarvesterTileEntity extends MachineTileEntity implements ITickableT
     }
 
     private SimpleMap<Pair<Boolean, Integer>, ItemStack> tryMoveStack(int slots) {
-        SimpleList<BlockPos> map = getHarvestableBlocks();
+        SimpleList<BlockPos> harvestableBlocks = getHarvestableBlocks();
         SimpleMap<Pair<Boolean, Integer>, ItemStack> ret = new SimpleMap<>();
         for (int i = 0; i < slots; i++) {
-            for (int j = 0; j < map.size(); j++) {
-                SimpleList<ItemStack> list = getResultItems(map.get(i));
-                for (ItemStack stack : list.get()) {
-                    if ((inventory.getItem(i).sameItem(stack) && inventory.getItem(i).getCount() < 64) || (inventory.getItem(i).getItem() == Items.AIR) || inventory.getItem(i).getStack() == ItemStack.EMPTY) {
-                        ret.append(new Pair<>(true, i), list.get(i));
+            for (int j = 0; j < harvestableBlocks.size(); j++) {
+                System.out.println(i+","+j);
+                SimpleList<ItemStack> resultItems = getResultItems(harvestableBlocks.get(i));
+                for (ItemStack stack : resultItems.list()) {
+                    if ((inventory.getItem(i).sameItem(stack) && inventory.getItem(i).getCount() < 64) || (inventory.getItem(i).getItem() == Items.AIR) || inventory.getItem(i) == ItemStack.EMPTY) {
+                        ret.append(new Pair<>(true, i), stack);
                     }
                 }
 
