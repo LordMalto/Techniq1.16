@@ -2,7 +2,8 @@ package com.entisy.techniq.common.block.harvester;
 
 import com.entisy.techniq.Techniq;
 import com.entisy.techniq.common.block.MachineTileEntity;
-import com.entisy.techniq.common.item.upgrades.Upgrade;
+import com.entisy.techniq.common.item.upgrades.RangeUpgradeItem;
+import com.entisy.techniq.common.item.upgrades.SpeedUpgradeItem;
 import com.entisy.techniq.common.item.upgrades.UpgradeItem;
 import com.entisy.techniq.common.item.upgrades.UpgradeType;
 import com.entisy.techniq.common.slots.UpgradeSlot;
@@ -29,8 +30,8 @@ import net.minecraftforge.common.util.Constants;
 
 public class HarvesterTileEntity extends MachineTileEntity implements ITickableTileEntity, INamedContainerProvider, IEnergyHandler {
 
-    private int workTime = 20;
-    private int radius = 6;
+    private final int workTime = 20;
+    private final int radius = 6;
 
     public HarvesterTileEntity() {
         super(6, 500, 0, ModTileEntityTypes.HARVESTER_TILE_ENTITY_TYPE.get());
@@ -76,6 +77,7 @@ public class HarvesterTileEntity extends MachineTileEntity implements ITickableT
                     energyStorage.setEnergyDirectly(getEnergyStored() - getRequiredEnergy());
                     currentEnergy = energyStorage.getEnergyStored();
                 });
+
                 currentSmeltTime = 0;
                 level.destroyBlock(pos, false);
                 if (crop instanceof BeetrootBlock) {
@@ -92,8 +94,7 @@ public class HarvesterTileEntity extends MachineTileEntity implements ITickableT
 
     private SimpleList<ItemStack> getResultItems(BlockPos pos) {
         SimpleList<ItemStack> ret = new SimpleList<>();
-        CropsBlock.getDrops(level.getBlockState(pos), (ServerWorld) level, pos, this)
-                .forEach(i -> ret.append(i));
+        CropsBlock.getDrops(level.getBlockState(pos), (ServerWorld) level, pos, this).forEach(i -> ret.append(i));
         return ret;
     }
 
@@ -116,6 +117,26 @@ public class HarvesterTileEntity extends MachineTileEntity implements ITickableT
 
     private int getRequiredEnergy() {
         return 100;
+    }
+
+    private SimpleList<RangeUpgradeItem> getRangeUpgrades() {
+        SimpleList<RangeUpgradeItem> ret = new SimpleList<>();
+        getUpgrades().forEach(u -> {
+            if (u instanceof RangeUpgradeItem) {
+                ret.append((RangeUpgradeItem) u);
+            }
+        });
+        return ret;
+    }
+
+    private SimpleList<SpeedUpgradeItem> getSpeedUpgrades() {
+        SimpleList<SpeedUpgradeItem> ret = new SimpleList<>();
+        getUpgrades().forEach(u -> {
+            if (u instanceof SpeedUpgradeItem) {
+                ret.append((SpeedUpgradeItem) u);
+            }
+        });
+        return ret;
     }
 
     private SimpleList<BlockPos> getHarvestableBlocks() {
@@ -177,12 +198,7 @@ public class HarvesterTileEntity extends MachineTileEntity implements ITickableT
     }
 
     private SimpleList<UpgradeType> getAcceptableUpgradeItems() {
-        SimpleList<UpgradeType> ret = new SimpleList<>();
-        ret.append(
-                UpgradeType.RANGE,
-                UpgradeType.SPEED
-        );
-        return ret;
+        return new SimpleList<>(UpgradeType.RANGE, UpgradeType.SPEED);
     }
 
     private SimpleList<UpgradeItem> getUpgrades() {
