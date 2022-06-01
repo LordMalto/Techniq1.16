@@ -4,6 +4,7 @@ import com.entisy.techniq.common.slots.OutputSlot;
 import com.entisy.techniq.core.init.ModBlocks;
 import com.entisy.techniq.core.init.ModContainerTypes;
 import com.entisy.techniq.core.util.FunctionalIntReferenceHolder;
+import com.entisy.techniq.core.util.SimpleList;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
@@ -21,6 +22,7 @@ import java.util.Objects;
 public class HarvesterContainer extends Container {
 
     public final HarvesterTileEntity tileEntity;
+    private static SimpleList<Slot> slotList = new SimpleList<>();
     private final IWorldPosCallable canInteractWithCallable;
     public FunctionalIntReferenceHolder currentSmeltTime;
     public FunctionalIntReferenceHolder currentEnergy;
@@ -34,12 +36,12 @@ public class HarvesterContainer extends Container {
         final int startX = 8;
 
         // furnace
-        addSlot(new OutputSlot(tileEntity.getInventory(), 0, 62, 27));
-        addSlot(new OutputSlot(tileEntity.getInventory(), 1, 80, 27));
-        addSlot(new OutputSlot(tileEntity.getInventory(), 2, 98, 27));
-        addSlot(new OutputSlot(tileEntity.getInventory(), 3, 62, 45));
-        addSlot(new OutputSlot(tileEntity.getInventory(), 4, 80, 45));
-        addSlot(new OutputSlot(tileEntity.getInventory(), 5, 98, 45));
+        slotList.append(addSlot(new OutputSlot(tileEntity.getInventory(), 0, 62, 27)));
+        slotList.append(addSlot(new OutputSlot(tileEntity.getInventory(), 1, 80, 27)));
+        slotList.append(addSlot(new OutputSlot(tileEntity.getInventory(), 2, 98, 27)));
+        slotList.append(addSlot(new OutputSlot(tileEntity.getInventory(), 3, 62, 45)));
+        slotList.append(addSlot(new OutputSlot(tileEntity.getInventory(), 4, 80, 45)));
+        slotList.append(addSlot(new OutputSlot(tileEntity.getInventory(), 5, 98, 45)));
 
         // inventory
         for (int row = 0; row < 3; row++) {
@@ -120,5 +122,9 @@ public class HarvesterContainer extends Container {
 
     public LazyOptional<IEnergyStorage> getCapabilityFromTE() {
         return this.tileEntity.getCapability(CapabilityEnergy.ENERGY);
+    }
+
+    public static SimpleList<Slot> getSlots() {
+        return slotList;
     }
 }

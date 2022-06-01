@@ -2,6 +2,10 @@ package com.entisy.techniq.common.block.harvester;
 
 import com.entisy.techniq.Techniq;
 import com.entisy.techniq.common.block.MachineTileEntity;
+import com.entisy.techniq.common.item.upgrades.Upgrade;
+import com.entisy.techniq.common.item.upgrades.UpgradeItem;
+import com.entisy.techniq.common.item.upgrades.UpgradeType;
+import com.entisy.techniq.common.slots.UpgradeSlot;
 import com.entisy.techniq.core.capabilities.energy.EnergyStorageImpl;
 import com.entisy.techniq.core.capabilities.energy.IEnergyHandler;
 import com.entisy.techniq.core.init.ModTileEntityTypes;
@@ -69,12 +73,12 @@ public class HarvesterTileEntity extends MachineTileEntity implements ITickableT
                 CropsBlock crop = (CropsBlock) level.getBlockState(pos).getBlock();
                 insertDropsInInventory();
                 energy.ifPresent(iEnergyStorage -> {
-                    energyStorage.setEnergyDirectly(getEnergyStored()-getRequiredEnergy());
+                    energyStorage.setEnergyDirectly(getEnergyStored() - getRequiredEnergy());
                     currentEnergy = energyStorage.getEnergyStored();
                 });
                 currentSmeltTime = 0;
                 level.destroyBlock(pos, false);
-                if(crop instanceof BeetrootBlock){
+                if (crop instanceof BeetrootBlock) {
                     level.setBlock(pos, crop.defaultBlockState().setValue(BlockStateProperties.AGE_3, 0), 0);
                 } else {
                     level.setBlock(pos, crop.defaultBlockState().setValue(CropsBlock.AGE, 0), 0);
@@ -119,8 +123,8 @@ public class HarvesterTileEntity extends MachineTileEntity implements ITickableT
         for (BlockPos pos : getBlocksInRange().list()) {
             Block block = getLevel().getBlockState(pos).getBlock();
             if (block instanceof CropsBlock) {
-                if(block instanceof BeetrootBlock){
-                    if(((BeetrootBlock)block).isMaxAge(level.getBlockState(pos))){
+                if (block instanceof BeetrootBlock) {
+                    if (((BeetrootBlock) block).isMaxAge(level.getBlockState(pos))) {
                         ret.append(pos);
                     }
                 } else {
@@ -165,13 +169,43 @@ public class HarvesterTileEntity extends MachineTileEntity implements ITickableT
             for (int i = 0; i < slots; i++) {
                 if ((inventory.getItem(i).sameItem(stack) && inventory.getItem(i).getCount() < 64) || (inventory.getItem(i).getItem() == Items.AIR) || inventory.getItem(i) == ItemStack.EMPTY) {
                     ItemStack result = stack.copy();
-                    inventory.insertItem(i,result,false);
+                    inventory.insertItem(i, result, false);
                     break;
                 }
             }
         }
     }
 
+    private SimpleList<UpgradeType> getAcceptableUpgradeItems() {
+        SimpleList<UpgradeType> ret = new SimpleList<>();
+        ret.append(
+                UpgradeType.RANGE,
+                UpgradeType.SPEED
+        );
+        return ret;
+    }
+
+    private SimpleList<UpgradeItem> getUpgrades() {
+        SimpleList<UpgradeItem> ret = new SimpleList<>();
+        getUpgradeSlots().forEach(u -> {
+            if (u.containsUpgrade()) {
+                if (getAcceptableUpgradeItems().contains(u.getUpgradeItem().getUpgradeType())) {
+                    ret.append(u.getUpgradeItem());
+                }
+            }
+        });
+        return ret;
+    }
+
+    private SimpleList<UpgradeSlot> getUpgradeSlots() {
+        SimpleList<UpgradeSlot> ret = new SimpleList<>();
+        HarvesterContainer.getSlots().forEach(s -> {
+            if (s instanceof UpgradeSlot) {
+                ret.append((UpgradeSlot) s);
+            }
+        });
+        return ret;
+    }
 
     @Override
     public EnergyStorageImpl getEnergyImpl() {
