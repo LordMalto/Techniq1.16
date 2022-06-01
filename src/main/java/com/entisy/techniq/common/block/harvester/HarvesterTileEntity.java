@@ -46,10 +46,14 @@ public class HarvesterTileEntity extends MachineTileEntity implements ITickableT
             });
             if (currentEnergy >= getRequiredEnergy()) {
                 if (currentSmeltTime != workTime) {
-                    currentSmeltTime++;
-                    dirty = true;
+                    if (tryMoveStack()) {
+                        currentSmeltTime++;
+                        dirty = true;
+                    }
                 } else {
-                    dirty = harvest();
+                    if (tryMoveStack()) {
+                        dirty = harvest();
+                    }
                 }
             }
         }
@@ -136,6 +140,20 @@ public class HarvesterTileEntity extends MachineTileEntity implements ITickableT
         for (int x = -radius; x < radius + 1; x++) {
             for (int z = -radius; z < radius + 1; z++) {
                 ret.append(harvester.offset(x, 0, z));
+            }
+        }
+        return ret;
+    }
+
+    private boolean tryMoveStack() {
+        SimpleList<BlockPos> harvestableBlocks = getHarvestableBlocks();
+        boolean ret = false;
+        for (ItemStack stack : Block.getDrops(level.getBlockState(harvestableBlocks.get(0)), (ServerWorld) level, harvestableBlocks.get(0), this)) {
+            for (int i = 0; i < slots; i++) {
+                if ((inventory.getItem(i).sameItem(stack) && inventory.getItem(i).getCount() < 64) || (inventory.getItem(i).getItem() == Items.AIR) || inventory.getItem(i) == ItemStack.EMPTY) {
+                    ret = true;
+                    break;
+                }
             }
         }
         return ret;
